@@ -1,23 +1,32 @@
-import $ from 'jquery';
-import AuthService from '../services/AuthService';
+import AuthService from '../services/AuthService'
 
-function dataFilter(data, type) {
-    if (data === '') return null;
-    return data;
+async function checkErrors(resp) {
+    if(resp.ok) return resp;
+
+    let errorMsg = `ERROR ${resp.status} (${resp.statusText})`;
+    let serverText = await resp.text();
+    if(serverText) errorMsg = `${errorMsg}: ${serverText}`;
+
+    var error = new Error(errorMsg);
+    error.response = resp;
+    throw error;
+}
+
+function toJSON(resp) {
+    return resp.json();
 }
 
 export async function postAsync(url, data) {
-    return await $.ajax({
+    return await fetch(url, {
         method: 'POST',
-        url: url,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(data),
-        dataFilter: dataFilter,
+        body: JSON.stringify(data),
         headers: {
-            Authorization: `Bearer ${AuthService.accessToken}`
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AuthService.accessToken}`
         }
-    });
+    })
+    .then(checkErrors)
+    .then(toJSON);
 }
 
 export async function putAsync(url, data) {
@@ -34,25 +43,23 @@ export async function putAsync(url, data) {
 }
 
 export async function getAsync(url) {
-    return await $.ajax({
+    return await fetch(url, {
         method: 'GET',
-        url: url,
-        dataType: 'json',
-        dataFilter: dataFilter,
         headers: {
-            Authorization: `Bearer ${AuthService.accessToken}`
+            'Authorization': `Bearer ${AuthService.accessToken}`
         }
-    });
+    })
+    .then(checkErrors)
+    .then(toJSON);
 }
 
 export async function deleteAsync(url) {
-    return await $.ajax({
+    return await fetch(url, {
         method: 'DELETE',
-        url: url,
-        dataType: 'json',
-        dataFilter: dataFilter,
         headers: {
-            Authorization: `Bearer ${AuthService.accessToken}`
+            'Authorization': `Bearer ${AuthService.accessToken}`
         }
-    });
+    })
+    .then(checkErrors)
+    .then(toJSON);
 }

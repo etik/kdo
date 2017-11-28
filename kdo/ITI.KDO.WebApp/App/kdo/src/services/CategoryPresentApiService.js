@@ -8,7 +8,7 @@ class CategoryPresentApiService{
     }
 
     async getCategoryPresentListAsync(){
-        return await getAsync(`${endpoint}/getPresentByUserId`);
+        return await getAsync(`${endpoint}/getCategoryPresents`);
     }
 }
 

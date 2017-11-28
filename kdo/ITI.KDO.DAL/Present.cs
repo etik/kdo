@@ -16,6 +16,8 @@ namespace ITI.KDO.DAL
 
         public int CategoryPresentId { get; set; }
 
+        public string CategoryName { get; set; }
+
         public int UserId { get; set; }
 
     }

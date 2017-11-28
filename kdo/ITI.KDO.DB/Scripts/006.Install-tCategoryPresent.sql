@@ -8,8 +8,12 @@ create table dbo.tCategoryPresent
     constraint CK_tPresents_PresentName check(CategoryName <> N''),
 );
 insert into dbo.tCategoryPresent(CategoryName, Link)
-               values('Informatique', 'www.azeazea');
+                          values('N'         , 'N ');
 insert into dbo.tCategoryPresent(CategoryName, Link)
-               values('Electro-ménagé', 'www.azeazea');
+                          values('Bureau', 'www.azeazea');
+insert into dbo.tCategoryPresent(CategoryName  , Link)
+                          values('Electro-menage', 'www.azeazea');
 insert into dbo.tCategoryPresent(CategoryName, Link) 
-               values('Food', 'www.azeaze');
+                          values('Laptop'      , 'www.azeaze');
+insert into dbo.tCategoryPresent(CategoryName  , Link)
+                          values('Computer', 'www.azeazea');

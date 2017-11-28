@@ -44,7 +44,20 @@ namespace ITI.KDO.WebApp.Controllers
             Console.WriteLine("Modify Password");
             if (ModelState.IsValid)
             {
-                User user = _userService.FindUser(model.Email, model.OldPassword);
+                User user = _userService.FindUserByEmail(model.Email);
+                if(user != null && !_userService.VerifyPasswordUser(user.UserId))
+                {
+                    if (model.NewPassword != model.NewPasswordConfirm)
+                    {
+                        ModelState.AddModelError(string.Empty, "New passwords are not match.");
+                        return View(model);
+                    }
+                    _userService.CreatePasswordIdUser(model);
+                    return RedirectToAction(nameof(Authenticated));
+                }
+
+
+                user = _userService.FindUser(model.Email, model.OldPassword);
                 Console.WriteLine("User is authenticated {0}", user != null);
                 if (user == null)
                 {

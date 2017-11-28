@@ -20,7 +20,7 @@
                 {{item.phone}}<br/>
               </p>
               <b-button href="/Home/userProfile/edit" variant="primary">Edit profile</b-button>
-              <b-button href="/Account/ModifyPassword" variant="primary">Modify password</b-button>
+              <b-button @click="modifyPassword()" variant="primary">Modify password</b-button>
             </b-card>
           </b-collapse>
 
@@ -285,6 +285,9 @@ export default {
     },
     onSlideEnd2(slide2) {
         this.sliding = false;
+    },
+    modifyPassword(){
+      AuthService.modifyPassword();
     }
   },
 

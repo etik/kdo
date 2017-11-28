@@ -2,6 +2,7 @@
 using ITI.KDO.WebApp.Models.AccountViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -37,6 +38,14 @@ namespace ITI.KDO.WebApp.Services
             User user = _userGateway.FindByEmail(email);
             user.Password = _userGateway.FindUserPasswordHashed(user.UserId).Password;
             return user;
+        }
+
+        public bool VerifyPasswordUser(int userId)
+        {
+            int userIdVerified = 0;
+            userIdVerified = _userGateway.FindPasswordUserId(userId);
+            if(userIdVerified == 0) { return false; }
+            return true;
         }
 
         public User FindUser(string email, string password)
@@ -79,10 +88,18 @@ namespace ITI.KDO.WebApp.Services
             if (!IsNameValid(email)) return Result.Failure<User>(Status.BadRequest, "The email is invalid.");
             if (!IsPhoneTelValid(phone)) return Result.Failure<User>(Status.BadRequest, "The phone number is invalid.");
             if (!IsPhotoValid(photo)) return Result.Failure<User>(Status.BadRequest, "The photo  is invalid.");
-
+            if (!IsDateTimeValid(birthdate)) return Result.Failure<User>(Status.BadRequest, "The birthdate is invalid.");
 
             _userGateway.Create(firstName, lastName, birthdate, email, phone, photo);
             User user = _userGateway.FindByEmail(email);
+            return Result.Success(Status.Ok, user);
+        }
+
+        public Result<User> CreatePasswordIdUser(ModifyPasswordViewModel model)
+        {
+            User user = _userGateway.FindByEmail(model.Email);
+            _userGateway.CreatePasswordIdUser(user.UserId, _passwordHasher.HashPassword(model.OldPassword));
+            user = _userGateway.FindByEmail(model.Email);
             return Result.Success(Status.Ok, user);
         }
 
@@ -91,6 +108,7 @@ namespace ITI.KDO.WebApp.Services
             if (!IsNameValid(firstName)) return Result.Failure<User>(Status.BadRequest, "The first name is invalid.");
             if (!IsNameValid(lastName)) return Result.Failure<User>(Status.BadRequest, "The last name is invalid.");
             if (!IsNameValid(email)) return Result.Failure<User>(Status.BadRequest, "The email is invalid.");
+            if (!IsDateTimeValid(birthdate)) return Result.Failure<User>(Status.BadRequest, "The birthdate is invalid.");
             if (phone != null && !IsPhoneTelValid(phone)) return Result.Failure<User>(Status.BadRequest, "The phone number is invalid.");
 
             _userGateway.Update(userId, firstName, lastName, birthdate, email, phone, photo);
@@ -110,6 +128,15 @@ namespace ITI.KDO.WebApp.Services
         bool IsPhoneTelValid(string phoneTel) => !Regex.IsMatch(phoneTel, @"^[a-zA-Z]+$");
 
         bool IsPhotoValid(string photo) => !string.IsNullOrEmpty(photo);
+
+        bool IsDateTimeValid(DateTime birthDate)
+        {
+            if((birthDate >= (DateTime)SqlDateTime.MinValue) && (birthDate <= (DateTime)SqlDateTime.MaxValue))
+            {
+                return true;
+            }
+            return false;
+        }
 
         public bool CreateOrUpdateGoogleUser(string email, string googleId, string refreshToken)
         {

@@ -46,7 +46,7 @@ namespace ITI.KDO.WebApp.Services
 
             {
                 Present p = _presentGateway.FindByName(presentName);
-                if(p != null && p.PresentId == presentId) return Result.Failure<Present>(Status.BadRequest, "A present with this name already exists.");
+                if(p != null && p.PresentId != presentId) return Result.Failure<Present>(Status.BadRequest, "A present with this name already exists.");
             }
             _presentGateway.Update(presentId, presentName, price, linkPresent, categoryPresent, userId);
             present = _presentGateway.FindByPresentId(presentId);

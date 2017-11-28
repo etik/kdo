@@ -33,7 +33,7 @@
                     <td>{{ i.presentName }}</td>
                     <td>{{ i.price }}</td>
                     <td>{{ i.linkPresent }}</td>
-                    <td>{{ i.categoryPresentId }}</td>
+                    <td>{{ i.categoryName }}</td>
                     <td>{{ i.userId }}</td>
                     <td>
                         <button @click="deletePresent(i.presentId)"  class="btn btn-primary">Remove</button>
@@ -56,7 +56,7 @@
     data() {
         return {
             user: {},
-            presentList: []
+            presentList: [],
         };
     },
 

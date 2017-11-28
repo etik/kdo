@@ -14,6 +14,8 @@ namespace ITI.KDO.WebApp.Models.PresentViewModels
 
         public int CategoryPresentId { get; set; }
 
+        public string CategoryName { get; set; }
+
         public int UserId { get; set; }
     }
 }

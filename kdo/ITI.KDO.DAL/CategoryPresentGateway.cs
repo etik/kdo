@@ -15,28 +15,20 @@ namespace ITI.KDO.DAL
         {
             _connectionString = connectionString;
         }
+
         /// <summary>
-        /// Create categoryName and return this CategoryPresentId
+        /// Get All Category Present
         /// </summary>
-        /// <param name="categoryName"></param>
-        /// <param name="link"></param>
         /// <returns></returns>
-        public int Create(string categoryName, string link)
+        public IEnumerable<CategoryPresent> GetAll()
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@categoryName", categoryName, DbType.String);
-                dynamicParameters.Add("@Link", link, DbType.String);
-                dynamicParameters.Add("@CategoryPresentId", DbType.Int32, direction: ParameterDirection.ReturnValue);
-
-                con.Execute(
-                    "dbo.sCategoryPresentCreate",
-                    dynamicParameters,
-                    commandType: CommandType.StoredProcedure
-                );
-
-                return dynamicParameters.Get<int>("@CategoryPresentId");
+                return con.Query<CategoryPresent>(
+                    @"select c.CategoryPresentId,
+                             c.CategoryName,
+                             c.Link
+                      from dbo.vCategoryPresent c;");
             }
         }
     }

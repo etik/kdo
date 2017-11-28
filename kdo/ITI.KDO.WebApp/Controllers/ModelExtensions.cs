@@ -1,4 +1,5 @@
 ﻿using ITI.KDO.DAL;
+using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using System;
@@ -32,7 +33,18 @@ namespace ITI.KDO.WebApp.Controllers
                 Price = @this.Price,
                 LinkPresent = @this.LinkPresent,
                 CategoryPresentId = @this.CategoryPresentId,
-                UserId = @this.UserId,
+                CategoryName = @this.CategoryName,
+                UserId = @this.UserId
+            };
+        }
+
+        public static CategoryPresentViewModel ToCategoryPresentViewModel(this CategoryPresent @this)
+        {
+            return new CategoryPresentViewModel
+            {
+                CategoryPresentId = @this.CategoryPresentId,
+                CategoryName = @this.CategoryName,
+                Link = @this.Link
             };
         }
     }

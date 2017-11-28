@@ -3,7 +3,7 @@ create table dbo.tUser
     UserId int identity(0, 1),
     FirstName nvarchar(32) not null,
     LastName  nvarchar(32) not null,
-	Birthdate datetime2,
+	Birthdate date,
 	Email nvarchar(128) not null,
 	Phone nvarchar(12),
 	Photo nvarchar(max)

@@ -16,27 +16,27 @@
 
             <div class="form-group">
                 <label class="required">Present Name:</label>
-                <input type="text" v-model="item.presentName" class="form-control" required>
+                <input type="text" v-model="present.presentName" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label class="required">Price</label>
-                <input type="text" v-model="item.price" class="form-control" required>
+                <input type="text" v-model="present.price" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label class="required">Link Present</label>
-                <input type="text" v-model="item.linkPresent" class="form-control" required>
+                <input type="text" v-model="present.linkPresent" class="form-control" required>
             </div>
 
             <div class="form-group">
-                <label>CategoryPresentId</label>
-                <b-dropdown right text="Menu">
-                    <tr v-for="i of presentList">
-                        <b-dropdown-item>Item 1</b-dropdown-item>
+                <label class="required">CategoryPresentId</label>
+                <b-dropdown right text="Category Present">
+                    <tr v-for="i of categoryPresentList">
+                        <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
                     </tr>
                 </b-dropdown>
-                <input type="text" v-model="item.categoryPresentId" class="form-control">
+                <input type="text" v-model="this.categoryChosen" class="form-control" disabled>
             </div>
 
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
@@ -47,6 +47,7 @@
 <script>
     import { mapActions } from 'vuex';
     import PresentApiService from '../../services/PresentApiService';
+    import CategoryPresentApiService from '../../services/CategoryPresentApiService';
     import UserApiService from "../../services/UserApiService";
     import AuthService from "../../services/AuthService";
 
@@ -54,67 +55,75 @@
     data() {
       return {
         user:{},
-        item:{},
+        present:{},
         mode: null,
         id: null,
-        errors: []
+        errors: [],
+        categoryPresentList: [],
+        categoryChosen: "Choose a category."
       };
     },
 
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
+
+        this.categoryPresentList = await CategoryPresentApiService.getCategoryPresentListAsync();
+
         this.mode = this.$route.params.mode;
         this.id = this.$route.params.id;
         
         if(this.mode == 'edit'){
-                try {
-                    // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
-                    // It is useful when we have to know if an error occurred, in order to adapt the user experience.
-                    this.item = await this.executeAsyncRequest(() => PresentApiService.getPresentAsync(this.id));
-                }
-                catch(error) {
-                    // So if an exception occurred, we redirect the user to the students list.
-                    this.$router.replace('/presents');
-                }
+            try {
+                // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
+                // It is useful when we have to know if an error occurred, in order to adapt the user experience.
+                this.present = await this.executeAsyncRequest(() => PresentApiService.getPresentAsync(this.id));
             }
+            catch(error) {
+                // So if an exception occurred, we redirect the user to the students list.
+                this.$router.replace('/presents');
+            }   
+        }
     },
 
     methods: {
-      ...mapActions(['executeAsyncRequest']),
+        ...mapActions(['executeAsyncRequest']),
 
-      async onSubmit(e){
-        e.preventDefault();
+        async onSubmit(e){
+            e.preventDefault();
 
-        var errors = [];
+            var errors = [];
 
-        if(!this.item.presentName) errors.push("Present Name");
-        if(!this.item.price) errors.push("Price");
-        if(!this.item.linkPresent) errors.push("Link Present");
-        if(!this.item.categoryPresentId) errors.push("Category Present Id");
+            if(!this.present.presentName) errors.push("Present Name");
+            if(!this.present.price) errors.push("Price");
+            if(!this.present.linkPresent) errors.push("Link Present");
+            if(!this.present.categoryPresentId) errors.push("Category Present Id");
 
-        this.errors = errors;
+            this.errors = errors;
 
-        if(errors.length == 0) {
-          try {
-              if(this.mode == 'create') {
-                  this.item.userId = this.user.userId;
-                  await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.item));
-              }
-              else {
-                  await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.item)); 
-              }
-
-              this.$router.replace('/presents');
-          }
-          catch(error) {
-              // Custom error management here.
-              // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
-              // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
-              // By the way, you can handle errors manually for each component if you need it...
-          }
-      }
-      }
+            if(errors.length == 0) {
+            try {
+                if(this.mode == 'create') {
+                    this.present.userId = this.user.userId;
+                    await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
+                }
+                else {
+                    await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present)); 
+                }
+                this.$router.replace('/presents');
+            }
+            catch(error) {
+                // Custom error management here.
+                // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
+                // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
+                // By the way, you can handle errors manually for each component if you need it...
+                }
+            }
+        },
+        choseCategory(categoryIdChosen, categoryNameChosen){
+            this.categoryChosen = categoryNameChosen;
+            this.present.categoryPresentId = categoryIdChosen;
+        }
     }
   };
 </script>

@@ -296,13 +296,13 @@ namespace ITI.KDO.DAL
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="password"></param>
-        public void UpdatePassword(int userId, byte[] password)
+        public void UpdatePassword(int userId, byte[] passwordHashed)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "dbo.sPasswordUserUpdate",
-                    new { UserId = userId, Password = password },
+                    new { UserId = userId, Password = passwordHashed },
                     commandType: CommandType.StoredProcedure);
             }
         }
@@ -344,6 +344,30 @@ namespace ITI.KDO.DAL
                 con.Execute(
                     "dbo.sGoogleUserUpdate",
                     new { UserId = userId, refreshToken = refreshToken },
+                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public int FindPasswordUserId(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<int>(
+                    @"select p.UserId
+                      from dbo.tPasswordUser p
+                      where p.UserId = @UserId",
+                    new { UserId = userId })
+                    .FirstOrDefault();
+            }
+        }
+
+        public void CreatePasswordIdUser(int userId, byte[] passwordHashed)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    "dbo.sPasswordIdUserCreate",
+                    new { UserId = userId, Password = passwordHashed },
                     commandType: CommandType.StoredProcedure);
             }
         }

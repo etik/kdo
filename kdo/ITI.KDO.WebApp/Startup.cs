@@ -47,10 +47,12 @@ namespace ITI.KDO.WebApp
             services.AddOptions();
             services.AddSingleton(_ => new UserGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new PresentGateway(Configuration["ConnectionStrings:KDODB"]));
+            services.AddSingleton(_ => new CategoryPresentGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<UserServices>();
             services.AddSingleton<TokenService>();
             services.AddSingleton<PresentServices>();
+            services.AddSingleton<CategoryPresentServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

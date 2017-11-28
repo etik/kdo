@@ -3,7 +3,7 @@ create proc dbo.sUserUpdate
     @UserId int,
 	@FirstName nvarchar(32),
 	@LastName nvarchar(32),
-	@Birthdate datetime2,
+	@Birthdate date,
 	@Email nvarchar(32),
 	@Phone nvarchar(12),
 	@Photo nvarchar(32)
