@@ -14,7 +14,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
 
-          <b-navbar-brand href="/Home">
+          <b-navbar-brand href="/Home/">
             <img src="../img/logoKdo.png" style="width:50px"></img>
           </b-navbar-brand>
 
@@ -34,7 +34,7 @@
 
           <b-navbar-nav v-if="auth.isConnected">
 
-            <b-nav-item v-if="$route.path != '/userProfile/edit'" v-b-toggle.collapse1 href="#">Profil</b-nav-item>
+            <b-nav-item v-if="$route.path == '/'" v-b-toggle.collapse1 href="#">Profil</b-nav-item>
 
             <b-nav-item href="#"@click="logout()">Logout</b-nav-item>
           </b-navbar-nav>

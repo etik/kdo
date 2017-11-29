@@ -30,11 +30,11 @@
                 <input asp-for="Phone" class="form-control" v-model="item.phone"/>
                 <span asp-validation-for="Phone"></span>
             </div>
+            
+            
             <div class="form-group">
-                <label asp-for="Photo">Photo : </label>
-                <input asp-for="Photo" class="form-control" v-model="item.photo"/> <br />
-                <img :src="item.photo" />
-                <span asp-validation-for="Photo"></span>
+                <label asp-for="Phone">Photo : </label>
+                <b-form-file id="photo_input" v-model="item.photo" accept=".jpg, .png, .gif"></b-form-file>
             </div>
 
             <input type="submit" class="btn btn-primary btn-block" value="Edit"/>
@@ -55,6 +55,7 @@ import { mapGetters, mapActions } from "vuex";
             return {
                 userEmail: null,
                 item: {},
+                img: null,
                 errors: []
             };
         },

@@ -20,17 +20,17 @@
             </div>
 
             <div class="form-group">
-                <label class="required">Price</label>
-                <input type="text" v-model="present.price" class="form-control" required>
+                <label>Price</label>
+                <input type="text" v-model="present.price" class="form-control">
             </div>
 
             <div class="form-group">
-                <label class="required">Link Present</label>
-                <input type="text" v-model="present.linkPresent" class="form-control" required>
+                <label>Link Present</label>
+                <input type="text" v-model="present.linkPresent" class="form-control">
             </div>
 
             <div class="form-group">
-                <label class="required">CategoryPresentId</label>
+                <label>CategoryPresentId</label>
                 <b-dropdown right text="Category Present">
                     <tr v-for="i of categoryPresentList">
                         <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
