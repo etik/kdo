@@ -10,7 +10,7 @@ namespace ITI.KDO.DAL
 
         public string EventName { get; set; }
 
-        public string Description { get; set; }
+        public string Descriptions { get; set; }
 
         public DateTime Dates { get; set; }
 

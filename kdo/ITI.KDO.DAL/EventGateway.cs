@@ -46,13 +46,13 @@ namespace ITI.KDO.DAL
         /// <param name="description"></param>
         /// <param name="dates"></param>
         /// <param name="userId"></param>
-        public int AddToUser(string eventName, string description, DateTime dates, int userId)
+        public int Create(string eventName, string descriptions, DateTime dates, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@EventName", eventName, DbType.String);
-                dynamicParameters.Add("@Description", description, DbType.String);
+                dynamicParameters.Add("@Descriptions", descriptions, DbType.String);
                 dynamicParameters.Add("@Dates", dates, DbType.DateTime2);
                 dynamicParameters.Add("@UserId", userId, DbType.Int32);
                 dynamicParameters.Add("@EventId", DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -73,7 +73,7 @@ namespace ITI.KDO.DAL
         /// <param name="descriptions"></param>
         /// <param name="dates"></param>
         /// <param name="userId"></param>
-        public void Update(int eventId, string eventName, string descriptions,DateTime dates, int userId)
+        public void Update(int eventId, string eventName, string descriptions,DateTime dates)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -84,8 +84,7 @@ namespace ITI.KDO.DAL
                    EventId = eventId,
                    EventName = eventName,
                    Descriptions = descriptions,
-                   Dates = dates,
-                   UserId = userId
+                   Dates = dates
                },
                commandType: CommandType.StoredProcedure);
             }
@@ -106,7 +105,11 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
-
+        /// <summary>
+        /// Get ALL Event by the UserId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public IEnumerable<Event> GetAllByUserId(int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -121,58 +124,11 @@ namespace ITI.KDO.DAL
                     new { UserId = userId });
             }
         }
-
-        public void Create(string eventName, string descriptions, DateTime dates, int userId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                con.Execute(
-                    "dbo.sEventCreate",
-                    new
-                    {
-                        EventName = eventName,
-                        Descriptions = descriptions,
-                        Dates = dates,
-                        UserId = userId
-                    },
-                    commandType: CommandType.StoredProcedure);
-            }
-        }
-
-        public void Update(string eventName, string descriptions, DateTime dates, int userId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                con.Execute(
-                    "dbo.sEventUpdate",
-                    new
-                    {
-                        EventName = eventName,
-                        Descriptions = descriptions,
-                        Dates = dates,
-                        UserId = userId
-                    },
-                    commandType: CommandType.StoredProcedure);
-            }
-        }
-
-        public Event FindByEventId(int eventId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                return con.Query<Event>(
-                          @"select e.UserId,
-                             e.EventName,
-                             e.Descriptions,
-                             e.Dates
-                      from dbo.vEvent e
-                      where e.EventId = @EventId;",
-                        new { EventId = eventId })
-                    .FirstOrDefault();
-            }
-        }
-
-
+        /// <summary>
+        /// Get Event by the EventName
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <returns></returns>
         public Event FindByName(string eventName)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -188,7 +144,5 @@ namespace ITI.KDO.DAL
                     .FirstOrDefault();
             }
         }
-
-
     }
 }
