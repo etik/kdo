@@ -14,7 +14,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
 
-          <b-navbar-brand href="/Home">
+          <b-navbar-brand href="/Home/">
             <img src="../img/logoKdo.png" style="width:50px"></img>
           </b-navbar-brand>
 

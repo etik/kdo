@@ -4,11 +4,6 @@
             <h1>Events</h1>
       </div>
 
-      <div class="panel panel-default">
-            <div class="panel-body text-right">
-                <router-link class="btn btn-primary" :to="`events/create`"><i class="glyphicon glyphicon-plus"></i>Add an event</router-link>
-            </div>
-      </div>
 
       <table class="table table-striped table-hover table-bordered">
             <thead>
@@ -29,10 +24,6 @@
                     <td>{{ i.description}}</td>
                     <td>{{ i.date }}</td>
                     <td>
-                        <button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
-                        <router-link :to="`events/edit/${i.eventId}`">Edit event</router-link>
-                        <router-link :to="`events/view/${i.eventId}`">View</router-link>
-
                     </td>
                 </tr>
             </tbody>
@@ -67,17 +58,8 @@
 
       async refreshList() {
             this.eventList = await EventApiService.getEventListAsync(this.user.userId);
-      },
-
-      async deleteEvent(eventId) {
-          try {
-              await EventApiService.deleteEventAsync(eventId);
-              await this.refreshList();
-          }
-          catch(error) {
-
-          }
       }
+
   }
   };
 </script>

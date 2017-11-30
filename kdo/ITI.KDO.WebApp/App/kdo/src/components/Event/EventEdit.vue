@@ -16,12 +16,12 @@
 
             <div class="form-group">
                 <label class="required">Event Name:</label>
-                <input type="text" v-model="item.eventName" class="form-control" required>
+                <input type="text" v-model="event.eventName" class="form-control" required>
             </div>
 
             <div class="form-group">
-                <label class="required">Description</label>
-                <textarea type="text" v-model="item.description" class="form-control" required></textarea>
+                <label class="">Description</label>
+                <textarea type="text" v-model="event.descriptions" class="form-control" ></textarea>
             </div>
 
             <!--div class="form-group">
@@ -40,9 +40,9 @@
             </div!-->
 
             <div class="form-group row">
-            <label for="example-datetime-local-input" class="required">Date and time</label>
+            <label for="example-datetime-local-input" class="">Date and time</label>
             <div class="col-10">
-                <input class="form-control" type="datetime-local" v-model="item.date" value="2011-08-19T13:45:00" id="example-datetime-local-input" required>
+                <input class="form-control" type="datetime-local" v-model="event.date" value="2011-08-19T13:45:00" id="example-datetime-local-input" >
             </div>
             </div>
 
@@ -61,7 +61,7 @@
     data() {
       return {
         user:{},
-        item:{},
+        event:{},
         mode: null,
         id: null,
         errors: []
@@ -78,7 +78,7 @@
                 try {
                     // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
                     // It is useful when we have to know if an error occurred, in order to adapt the user experience.
-                    this.item = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.id));
+                    this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.id));
                 }
                 catch(error) {
                     // So if an exception occurred, we redirect the user to the students list.
@@ -95,21 +95,21 @@
 
         var errors = [];
 
-        if(!this.item.eventName) errors.push("Event Name");
-        //if(!this.item.participants) errors.push("Participants");
-        if(!this.item.date) errors.push("Date");
-        //if(!this.item.friendsId) errors.push("friends Id");
+        if(!this.event.eventName) errors.push("Event Name");
+        //if(!this.event.participants) errors.push("Participants");
+        //if(!this.event.date) errors.push("Date");
+        //if(!this.event.friendsId) errors.push("friends Id");
 
         this.errors = errors;
 
         if(errors.length == 0) {
           try {
               if(this.mode == 'create') {
-                  this.item.userId = this.user.userId;
-                  await this.executeAsyncRequest(() => EventtApiService.createEventAsync(this.item));
+                  this.event.userId = this.user.userId;
+                  await this.executeAsyncRequest(() => EventApiService.createEventAsync(this.event));
               }
               else {
-                  await this.executeAsyncRequest(() => EventApiService.updateEventAsync(this.item)); 
+                  await this.executeAsyncRequest(() => EventApiService.updateEventAsync(this.event)); 
               }
 
               this.$router.replace('/events');

@@ -46,13 +46,13 @@ namespace ITI.KDO.DAL
         /// <param name="description"></param>
         /// <param name="dates"></param>
         /// <param name="userId"></param>
-        public int AddToUser(string eventName, string description, DateTime dates, int userId)
+        public int Create(string eventName, string description, DateTime dates, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@EventName", eventName, DbType.String);
-                dynamicParameters.Add("@Description", description, DbType.String);
+                dynamicParameters.Add("@Descriptions", description, DbType.String);
                 dynamicParameters.Add("@Dates", dates, DbType.DateTime2);
                 dynamicParameters.Add("@UserId", userId, DbType.Int32);
                 dynamicParameters.Add("@EventId", DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -73,7 +73,7 @@ namespace ITI.KDO.DAL
         /// <param name="descriptions"></param>
         /// <param name="dates"></param>
         /// <param name="userId"></param>
-        public void Update(int eventId, string eventName, string descriptions,DateTime dates, int userId)
+        public void Update(int eventId, string eventName, string descriptions,DateTime dates)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -84,8 +84,7 @@ namespace ITI.KDO.DAL
                    EventId = eventId,
                    EventName = eventName,
                    Descriptions = descriptions,
-                   Dates = dates,
-                   UserId = userId
+                   Dates = dates
                },
                commandType: CommandType.StoredProcedure);
             }
@@ -112,30 +111,14 @@ namespace ITI.KDO.DAL
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 return con.Query<Event>(
-                    @"select e.UserId,
+                    @"select e.EventId,
+                             e.UserId,
                              e.EventName,
                              e.Descriptions,
                              e.Dates
                       from dbo.vEvent e
                       where e.UserId = @UserId;",
                     new { UserId = userId });
-            }
-        }
-
-        public void Create(string eventName, string descriptions, DateTime dates, int userId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                con.Execute(
-                    "dbo.sEventCreate",
-                    new
-                    {
-                        EventName = eventName,
-                        Descriptions = descriptions,
-                        Dates = dates,
-                        UserId = userId
-                    },
-                    commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -179,11 +162,11 @@ namespace ITI.KDO.DAL
             {
                 return con.Query<Event>(
                           @"select e.UserId,
-                             e.EventName,
-                             e.Descriptions,
-                             e.Dates
-                      from dbo.vEvent e
-                      where e.EventId = @EventId;",
+                                   e.EventName,
+                                   e.Descriptions,
+                                   e.Dates
+                            from dbo.vEvent e
+                            where e.EventName = @EventName;",
                         new { EventName = eventName })
                     .FirstOrDefault();
             }

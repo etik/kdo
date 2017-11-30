@@ -11,13 +11,13 @@
                 mail :<br/>
                 {{auth.email}}<br/>
                 firstName :<br/>
-                {{item.firstName}}<br/>
+                {{user.firstName}}<br/>
                 lastname :<br/>
-                {{item.lastName}}<br/>
+                {{user.lastName}}<br/>
                 birthdate :<br/>
-                {{item.birthdate}}<br/>
+                {{user.birthdate}}<br/>
                 phone :<br/>
-                {{item.phone}}<br/>
+                {{user.phone}}<br/>
               </p>
               <b-button href="/Home/userProfile/edit" variant="primary">Edit profile</b-button>
               <b-button @click="modifyPassword()" variant="primary">Modify password</b-button>
@@ -26,7 +26,7 @@
 
           <b-nav-item variant="dark" href="events">Créer un évènement</b-nav-item>
           <b-nav-item variant="dark" href="#">Mes contacts</b-nav-item>
-          <b-nav-item variant="dark" href="#">Calendrier</b-nav-item>
+          <b-nav-item variant="dark" href="carousel">Calendrier</b-nav-item>
           <b-nav-item variant="dark" href="presents">Ma liste de cadeau</b-nav-item>
         </nav>
       </b-col>
@@ -44,11 +44,11 @@
                 v-model="slide1"
                 @sliding-start="onSlideStart1"
                 @sliding-end="onSlideEnd1">
-
           <b-carousel-slide img-blank img-alt="Blank image">
-            <b-row>
-              <b-col md="4">
-                <b-card title="bulbizarre"
+
+            <b-row>            
+              <b-col v-for="i of eventList" md="4">
+                <b-card :title="i.eventName"
                       img-src="https://img4.hostingpics.net/pics/518638Image1.png"
                       img-alt="Image"
                       img-top
@@ -62,7 +62,7 @@
                 </b-card>
               </b-col>
 
-              <b-col md="4">
+              <!--b-col md="4">
                 <b-card title="Salamèche"
                       img-src="https://img4.hostingpics.net/pics/211052Image2.png"
                       img-alt="Image"
@@ -90,11 +90,11 @@
                 </p>
                 <b-button href="#" variant="primary">Go</b-button>
                 </b-card>
-              </b-col>
+              </b-col-->
             </b-row>
           </b-carousel-slide>
 
-          <b-carousel-slide img-blank img-alt="Blank image">
+          <!--b-carousel-slide img-blank img-alt="Blank image">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
               eros felis, tincidunt a tincidunt eget, convallis vel est. Ut pellentesque
@@ -117,6 +117,8 @@
               ut lacus vel interdum.
             </p>
           </b-carousel-slide>
+
+     
 
           <!-- Slide with blank fluid image to maintain slide aspect ratio -->
           <b-carousel-slide img-blank img-alt="Blank image">
@@ -233,6 +235,7 @@
 
 <script>
 import AuthService from "../services/AuthService";
+import EventApiService from "../services/EventApiService";
 import UserApiService from "../services/UserApiService";
 import { mapGetters, mapActions } from "vuex";
 import "../directives/requiredProviders";
@@ -243,7 +246,8 @@ export default {
   data() {
     return {
     userEmail: null,
-    item: {},
+    user: {},
+    eventList: [],
 
     slide1: 0,
     slide2: 0,
@@ -274,6 +278,11 @@ export default {
   ///******ACTION********
   //The actions, which are the possible ways the state could change in reaction to user inputs from the view.
   methods:{
+    ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
+    
+    async refreshList() {
+            this.eventList = await EventApiService.getEventListAsync(this.user.userId);
+      },
     onSlideStart1(slide1) {
         this.sliding = true;
     },
@@ -293,7 +302,9 @@ export default {
 
   async mounted() {
     var userEmail = AuthService.emailUser();
-    this.item = await UserApiService.getUserAsync(userEmail);
+    this.user = await UserApiService.getUserAsync(userEmail);
+  
+    await this.refreshList();
   },
   
   computed: {
