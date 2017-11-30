@@ -22,6 +22,8 @@ import UserProfileEdit from './components/user/UserProfileEdit.vue';
 import PresentList from './components/present/PresentList.vue';
 import PresentEdit from './components/present/PresentEdit.vue';
 
+import ContactList from './components/contact/ContactList.vue';
+
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 
@@ -84,6 +86,8 @@ const router = new VueRouter({
 
         { path: '/presents', component: PresentList, beforeEnter: requireAuth },
         { path: '/presents/:mode([create|edit]+)/:id?', component: PresentEdit, beforeEnter: requireAuth },
+
+        { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },

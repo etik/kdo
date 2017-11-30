@@ -24,10 +24,10 @@
             </b-card>
           </b-collapse>
 
-          <b-nav-item variant="dark" href="events">Créer un évènement</b-nav-item>
-          <b-nav-item variant="dark" href="#">Mes contacts</b-nav-item>
+          <b-nav-item variant="dark" href="/Home/events">Créer un évènement</b-nav-item>
+          <b-nav-item variant="dark" href="/Home/contacts">Mes contacts</b-nav-item>
           <b-nav-item variant="dark" href="#">Calendrier</b-nav-item>
-          <b-nav-item variant="dark" href="presents">Ma liste de cadeau</b-nav-item>
+          <b-nav-item variant="dark" href="/Home/presents">Ma liste de cadeau</b-nav-item>
         </nav>
       </b-col>
 
