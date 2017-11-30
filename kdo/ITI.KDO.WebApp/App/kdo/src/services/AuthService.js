@@ -9,6 +9,7 @@ class AuthService {
         this.appRedirect = () => null;
         this.authenticatedCallbacks = [];
         this.signedOutCallbacks = [];
+        this.sendEmailType = {};
         window.addEventListener("message", (e) => this.onMessage(e), false);
     }
 
@@ -102,6 +103,11 @@ class AuthService {
 
     removeSignedOutCallback(cb) {
         this.signedOutCallbacks.splice(this.signedOutCallbacks.indexOf(cb), 1);
+    }
+
+    sendEmail(selectedEmailType){
+        var emailType = this.sendEmailType[selectedEmailType];
+        var popup = window.open(emailType.endpoint, "Send Email", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
     }
 
     onSignedOut() {

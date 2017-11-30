@@ -1,5 +1,6 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
+using ITI.KDO.WebApp.Models.InviteViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using System;
@@ -45,6 +46,16 @@ namespace ITI.KDO.WebApp.Controllers
                 CategoryPresentId = @this.CategoryPresentId,
                 CategoryName = @this.CategoryName,
                 Link = @this.Link
+            };
+        }
+
+        public static InviteViewModel ToInviteViewModel(this InviteViewModel @this)
+        {
+            return new InviteViewModel
+            {
+                RecipientsMail = @this.RecipientsMail,
+                SenderMail = @this.SenderMail,
+                Descriptions = @this.Descriptions
             };
         }
     }

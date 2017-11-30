@@ -1,13 +1,15 @@
 <template>
     <div>
-        <img :src="item.photo" /> <br />
-        {{auth.email}} <br />
-        {{item.firstName}} <br />
-        {{item.lastName}} <br />
-        {{item.birthdate}} <br />
-        {{item.phone}} <br />
-        <router-link :to="`/userProfile/edit`">Edit profile</router-link>
-        <a href="#" @click="modifyPassword()">Modify Password</a>
+        <b-card  bg-variant="light" text-variant="dark">
+            <p class="card-text">
+                <img :src="item.photo" /> <br />
+                {{auth.email}} <br />
+                {{item.firstName}} <br />
+                {{item.lastName}} <br />
+                {{item.birthdate}} <br />
+                {{item.phone}} <br />
+            </p>
+        </b-card>
     </div>
 </template>
 <script>

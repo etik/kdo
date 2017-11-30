@@ -1,14 +1,19 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Authentification;
+using ITI.KDO.WebApp.Models.InviteViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using ITI.KDO.WebApp.Services;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -49,5 +54,7 @@ namespace ITI.KDO.WebApp.Controllers
                 o.ToViewModel = s => s.ToUserViewModel();
             });
         }
+
+        
     }
 }

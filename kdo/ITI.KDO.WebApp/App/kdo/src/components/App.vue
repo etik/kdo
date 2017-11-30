@@ -6,8 +6,7 @@
       <b-col md="2" class="bg-dark" style="height:100%;">
         <nav id="bd-docs-nav" class="bd-links navbar-collapse collapse show" style="padding-top: 30px">
           <b-collapse id="collapse1" class="mt-2">
-            <b-card  bg-variant="light" text-variant="dark">
-              <p class="card-text">
+              <!--<p class="card-text">
                 mail :<br/>
                 {{auth.email}}<br/>
                 firstName :<br/>
@@ -18,10 +17,10 @@
                 {{item.birthdate}}<br/>
                 phone :<br/>
                 {{item.phone}}<br/>
-              </p>
+              </p>-->
+              <UserProfile></UserProfile>
               <b-button href="/Home/userProfile/edit" variant="primary">Edit profile</b-button>
               <b-button @click="modifyPassword()" variant="primary">Modify password</b-button>
-            </b-card>
           </b-collapse>
 
           <b-nav-item variant="dark" href="events">Créer un évènement</b-nav-item>
@@ -234,6 +233,7 @@
 <script>
 import AuthService from "../services/AuthService";
 import UserApiService from "../services/UserApiService";
+import UserProfile from "./User/UserProfile.vue"
 import { mapGetters, mapActions } from "vuex";
 import "../directives/requiredProviders";
 
@@ -275,19 +275,19 @@ export default {
   //The actions, which are the possible ways the state could change in reaction to user inputs from the view.
   methods:{
     onSlideStart1(slide1) {
-        this.sliding = true;
+      this.sliding = true;
     },
     onSlideEnd1(slide1) {
-        this.sliding = false;
+      this.sliding = false;
     },
     onSlideStart2(slide2) {
-        this.sliding = true;
+      this.sliding = true;
     },
     onSlideEnd2(slide2) {
-        this.sliding = false;
+      this.sliding = false;
     },
     modifyPassword(){
-      AuthService.modifyPassword();
+    AuthService.modifyPassword();
     }
   },
 
@@ -299,6 +299,10 @@ export default {
   computed: {
     ...mapGetters(["isLoading"]),
     auth: () => AuthService
+  },
+
+  components: {
+    'UserProfile': UserProfile
   }
 };
 </script>
