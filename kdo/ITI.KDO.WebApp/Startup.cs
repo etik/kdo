@@ -46,12 +46,14 @@ namespace ITI.KDO.WebApp
             services.AddMvc();
             services.AddOptions();
             services.AddSingleton(_ => new UserGateway(Configuration["ConnectionStrings:KDODB"]));
+            services.AddSingleton(_ => new EventGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new PresentGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new CategoryPresentGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<UserServices>();
             services.AddSingleton<TokenService>();
             services.AddSingleton<PresentServices>();
+            services.AddSingleton<EventServices>();
             services.AddSingleton<CategoryPresentServices>();
         }
 

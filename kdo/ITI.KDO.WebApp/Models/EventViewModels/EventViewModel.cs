@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ITI.KDO.DAL
+namespace ITI.KDO.WebApp.Models.EventViewModels
 {
-    public class Event
+    public class EventViewModel
     {
         public int EventId { get; set; }
 

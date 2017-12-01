@@ -2,6 +2,7 @@
 using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
+using ITI.KDO.WebApp.Models.EventViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,18 @@ namespace ITI.KDO.WebApp.Controllers
                 LinkPresent = @this.LinkPresent,
                 CategoryPresentId = @this.CategoryPresentId,
                 CategoryName = @this.CategoryName,
+                UserId = @this.UserId
+            };
+        }
+
+        public static EventViewModel ToEventViewModel(this Event @this)
+        {
+            return new EventViewModel
+            {
+                EventId = @this.EventId,
+                EventName = @this.EventName,
+                Descriptions = @this.Descriptions,
+                Dates = @this.Dates,
                 UserId = @this.UserId
             };
         }

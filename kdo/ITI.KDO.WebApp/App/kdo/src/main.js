@@ -24,7 +24,9 @@ import PresentEdit from './components/present/PresentEdit.vue';
 
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
+import EventView from './components/event/EventView.vue'
 
+//import Carousel from './components/carousel.vue'
 import AppDefault from './components/AppDefault.vue';
 
 //import Register from './components/Register.vue';
@@ -87,6 +89,9 @@ const router = new VueRouter({
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
+        { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
+       // { path: '/carousel', component: Carousel, beforeEnter: requireAuth },
+
 
         { path: '', component: App, beforeEnter: requireAuth },
     ]
