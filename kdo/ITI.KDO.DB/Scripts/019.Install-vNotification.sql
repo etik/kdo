@@ -2,7 +2,6 @@ create view dbo.vNotification
 as
 	select
         NotificationId = n.NotificationId,
-		UserId = n.UserId,
 		RecipientsEmail = n.RecipientsEmail,
 		SenderEmail = n.SenderEmail,
 		Descriptions = n.Descriptions,

@@ -55,7 +55,6 @@ namespace ITI.KDO.WebApp.Controllers
             return new NotificationViewModel
             {
                 NotificationId = @this.NotificationId,
-                UserId = @this.UserId,
                 RecipientsEmail = @this.RecipientsEmail,
                 SenderEmail = @this.SenderEmail,
                 Descriptions = @this.Descriptions,

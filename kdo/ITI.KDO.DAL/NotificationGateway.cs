@@ -17,24 +17,23 @@ namespace ITI.KDO.DAL
             _connectionString = connectionString;
         }
 
-        public IEnumerable<Notification> GetAllByUserId(int userId)
+        public IEnumerable<Notification> GetAllByRecipientsEmail(string recipientsEmail)
         {
             using(SqlConnection con = new SqlConnection(_connectionString))
             {
                 return con.Query<Notification>(
                     @"select n.NotificationId,
-                             n.UserId,
                              n.RecipientsEmail,
                              n.SenderEmail,
                              n.Descriptions,
                              n.InviteAccept
                       from dbo.vNotification n
-                      where n.UserId = @UserId;",
-                    new { UserId = userId });
+                      where n.RecipientsEmail = @RecipientsEmail;",
+                    new { RecipientsEmail = recipientsEmail });
             }
         }
 
-        public void Create(int userId, string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
+        public void Create(string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
         {
             using(SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -42,7 +41,6 @@ namespace ITI.KDO.DAL
                     "dbo.sNotificationCreate",
                     new
                     {
-                        UserId = userId,
                         RecipientsEmail = recipientsEmail,
                         SenderEmail = senderEmail,
                         Descriptions = descriptions,
@@ -51,7 +49,7 @@ namespace ITI.KDO.DAL
             }
         }
 
-        public void Update(int notificationId, int userId, string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
+        public void Update(int notificationId, string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -60,7 +58,6 @@ namespace ITI.KDO.DAL
                     new
                     {
                         NotificationId = notificationId,
-                        UserId = userId,
                         RecipientsEmail = recipientsEmail,
                         SenderEmail = senderEmail,
                         Descriptions = descriptions,
@@ -76,7 +73,6 @@ namespace ITI.KDO.DAL
             {
                 return con.Query<Notification>(
                         @"select n.NotificationId,
-                             n.UserId,
                              n.RecipientsEmail,
                              n.SenderEmail,
                              n.Descriptions,

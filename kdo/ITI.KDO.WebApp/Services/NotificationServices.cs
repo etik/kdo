@@ -9,25 +9,28 @@ namespace ITI.KDO.WebApp.Services
     public class NotificationServices
     {
         readonly NotificationGateway _notificationGateway;
+        readonly UserGateway _userGateway;
 
-        public NotificationServices(NotificationGateway notificationGateway)
+        public NotificationServices(NotificationGateway notificationGateway, UserGateway userGateway)
         {
             _notificationGateway = notificationGateway;
+            _userGateway = userGateway;
         }
 
-        public Result<IEnumerable<Notification>> GetAllByUserId(int userId)
+        public Result<IEnumerable<Notification>> GetAllByRecipientsId(int recipientsId)
         {
-            return Result.Success(Status.Ok, _notificationGateway.GetAllByUserId(userId));
+            User user = _userGateway.FindById(recipientsId);
+            return Result.Success(Status.Ok, _notificationGateway.GetAllByRecipientsEmail(user.Email));
         }
 
-        public Result<int> CreateNotification(int userId, string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
+        public Result CreateNotification(string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
         {
-            if (!IsNameValid(recipientsEmail)) return Result.Failure<int>(Status.BadRequest, "The recipients's email is not valid.");
-            if (!IsNameValid(senderEmail)) return Result.Failure<int>(Status.BadRequest, "The sender's email is not valid.");
-            if (string.IsNullOrEmpty(descriptions)) return Result.Failure<int>(Status.BadRequest, "Descriptions must not null.");
+            if (!IsNameValid(recipientsEmail)) return Result.Failure(Status.BadRequest, "The recipients's email is not valid.");
+            if (!IsNameValid(senderEmail)) return Result.Failure(Status.BadRequest, "The sender's email is not valid.");
+            if (string.IsNullOrEmpty(descriptions)) return Result.Failure(Status.BadRequest, "Descriptions must not null.");
 
-            _notificationGateway.Create(userId, recipientsEmail, senderEmail, descriptions, inviteAccept);
-            return Result.Success(Status.Ok, userId);
+            _notificationGateway.Create(recipientsEmail, senderEmail, descriptions, inviteAccept);
+            return Result.Success(Status.Ok);
         }
 
         public Result<Notification> GetById(int notificationId)
@@ -45,7 +48,7 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, notificationId);
         }
 
-        public Result<Notification> UpdateNotification(int notificationId, int userId, string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
+        public Result<Notification> UpdateNotification(int notificationId, string recipientsEmail, string senderEmail, string descriptions, bool inviteAccept)
         {
             if (!IsNameValid(recipientsEmail)) return Result.Failure<Notification>(Status.BadRequest, "The recipients's email is not valid.");
             if (!IsNameValid(senderEmail)) return Result.Failure<Notification>(Status.BadRequest, "The sender's email is not valid.");
@@ -57,7 +60,7 @@ namespace ITI.KDO.WebApp.Services
                 return Result.Failure<Notification>(Status.NotFound, "Notification not found.");
             }
 
-            _notificationGateway.Update(notificationId, userId, recipientsEmail, senderEmail, descriptions, inviteAccept);
+            _notificationGateway.Update(notificationId, recipientsEmail, senderEmail, descriptions, inviteAccept);
             notification = _notificationGateway.FindByNotificationId(notificationId);
             return Result.Success(Status.Ok, notification);
         }

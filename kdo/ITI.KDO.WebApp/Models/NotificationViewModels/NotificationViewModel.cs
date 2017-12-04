@@ -9,8 +9,6 @@ namespace ITI.KDO.WebApp.Models.NotificationViewModels
     {
         public int NotificationId { get; set; }
 
-        public int UserId { get; set; }
-
         public string RecipientsEmail { get; set; }
 
         public string SenderEmail { get; set; }

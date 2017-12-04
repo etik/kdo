@@ -22,10 +22,10 @@ namespace ITI.KDO.WebApp.Controllers
             _notificationServices = notificationServices;
         }
 
-        [HttpGet("{userId}/getNotificationByUserId")]
-        public IActionResult GetNotificationList(int userId)
+        [HttpGet("{recipientsId}/getAll")]
+        public IActionResult GetNotificationList(int recipientsId)
         {
-            Result<IEnumerable<Notification>> result = _notificationServices.GetAllByUserId(userId);
+            Result<IEnumerable<Notification>> result = _notificationServices.GetAllByRecipientsId(recipientsId);
             return this.CreateResult<IEnumerable<Notification>, IEnumerable<NotificationViewModel>>(result, o =>
             {
                 o.ToViewModel = x => x.Select(s => s.ToNotificationViewModel());
@@ -45,14 +45,14 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPost]
         public IActionResult CreateNotification([FromBody] NotificationViewModel model)
         {
-            Result<int> result = _notificationServices.CreateNotification(model.UserId, model.RecipientsEmail, model.SenderEmail, model.Descriptions, model.InviteAccept);
+            Result result = _notificationServices.CreateNotification(model.RecipientsEmail, model.SenderEmail, model.Descriptions, model.InviteAccept);
             return this.CreateResult(result);
         }
 
         [HttpPut("{notificationId}")]
-        public IActionResult UpdateStudent(int notificationId, [FromBody] NotificationViewModel model)
+        public IActionResult UpdateNotificatin(int notificationId, [FromBody] NotificationViewModel model)
         {
-            Result<Notification> result = _notificationServices.UpdateNotification(model.NotificationId, model.UserId, model.RecipientsEmail, model.SenderEmail, model.Descriptions, model.InviteAccept);
+            Result<Notification> result = _notificationServices.UpdateNotification(model.NotificationId, model.RecipientsEmail, model.SenderEmail, model.Descriptions, model.InviteAccept);
             return this.CreateResult<Notification, NotificationViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToNotificationViewModel();

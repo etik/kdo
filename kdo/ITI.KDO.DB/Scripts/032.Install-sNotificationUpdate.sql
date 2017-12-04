@@ -1,7 +1,6 @@
 create procedure dbo.sNotificationUpdate
 (
     @NotificationId  int,
-    @UserId          int,
     @RecipientsEmail nvarchar,
     @SenderEmail     nvarchar,
     @Descriptions    nvarchar,
@@ -10,8 +9,7 @@ create procedure dbo.sNotificationUpdate
 as
 begin
 	update dbo.tNotification
-	set UserId = @UserId,
-		RecipientsEmail = @RecipientsEmail,
+	set RecipientsEmail = @RecipientsEmail,
 		SenderEmail = @SenderEmail,
 		Descriptions = @Descriptions,
 		InviteAccept = @InviteAccept
