@@ -9,6 +9,7 @@
                 {{item.birthdate}} <br />
                 {{item.phone}} <br />
             </p>
+            <b-button href="/Home/contact" variant="primary">Contact</b-button>
         </b-card>
     </div>
 </template>

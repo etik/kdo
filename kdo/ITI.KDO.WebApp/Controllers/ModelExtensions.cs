@@ -1,6 +1,7 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
-using ITI.KDO.WebApp.Models.InviteViewModels;
+using ITI.KDO.WebApp.Models.EmailViewModels;
+using ITI.KDO.WebApp.Models.NotificationViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using System;
@@ -49,13 +50,16 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
-        public static InviteViewModel ToInviteViewModel(this InviteViewModel @this)
+        public static NotificationViewModel ToNotificationViewModel(this Notification @this)
         {
-            return new InviteViewModel
+            return new NotificationViewModel
             {
-                RecipientsMail = @this.RecipientsMail,
-                SenderMail = @this.SenderMail,
-                Descriptions = @this.Descriptions
+                NotificationId = @this.NotificationId,
+                UserId = @this.UserId,
+                RecipientsEmail = @this.RecipientsEmail,
+                SenderEmail = @this.SenderEmail,
+                Descriptions = @this.Descriptions,
+                InviteAccept = @this.InviteAccept
             };
         }
     }

@@ -1,6 +1,5 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Authentification;
-using ITI.KDO.WebApp.Models.InviteViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using ITI.KDO.WebApp.Services;
 using MailKit.Net.Smtp;

@@ -18,29 +18,6 @@ namespace ITI.KDO.DAL
         }
 
         /// <summary>
-        /// Find Present Of User with UserId
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public Present FindById(int presentId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                return con.Query<Present>(
-                    @"select p.UserId,
-                             p.PresentId,
-                             p.PresentName,
-                             p.Price,
-                             p.CategoryPresentId,
-                             p.LinkPresent    
-                  from dbo.vPresent p
-                    where p.PresentId = @PresentId",
-                    new { PresentId = presentId })
-                    .FirstOrDefault();
-            }
-        }
-
-        /// <summary>
         /// Add Present to User and return the PresentId
         /// </summary>
         /// <param name="presentName"></param>
@@ -207,6 +184,7 @@ namespace ITI.KDO.DAL
                     .FirstOrDefault();
             }
         }
+
         /// <summary>
         /// Find a present by the PresentName
         /// </summary>

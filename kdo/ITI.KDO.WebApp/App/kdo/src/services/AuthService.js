@@ -9,7 +9,7 @@ class AuthService {
         this.appRedirect = () => null;
         this.authenticatedCallbacks = [];
         this.signedOutCallbacks = [];
-        this.sendEmailType = {};
+        this.emailTypes = {};
         window.addEventListener("message", (e) => this.onMessage(e), false);
     }
 
@@ -106,7 +106,7 @@ class AuthService {
     }
 
     sendEmail(selectedEmailType){
-        var emailType = this.sendEmailType[selectedEmailType];
+        var emailType = this.emailTypes[selectedEmailType];
         var popup = window.open(emailType.endpoint, "Send Email", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
     }
 

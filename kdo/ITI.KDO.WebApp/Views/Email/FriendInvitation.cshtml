@@ -1,6 +1,6 @@
-﻿@using ITI.KDO.WebApp.Models.InviteViewModels;
+﻿﻿@using ITI.KDO.WebApp.Models.EmailViewModels;
 
-@model InviteViewModel
+@model FriendInvitationViewModel
 @{
     ViewData["Titre"] = "Send email invitation.";
 }
@@ -11,20 +11,20 @@
     </div>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <form asp-controller="Email" asp-action="SendFriendInvitation" method="post">
+    <form asp-controller="Email" asp-action="FriendInvitation" method="post">
         @if (!ViewContext.ViewData.ModelState.IsValid)
         {
             <div asp-validation-summary="All" class="alert alert-danger"></div>
         }
         <div class="form-group">
-            <label asp-for="RecipientsMail">Recipients email: </label>
-            <input asp-for="RecipientsMail" class="form-control" />
-            <span asp-validation-for="RecipientsMail"></span>
+            <label asp-for="RecipientsEmail">Recipients email: </label>
+            <input asp-for="RecipientsEmail" class="form-control" />
+            <span asp-validation-for="RecipientsEmail"></span>
         </div>
         <div class="form-group">
-            <label asp-for="SenderMail">Sender email: </label>
-            <input asp-for="SenderMail" class="form-control" />
-            <span asp-validation-for="SenderMail"></span>
+            <label asp-for="SenderEmail">Sender email: </label>
+            <input asp-for="SenderEmail" class="form-control" />
+            <span asp-validation-for="SenderEmail"></span>
         </div>
         <div class="form-control">
             <label asp-for="Descriptions">Descriptions: </label>
@@ -32,10 +32,10 @@
             <span asp-validation-for="Descriptions"></span>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Submit</button> 
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </div>
         <div class="form-group">
-            <button type="reset" class="btn btn-primary btn-block">Close</button>
+            <button type="reset" class="btn btn-primary btn-block">Reset</button>
         </div>
     </form>
 </div>
