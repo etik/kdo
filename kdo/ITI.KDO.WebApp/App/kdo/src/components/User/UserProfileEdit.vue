@@ -3,6 +3,37 @@
         <div class="page-header">
             <h1 style="margin: 20px;">Edit your profile</h1>
         </div>
+
+        <div class="alert alert-danger" v-if="errors.length > 0">
+                <b>Les champs suivants semblent invalides : </b>
+                <ul>
+                    <li v-for="e of errors">{{e}}</li>
+                </ul>
+        </div>
+        
+        </br>
+        <div class="form-group" >
+                <label asp-for="Photo">Photo : </label>
+                <div class="thumbnail">
+                     <img src="../../assets/user.jpg" style="width:30%" class="img-thumbnail"></img>
+                </div>
+        </div>
+
+        <div class="col-md-4 pickPhoto">
+                    <label>Sélectionner une image : </label>
+                    <div class="input-group">
+                    <label class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Browse
+                        <input type="file" @change="onFileChange" style="display: none;" multiple>
+                    </span>
+                    </label>
+                    </div>
+               
+                <input type="text" class="form-control">
+        </div>
+        
+        </br></br></br></br></br>
         <form asp-controller="Account" asp-action="Register" method="post" @submit="onSubmit($event)">
             <div class="form-group">
                 <label asp-for="Email">Email : </label>
@@ -30,13 +61,7 @@
                 <input asp-for="Phone" class="form-control" v-model="item.phone"/>
                 <span asp-validation-for="Phone"></span>
             </div>
-            
-            
-            <div class="form-group">
-                <label asp-for="Phone">Photo : </label>
-                <b-form-file id="photo_input" v-model="item.photo" accept=".jpg, .png, .gif"></b-form-file>
-            </div>
-
+                      
             <input type="submit" class="btn btn-primary btn-block" value="Edit"/>
 
         </form>
@@ -56,7 +81,11 @@ import { mapGetters, mapActions } from "vuex";
                 userEmail: null,
                 item: {},
                 img: null,
-                errors: []
+                errors: [],
+                success: [],
+                image: '',
+                sendImage: '',
+                data: new FormData()
             };
         },
 
@@ -75,6 +104,7 @@ import { mapGetters, mapActions } from "vuex";
 
             async onSubmit(e) {
                     try{
+                        this.setPhoto();
                         await UserApiService.updateUserAsync(this.item);
                     }
                     catch (error){
@@ -88,8 +118,49 @@ import { mapGetters, mapActions } from "vuex";
                     finally {
                         this.notifyLoading(false);
                 }
-                this.$router.replace('/');
-            }
+                
+                this.$router.replace('edit');
+            },
+
+            async setPhoto() {
+                this.success = [];
+                try
+                {
+                    if(this.image != null)  this.sendItemImage = await this.executeAsyncRequest(() => UserApiService.updateFileAnsync(this.data, this.item.userId));
+                }
+                catch(error)
+                {
+                    this.errors.push({responseText:"La photo n'est pas valide, veuillez essayer avec une autre image ou de la redimensionner."});
+                }
+                
+                if (this.errors.length == 0)
+                {
+                    this.success.push({responseText:"La photo a bien été modifiée."});
+                }
+                 this.refresh();
+                 
+            },
+
+            onFileChange(e) {             
+                var files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.createImage(files[0]);    
+            },
+            createImage(file) {
+                var image = new Image();
+                var reader = new FileReader();
+                var vm = this;
+
+                this.data.append('files', file);
+                this.sendImage = file;
+                console.log(this.sendImage);
+                
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
         }
     }
 </script>
@@ -108,4 +179,9 @@ import { mapGetters, mapActions } from "vuex";
 
 <style lang="less">
     @import "../../styles/global.less";
+
+    .pickPhoto{
+        margin-top : -18%;
+        margin-left: 35%;
+    }
 </style>

@@ -63,3 +63,20 @@ export async function deleteAsync(url) {
     .then(checkErrors)
     .then(toJSON);
 }
+
+export async function putFileAsync(url, data) {
+    console.log("votre data : " + data);
+    console.dir(data);  
+      return await $.ajax({
+        method: 'POST',
+        url: url,
+        contentType: false,
+        cache: false,
+        data: data,
+        dataFilter: dataFilter,
+        processData: false,
+        headers: {
+            Authorization: `Bearer ${AuthService.accessToken}`
+        }
+    });
+}
