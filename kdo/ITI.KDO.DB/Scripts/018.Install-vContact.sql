@@ -1,10 +1,11 @@
 create view dbo.vContact
 as
 select
-    c.UserId,
-	c.FriendId
-	from dbo.tContact c
-	where c.UserId > 0
+	c.ContactId,
+	c.FirstEmail,
+	c.SecondEmail
+from dbo.tContact c
+where c.ContactId > 0
 
 
 

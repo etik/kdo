@@ -1,8 +1,8 @@
 create table dbo.tContact
-(    
-	FriendId int not null,
-	UserId int not null
-
-	constraint FK_tContact_FriendId foreign key(FriendId) references dbo.tUser(UserId),
-	constraint FK_tContact_UserId foreign key(UserId) references dbo.tUser(UserId),
+(
+	ContactId int identity(0, 1),
+	FirstEmail nvarchar(64) not null,
+	SecondEmail nvarchar(64) not null
+	
+	constraint PK_tContact_ContactId primary key(ContactId)
 );

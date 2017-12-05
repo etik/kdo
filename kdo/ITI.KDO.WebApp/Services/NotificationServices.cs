@@ -10,11 +10,13 @@ namespace ITI.KDO.WebApp.Services
     {
         readonly NotificationGateway _notificationGateway;
         readonly UserGateway _userGateway;
+        readonly ContactGateway _contactGateway;
 
-        public NotificationServices(NotificationGateway notificationGateway, UserGateway userGateway)
+        public NotificationServices(NotificationGateway notificationGateway, UserGateway userGateway, ContactGateway contactGateway)
         {
             _notificationGateway = notificationGateway;
             _userGateway = userGateway;
+            _contactGateway = contactGateway;
         }
 
         public Result<IEnumerable<Notification>> GetAllByRecipientsId(int recipientsId)
@@ -28,6 +30,9 @@ namespace ITI.KDO.WebApp.Services
             if (!IsNameValid(recipientsEmail)) return Result.Failure(Status.BadRequest, "The recipients's email is not valid.");
             if (!IsNameValid(senderEmail)) return Result.Failure(Status.BadRequest, "The sender's email is not valid.");
             if (string.IsNullOrEmpty(descriptions)) return Result.Failure(Status.BadRequest, "Descriptions must not null.");
+            if (_userGateway.FindByEmail(recipientsEmail) == null) return Result.Failure(Status.NotFound, "Recipients not exist.");
+            if ((_contactGateway.GetByEmails(recipientsEmail, senderEmail) != null) || (_contactGateway.GetByEmails(senderEmail, recipientsEmail) != null))
+                return Result.Failure(Status.BadRequest, "This contact already exist.");
 
             _notificationGateway.Create(recipientsEmail, senderEmail, descriptions, inviteAccept);
             return Result.Success(Status.Ok);

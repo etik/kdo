@@ -28,7 +28,8 @@
                     <td>{{ i.descriptions }}</td>
                     <td>{{ i.inviteAccept }}</td>
                     <td>
-                        <button @click="deleteNotification(i.notificationId)" class="btn btn-primary">Delete</button>
+                        <button @click="responseInvitation('yes', i.senderEmail, i.recipientsEmail, i.notificationId)" class="btn btn-primary">Accept</button>
+                        <button @click="responseInvitation('no')" class="btn btn-primary">Decline</button>
                     </td>
                 </tr>
             </tbody>
@@ -43,43 +44,64 @@
     import PresentApiService from '../services/PresentApiService';
     import UserApiService from '../services/UserApiService';
     import NotificationApiService from '../services/NotificationApiService';
+    import ContactApiService from '../services/ContactApiService';
 
-  export default {
-    data() {
-        return {
-            user: {},
-            id: null,
-            notificationList: [],
-        };
-    },
+    export default {
+        data() {
+            return {
+                user: {},
+                id: null,
+                notificationList: [],
+                model: {}
+            };
+        },
 
-    async mounted() {
-        this.id = this.$route.params.id;
-        console.log(this.id);
-        var userEmail = AuthService.emailUser();
-        this.user = await UserApiService.getUserAsync(userEmail);
+        async mounted() {
+            this.id = this.$route.params.id;
+            console.log(this.id);
+            var userEmail = AuthService.emailUser();
+            this.user = await UserApiService.getUserAsync(userEmail);
 
-        await this.refreshList();
-    },
+            await this.refreshList();
+        },
 
-    methods: {
-      ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
+        methods: {
+            ...mapActions(['executeAsyncRequest']),
 
-      async refreshList() {
-            this.notificationList = await NotificationApiService.getNotificationListAsync(this.id);
-      },
+            async refreshList() {
+                this.notificationList = await NotificationApiService.getNotificationListAsync(this.id);
+            },
 
-      async deleteNotification(notificationId) {
-          try {
-              await NotificationApiService.deleteNotificationAsync(notificationId);
-              await this.refreshList();
-          }
-          catch(error) {
+            async responseInvitation(response, firstEmail, secondEmail, notificationId){
+                if(response == 'yes'){
+                    try {
+                        this.model.firstEmail = firstEmail;
+                        this.model.secondEmail = secondEmail;
 
-          }
-      }
-  }
-  };
+                        console.log(this.model.firstEmail);
+                        console.log(this.model.secondEmail);
+                        console.log(notificationId);
+
+                        await ContactApiService.createContactAsync(this.model);
+                    } catch (error) {
+                        
+                    }
+                }
+                await NotificationApiService.deleteNotificationAsync(notificationId);
+                await this.refreshList();
+            },
+
+            async deleteNotification(notificationId) {
+                try {
+                    await NotificationApiService.deleteNotificationAsync(notificationId);
+                    await this.refreshList();
+                }
+                catch(error) {
+
+                }
+            }
+        }
+    };
 </script>
 
 <style lang="less">

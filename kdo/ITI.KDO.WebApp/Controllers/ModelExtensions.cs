@@ -61,5 +61,15 @@ namespace ITI.KDO.WebApp.Controllers
                 InviteAccept = @this.InviteAccept
             };
         }
+
+        public static ContactViewModel ToContactViewModel(this Contact @this)
+        {
+            return new ContactViewModel
+            {
+                ContactId = @this.ContactId,
+                FirstEmail = @this.FirstEmail,
+                SecondEmail = @this.SecondEmail
+            };
+        }
     }
 }

@@ -7,8 +7,8 @@ class NotificationApiService{
 
     }
     
-    async getNotificationListAsync(notificationId){
-        return await getAsync(`${endpoint}/${notificationId}/getAll`);
+    async getNotificationListAsync(userId){
+        return await getAsync(`${endpoint}/${userId}/getAll`);
     }
 
     async getNotificationAsync(notificationId){

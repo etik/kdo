@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ITI.KDO.DAL
+namespace ITI.KDO.WebApp.Models.UserViewModels
 {
-    public class Contact
+    public class ContactViewModel
     {
         public int ContactId { get; set; }
 

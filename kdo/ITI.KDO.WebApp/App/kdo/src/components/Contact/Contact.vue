@@ -3,20 +3,21 @@
         <div class="text-center" style="padding: 50px">
             <button type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
             <button type="button" @click="sendEmail('FriendInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Send Friends Invitation</button>
-            <router-link :to="`notification/${this.receivePerson.userId}`">Notification</router-link>
-            <input v-model="this.recipientsEmail" placeholder="Find friend's email">
-            <button type="submit" class="btn btn-primary">Send friend request</button>
+            <router-link :to="`notification/${this.user.userId}`">Notification</router-link>
+            <form @submit="onSubmit($event)">
+                <input v-model="recipientsEmail" placeholder="Find friend's email">
+                <button type="submit" class="btn btn-primary">Send friend request</button>
+            </form>
         </div>
     </div>
 </template>
 
 <script>
-import AuthService from "../../services/AuthService";
-import UserApiService from "../../services/UserApiService"
-import NotificationApiService from "../../services/NotificationApiService"
-import Vue from "vue";
-import $ from "jquery";
-import Vuex from 'vuex';
+    import { mapActions } from 'vuex';
+    import AuthService from "../../services/AuthService";
+    import UserApiService from "../../services/UserApiService";
+    import NotificationApiService from "../../services/NotificationApiService";
+    import Vue from "vue";
 
 export default {
     data() {
@@ -38,6 +39,8 @@ export default {
     },
 
     methods: {
+        ...mapActions(['executeAsyncRequest']),
+
         sendEmail(mailType){
             AuthService.sendEmail(mailType);
         },
@@ -50,7 +53,7 @@ export default {
             if(this.friendEmail) errors.push("Event Name");
 
             this.errors = errors;
-
+            console.log("clicked.");
             if(errors.length == 0) {
                 try {
                     this.model.userId = this.user.userId;
@@ -59,6 +62,12 @@ export default {
                     this.model.descriptions = "hello";
                     this.model.inviteAccept = false;
                     
+                    console.log(this.model.userId);
+                    console.log(this.model.recipientsEmail);
+                    console.log(this.model.senderEmail);
+                    console.log(this.model.descriptions);
+                    console.log(this.model.inviteAccept);
+
                     await this.executeAsyncRequest(() => NotificationApiService.createNotificationAsync(this.model));
                 }
                 catch(error) {
