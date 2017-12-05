@@ -42,7 +42,7 @@ namespace ITI.KDO.DAL
             using(SqlConnection con = new SqlConnection(_connectionString))
             {
                 return con.Query<Contact>(
-                    @"select c.ContactId
+                    @"select c.ContactId,
                              c.FirstEmail,
                              c.SecondEmail
                     from dbo.vContact c

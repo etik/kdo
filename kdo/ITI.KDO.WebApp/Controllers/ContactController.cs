@@ -22,6 +22,16 @@ namespace ITI.KDO.WebApp.Controllers
             _contactServices = contactServices;
         }
 
+        [HttpGet("{userId}/getAll")]
+        public IActionResult GetContactList(int userId)
+        {
+            Result<IEnumerable<Contact>> result = _contactServices.GetAllByUserId(userId);
+            return this.CreateResult<IEnumerable<Contact>, IEnumerable<ContactViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToContactViewModel());
+            });
+        }
+
         [HttpPost]
         public IActionResult CreateContact([FromBody] ContactViewModel model)
         {

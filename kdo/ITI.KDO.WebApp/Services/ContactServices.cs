@@ -9,10 +9,18 @@ namespace ITI.KDO.WebApp.Services
     public class ContactServices
     {
         readonly ContactGateway _contactGateway;
+        readonly UserGateway _userGateway;
 
-        public ContactServices(ContactGateway contactGateway)
+        public ContactServices(ContactGateway contactGateway, UserGateway userGateway)
         {
             _contactGateway = contactGateway;
+            _userGateway = userGateway;
+        }
+
+        public Result<IEnumerable<Contact>> GetAllByUserId(int userId)
+        {
+            User user = _userGateway.FindById(userId);
+            return Result.Success(Status.Ok, _contactGateway.GetAllByEmail(user.Email));
         }
 
         public Result<IEnumerable<Contact>> GetAllByEmail(string email)

@@ -29,7 +29,7 @@
                     <td>{{ i.inviteAccept }}</td>
                     <td>
                         <button @click="responseInvitation('yes', i.senderEmail, i.recipientsEmail, i.notificationId)" class="btn btn-primary">Accept</button>
-                        <button @click="responseInvitation('no')" class="btn btn-primary">Decline</button>
+                        <button @click="responseInvitation('no', i.senderEmail, i.recipientsEmail, i.notificationId)" class="btn btn-primary">Decline</button>
                     </td>
                 </tr>
             </tbody>
@@ -50,18 +50,15 @@
         data() {
             return {
                 user: {},
-                id: null,
                 notificationList: [],
                 model: {}
             };
         },
 
         async mounted() {
-            this.id = this.$route.params.id;
-            console.log(this.id);
             var userEmail = AuthService.emailUser();
             this.user = await UserApiService.getUserAsync(userEmail);
-
+            console.log(this.user.userId);
             await this.refreshList();
         },
 
@@ -69,7 +66,7 @@
             ...mapActions(['executeAsyncRequest']),
 
             async refreshList() {
-                this.notificationList = await NotificationApiService.getNotificationListAsync(this.id);
+                this.notificationList = await NotificationApiService.getNotificationListAsync(this.user.userId);
             },
 
             async responseInvitation(response, firstEmail, secondEmail, notificationId){
@@ -81,11 +78,13 @@
                         console.log(this.model.firstEmail);
                         console.log(this.model.secondEmail);
                         console.log(notificationId);
-
+                        
                         await ContactApiService.createContactAsync(this.model);
                     } catch (error) {
                         
                     }
+                }else{
+
                 }
                 await NotificationApiService.deleteNotificationAsync(notificationId);
                 await this.refreshList();

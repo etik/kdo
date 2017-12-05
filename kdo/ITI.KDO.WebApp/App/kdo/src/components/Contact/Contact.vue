@@ -8,6 +8,7 @@
                 <input v-model="recipientsEmail" placeholder="Find friend's email">
                 <button type="submit" class="btn btn-primary">Send friend request</button>
             </form>
+            <router-link :to="`contacts`">Contact List</router-link>
         </div>
     </div>
 </template>

@@ -23,6 +23,7 @@ import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 
 import Contact from './components/Contact/Contact.vue';
+import ContactList from './components/Contact/ContactList.vue'
 
 import NotificationUser from './components/Notification.vue';
 
@@ -87,6 +88,7 @@ const router = new VueRouter({
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
+        { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
 
         { path: '/notification/:id?', component: NotificationUser, beforeEnter: requireAuth },
 
