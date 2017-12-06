@@ -55,14 +55,14 @@ namespace ITI.KDO.DAL
                 dynamicParameters.Add("@Descriptions", descriptions, DbType.String);
                 dynamicParameters.Add("@Dates", dates, DbType.DateTime2);
                 dynamicParameters.Add("@UserId", userId, DbType.Int32);
-                dynamicParameters.Add("@EventId", DbType.Int32, direction: ParameterDirection.ReturnValue);
+                dynamicParameters.Add("@Id", DbType.Int32, direction: ParameterDirection.ReturnValue);
 
                 con.Execute(
                     "dbo.sEventCreate",
                     dynamicParameters,
                     commandType: CommandType.StoredProcedure
                 );
-                return dynamicParameters.Get<int>("@EventId");
+                return dynamicParameters.Get<int>("@Id");
             }
         }
 
