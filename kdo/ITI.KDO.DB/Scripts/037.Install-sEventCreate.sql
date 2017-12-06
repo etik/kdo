@@ -9,5 +9,5 @@ as
 begin
 	insert into dbo.tEvent(EventName, Descriptions, Dates, UserId)
 	values(@EventName, @Descriptions, @Dates, @UserId);
-	return 0;
+	return scope_identity();
 end
