@@ -22,7 +22,7 @@ namespace ITI.KDO.DAL
         /// <param name="userId"></param>
         /// <param name="friendId"></param>
         /// <param name="invitation"></param>
-        public void Add(int userId, int friendId, bool invitation)
+        public void Create(int userId, int friendId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -31,8 +31,8 @@ namespace ITI.KDO.DAL
                     new
                     {
                         UserId = userId,
-                        friendId = friendId,
-                        Invitation = invitation
+                        FriendId = friendId,
+                        Invitation = true
                     },
                     commandType: CommandType.StoredProcedure);
             }
@@ -56,6 +56,20 @@ namespace ITI.KDO.DAL
                             c.FriendId = @FriendId",
                     new { UserId = userId, friendId = friendId })
                     .FirstOrDefault();
+            }
+        }
+
+        public IEnumerable<Contact> GetAllByUserId(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Contact>(
+                    @"select e.UserId,
+                             e.FriendId,
+                             e.Invitation
+                      from dbo.vContact e 
+                      where e.UserId = @UserId;",
+                    new { UserId = userId });
             }
         }
 

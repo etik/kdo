@@ -11,12 +11,12 @@ class UserApiServices {
         return await getAsync(`${endpoint}/${emailUser}`);
     }
 
-    async updateUserAsync(model) {
-        return await putAsync(`${endpoint}/${model.userId}`, model);
+    async getUserById(userId) {
+        return await getAsync(`${endpoint}/${userId}/getById`);
     }
 
-    async getUserId(emailUser){
-        return await getAsync(`${endpoint}/${emailUser}`);
+    async updateUserAsync(model) {
+        return await putAsync(`${endpoint}/${model.userId}`, model);
     }
 }
 

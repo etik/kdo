@@ -40,6 +40,13 @@ namespace ITI.KDO.WebApp.Controllers
             return user;
         }
 
+        [HttpGet("{userId}/getById")]
+        public User GetUserById(int userId)
+        {
+            User user = _userServices.FindUserById(userId);
+            return user;
+        }
+
         [HttpPut("{userId}")]
         public IActionResult UpdateUser(int userId, [FromBody] UserViewModel model)
         {

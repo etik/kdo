@@ -8,11 +8,7 @@ class ContactApiService{
     }
 
     async getContactListAsync(userId){
-        return await getAsync(`${endpoint}/${userId}/getContactByUserId`);
-    }
-
-    async getContactAsync(contactId){
-        return await getAsync(`${endpoint}/${contactId}`);
+        return await getAsync(`${endpoint}/${userId}/getContactsByUserId`);
     }
 
     async createContactAsync(model){
@@ -23,8 +19,8 @@ class ContactApiService{
         return await putAsync(`${endpoint}/${model.contactId}`, model)
     }
 
-    async deleteContactAsync(contactId) {
-        return await deleteAsync(`${endpoint}/${contactId}`);
+    async deleteContactAsync(userId, friendId) {
+        return await deleteAsync(`${endpoint}/${userId}/${friendId}`);
     }
 }
 

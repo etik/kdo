@@ -2,6 +2,7 @@
 using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
+using ITI.KDO.WebApp.Models.ContactViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,16 @@ namespace ITI.KDO.WebApp.Controllers
                 CategoryPresentId = @this.CategoryPresentId,
                 CategoryName = @this.CategoryName,
                 Link = @this.Link
+            };
+        }
+
+        public static ContactViewModel ToContactViewModel(this Contact @this)
+        {
+            return new ContactViewModel
+            {
+                FriendId = @this.FriendId,
+                UserId = @this.UserId,
+                Invitation = @this.Invitation
             };
         }
     }

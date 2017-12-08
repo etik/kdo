@@ -29,11 +29,13 @@
                 </tr>
 
                 <tr v-for="i of contactList">
-                    <td><img :src="item.photo" /></td>
-                    <td>{{ i.firstName }}</td>
-                    <td>{{ i.lastName }}</td>
+                    <td v-if="contactInfo[contactList.indexOf(i)] = getContactInfo(i.friendId)">
+                        <img :src="contactInfo[contactList.indexOf(i)].photo" />
+                    </td>
+                    <td>{{ contactInfo[contactList.indexOf(i)].firstName }}</td>
+                    <td>{{ contactInfo[contactList.indexOf(i)].lastName }}</td>
                     <td>
-                        <button @click="deleteContact(i.contactId)"  class="btn btn-primary">Remove</button>
+                        <button @click="deleteContact(i.userId, i.friendId)"  class="btn btn-primary">Remove</button>
                     </td>
                 </tr>
             </tbody>
@@ -53,6 +55,8 @@
         return {
             user: {},
             contactList: [],
+            contact: null,
+            contactInfo: [],
         };
     },
 
@@ -70,9 +74,9 @@
             this.contactList = await ContactApiService.getContactListAsync(this.user.userId);
       },
 
-      async deleteContact(contactId) {
+      async deleteContact(userId, friendId) {
           try {
-              await ContactApiService.deleteContactAsync(contactId);
+              await ContactApiService.deleteContactAsync(userId, friendId);
               await this.refreshList();
           }
           catch(error) {
@@ -80,8 +84,16 @@
           }
       },
 
+      async getContactInfo(friendId) {
+          return await UserApiService.getUserById(friendId);
+      },
+
       async onSubmit(e){
-            await this.executeAsyncRequest(() => ContactApiService.createContactAsync(this.contact));
+            var contact = await UserApiService.getUserAsync(this.contact);
+            var model = {};
+            model.UserId = this.user.userId;
+            model.FriendId = contact.userId;
+            await this.executeAsyncRequest(() => ContactApiService.createContactAsync(model));
       }
   }
   };

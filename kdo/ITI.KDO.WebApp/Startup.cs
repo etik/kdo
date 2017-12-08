@@ -48,10 +48,12 @@ namespace ITI.KDO.WebApp
             services.AddSingleton(_ => new UserGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new PresentGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new CategoryPresentGateway(Configuration["ConnectionStrings:KDODB"]));
+            services.AddSingleton(_ => new ContactGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<UserServices>();
             services.AddSingleton<TokenService>();
             services.AddSingleton<PresentServices>();
+            services.AddSingleton<ContactServices>();
             services.AddSingleton<CategoryPresentServices>();
         }
 

@@ -65,9 +65,12 @@ namespace ITI.KDO.WebApp.Services
             return _userGateway.FindByEmail(email);
         }
 
-        public User FindUserByEmail(string email) => _userGateway.FindByEmail(email);
+        public User FindUserById(int userId)
+        {
+            return _userGateway.FindById(userId);
+        }
 
-        public User FindUserById(int userId) => _userGateway.FindById(userId);
+        public User FindUserByEmail(string email) => _userGateway.FindByEmail(email);
 
         public Result<int> Delete(int userId)
         {
