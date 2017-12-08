@@ -50,7 +50,7 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
-        public static NotificationViewModel ToNotificationViewModel(this Notification @this)
+        /*public static NotificationViewModel ToNotificationViewModel(this Notification @this)
         {
             return new NotificationViewModel
             {
@@ -60,15 +60,15 @@ namespace ITI.KDO.WebApp.Controllers
                 Descriptions = @this.Descriptions,
                 InviteAccept = @this.InviteAccept
             };
-        }
+        }*/
 
         public static ContactViewModel ToContactViewModel(this Contact @this)
         {
             return new ContactViewModel
             {
-                ContactId = @this.ContactId,
-                FirstEmail = @this.FirstEmail,
-                SecondEmail = @this.SecondEmail
+                UserId = @this.UserId,
+                FriendId = @this.FriendId,
+                Invitation = @this.Invitation
             };
         }
     }

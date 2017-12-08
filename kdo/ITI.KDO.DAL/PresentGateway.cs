@@ -85,6 +85,7 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
+
         /// <summary>
         /// Get all by the User Id
         /// </summary>

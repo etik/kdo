@@ -16,27 +16,48 @@ namespace ITI.KDO.DAL
         {
             _connectionString = connectionString;
         }
+
         /// <summary>
         /// Add a Contact
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="friendId"></param>
         /// <param name="invitation"></param>
-        public void Add(int userId, int friendId, bool invitation)
+        public void CreateContact(int userId, int friendId, bool invitation)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
-                    "dbo.sContactCreate",
+                    "dbo.sContactCreate", new
                     {
-                    new
                         UserId = userId,
-                        friendId = friendId,
+                        FriendId = friendId,
                         Invitation = invitation
-                    },
-                    commandType: CommandType.StoredProcedure);
+                    }, commandType: CommandType.StoredProcedure);
             }
         }
+
+
+        /// <summary>
+        /// Get all contacts by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<Contact> FindAllByUserId(int userId)
+        {
+            using(SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Contact>(
+                    @"select c.UserId,
+                             c.FriendId
+                    from dbo.vContact c
+                    where c.Invitation = 1 and
+                         (c.UserId = @UserId or c.FriendId = @UserId);", 
+                    new { UserId = userId });
+            }
+        }
+
+
         /// <summary>
         /// Find contact by the UserId, FriendId
         /// </summary>
@@ -50,16 +71,18 @@ namespace ITI.KDO.DAL
                     @"select c.UserId,
                              c.FriendId,
                              c.Invitation
-                      from dbo.vContact c 
-                      where c.UserId = @UserId and
-                            c.FriendId = @FriendId",
+                      from dbo.vContact c
+                      where (c.UserId = @UserId and c.FriendId = @FriendId) or 
+                            (c.UserId = @FriendId and c.FriendId = @UserId)",
                     new { UserId = userId, friendId = friendId })
                     .FirstOrDefault();
-            }
         }
-}
-    }
 
+        /// <summary>
+        /// Delete a Contact
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="friendId"></param>
         public void Delete(int userId, int friendId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -70,5 +93,5 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
-
-            {
+    }
+}

@@ -43,7 +43,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Data\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\css\" />

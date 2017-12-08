@@ -20,15 +20,10 @@ namespace ITI.KDO.WebApp.Services
         public Result<IEnumerable<Contact>> GetAllByUserId(int userId)
         {
             User user = _userGateway.FindById(userId);
-            return Result.Success(Status.Ok, _contactGateway.GetAllByEmail(user.Email));
+            return Result.Success(Status.Ok, _contactGateway.FindAllByUserId(userId));
         }
 
-        public Result<IEnumerable<Contact>> GetAllByEmail(string email)
-        {
-            return Result.Success(Status.Ok, _contactGateway.GetAllByEmail(email));
-        }
-
-        public Result<Contact> GetByEmails(string firstEmail, string secondEmail)
+        public Result<Contact> GetByIds(int userId, int friendId)
         {
             Contact contact;
             if ((contact = _contactGateway.GetByEmails(firstEmail, secondEmail)) == null) return Result.Failure<Contact>(Status.NotFound, "Contact not found.");
@@ -42,15 +37,14 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, contactId);
         }
 
-        public Result CreateContact(string firstEmail, string secondEmail)
+        public Result CreateContact(int userId, int friendId, bool invitation)
         {
-            if (string.IsNullOrEmpty(firstEmail)) return Result.Failure(Status.BadRequest, "The first person's email is not valid.");
-            if (string.IsNullOrEmpty(secondEmail)) return Result.Failure(Status.BadRequest, "The second person's email is not valid.");
-            if (_contactGateway.GetByEmails(firstEmail, secondEmail) != null) return Result.Failure(Status.NotFound, "Contact already exist.");
+            if (_userGateway.FindById(userId) == null) return Result.Failure(Status.NotFound, "User not found.");
+            if (_userGateway.FindById(friendId) == null) return Result.Failure(Status.NotFound, "User not found.");
+            if (_contactGateway.FindByIds(userId, friendId) != null) return Result.Failure(Status.BadRequest, "Contact existed.");
 
-            _contactGateway.Create(firstEmail, secondEmail);
+            _contactGateway.CreateContact(userId, friendId, false);
             return Result.Success(Status.Ok);
-
         }
     }
 }

@@ -7,10 +7,10 @@ namespace ITI.KDO.WebApp.Models.UserViewModels
 {
     public class ContactViewModel
     {
-        public int ContactId { get; set; }
+        public int UserId { get; set; }
 
-        public string FirstEmail { get; set; }
+        public int FriendId { get; set; }
 
-        public string SecondEmail { get; set; }
+        public bool Invitation { get; set; }
     }
 }
