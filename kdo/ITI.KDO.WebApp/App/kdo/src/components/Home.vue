@@ -1,7 +1,8 @@
 <template>
-  <div id="fond" style="margin-top:-24px;">
+
+ <div id="fond" style="margin-top:-24px;">
  
-    <b-navbar toggleable="md" type="dark" variant="dark" >
+    <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -34,9 +35,7 @@
 
           <b-navbar-nav v-if="auth.isConnected">
 
-            <b-nav-item v-if="$route.path == '/'" v-b-toggle.collapse1 href="#">Profil</b-nav-item>
-
-            <b-nav-item href="#"@click="logout()">Logout</b-nav-item>
+            <b-nav-item  href="#"@click="logout()">Logout</b-nav-item>
           </b-navbar-nav>
 
         </b-navbar-nav>
@@ -47,13 +46,87 @@
     <div class="progress" v-show="isLoading">
       <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
     </div>
+    
 
     </b-collapse>
     </b-navbar>
-  
-    <router-view class="child"></router-view>
-  
+    
+    <header id="page-top" v-if="!auth.isConnected">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <img class="img-responsive" src="http://ironsummitmedia.github.io/startbootstrap-freelancer/img/profile.png" alt="">
+            </div>
+        </div>
+    </div>
+</header>
+<div class="content-wrapper">
+    <section class="primary" id="portfolio"  v-if="!auth.isConnected">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>All ABOUT US</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="http://lorempixel.com/360/260/nature/">    
+                </div>
+                <div class="col-sm-4">
+                    <img src="http://lorempixel.com/360/260/animals/">    
+                </div>
+                <div class="col-sm-4">
+                    <img src="http://lorempixel.com/360/260/abstract/">    
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="success" id="about"  v-if="!auth.isConnected">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+                </div>
+                <div class="col-lg-4">
+                    <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+   <b-row class="bg-light" style="height: 100%; margin-top: 0px; margin-bottom: 0px;">
+      <b-col md="2" class="bg-light " style="height:100%;">
+      <b-navbar-nav v-if="auth.isConnected">
+        <b-nav vertical class="icon-bar" >
+          <b-nav-item href="userProfile" class="row">Profil</b-nav-item>
+          <b-nav-item href="events"class="row">Event</b-nav-item>
+          <b-nav-item  href="#" class="row" >Mes contacts</b-nav-item>
+          <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
+          <b-nav-item href="presents" class="row">Ma liste de cadeaux</b-nav-item>
+        </b-nav>
+        </b-navbar-nav>
+      </b-col>
+
+      <b-col md="8" class="bg-light" style="height:100%;">
+        <router-view class="child"></router-view>
+      </b-col>
+      <b-col md="2" class="bg-light" style="height:100%;">
+      </b-col>
+   </b-row>
+
+<div class="footer">
+  <p>Footer</p>
+
+</div>
   </div>
+    </div>
 </template>
 
 <script>
@@ -105,25 +178,74 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-
-
-.progress {
-  margin: 0px;
-  padding: 0px;
-  height: 0px;
+<style>
+.row{
+  margin-left:1%;
+  margin-Right:0!important;
 }
 
-p {
-    line-height:0;
+.active {
+    background-color: #4CAF50 !important;
+}
+.icon-bar {
+    height: 100%;
+    width: max-content;
+    background-color: #343a40; /* Dark-grey background */
+    position: fixed;
+
 }
 
-a.router-link-active {
-  font-weight: bold;
+.icon-bar a {
+    display: block; /* Make the links appear below each other instead of side-by-side */
+    text-align: center; /* Center-align text */
+    transition: all 0.3s ease; /* Add transition for hover effects */
+    color: white; /* White text color */
+    font-size: 18px; /* Increased font-size */
+    font-weight:600px;
+    line-height: 30px;
+    padding-top: 40%;
+
 }
 
+header {
+  background: url(https://cdn01.vulcanpost.com/wp-uploads/2015/12/Screen-Shot-2015-12-10-at-12.27.01-pm.png) repeat;
+  width: 100%;
+  background-size: 100%;
+  height:600px;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+
+.header {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
+}
+.icon-bar a:hover {
+color: #bcbcbc;
+}
+
+.active {
+    background-color: #4CAF50; /* Add an active/current color */
+}
 </style>
-
 <style lang="less">
   @import "../styles/global.less";
+  @media screen and (max-height: 450px) {
+    .icon-bar {padding-top: 15px;}
+    .icon-bar a {font-size: 18px;}
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #343a40;
+   color: white;
+   text-align: center;
+}
+</style>
 </style>

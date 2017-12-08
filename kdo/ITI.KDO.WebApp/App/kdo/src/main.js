@@ -24,8 +24,12 @@ import PresentEdit from './components/present/PresentEdit.vue';
 
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
+import EventView from './components/event/EventView.vue'
 
+//import Carousel from './components/carousel.vue'
 import AppDefault from './components/AppDefault.vue';
+import SideBar from './components/UIComponents/SidebarPlugin';
+
 
 //import Register from './components/Register.vue';
 
@@ -40,7 +44,7 @@ import AuthService from './services/AuthService';
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-
+Vue.use(SideBar)
 /**
  * Filter for routes requiring an authenticated user
  * @param {*} to 
@@ -87,6 +91,9 @@ const router = new VueRouter({
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
+        { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
+       // { path: '/carousel', component: Carousel, beforeEnter: requireAuth },
+
 
         { path: '', component: App, beforeEnter: requireAuth },
     ]

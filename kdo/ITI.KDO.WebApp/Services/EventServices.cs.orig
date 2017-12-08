@@ -48,7 +48,11 @@ namespace ITI.KDO.WebApp.Services
                 if (p != null && p.EventId == eventId) return Result.Failure<Event>(Status.BadRequest, "A Event with this name already exists.");
             }
             _eventGateway.Update(eventId, eventName, descriptions,dates);
+<<<<<<< HEAD
             events = _eventGateway.FindById(eventId);
+=======
+            events = _eventGateway.FindByEventId(eventId);
+>>>>>>> EventsCreation
             return Result.Success(Status.Ok, events);
         }
         public Result<Event> CreateEvent(int userId, string eventName, string descriptions, DateTime dates)
