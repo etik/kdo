@@ -55,7 +55,7 @@ namespace ITI.KDO.WebApp.Controllers
         }
 
         [HttpPut("{presentId}")]
-        public IActionResult UpdateStudent(int presentId, [FromBody] PresentViewModel model)
+        public IActionResult UpdatePresent(int presentId, [FromBody] PresentViewModel model)
         {
             Result<Present> result = _presentService.UpdatePresent(model.PresentId, model.UserId, model.CategoryPresentId, model.Price, model.PresentName, model.LinkPresent);
             return this.CreateResult<Present, PresentViewModel>(result, o =>
@@ -65,7 +65,7 @@ namespace ITI.KDO.WebApp.Controllers
         }
 
         [HttpDelete("{presentId}")]
-        public IActionResult DeleteStudent(int presentId)
+        public IActionResult DeletePresent(int presentId)
         {
             Result<int> result = _presentService.Delete(presentId);
             return this.CreateResult(result);

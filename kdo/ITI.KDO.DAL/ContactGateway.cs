@@ -1,10 +1,10 @@
+using System.Text;
+using System.Linq;
+using System.Data.SqlClient;
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 
 namespace ITI.KDO.DAL
 {
@@ -28,8 +28,8 @@ namespace ITI.KDO.DAL
             {
                 con.Execute(
                     "dbo.sContactCreate",
-                    new
                     {
+                    new
                         UserId = userId,
                         friendId = friendId,
                         Invitation = invitation
@@ -46,7 +46,6 @@ namespace ITI.KDO.DAL
         public Contact FindByIds(int userId, int friendId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
-            {
                 return con.Query<Contact>(
                     @"select c.UserId,
                              c.FriendId,
@@ -58,6 +57,8 @@ namespace ITI.KDO.DAL
                     .FirstOrDefault();
             }
         }
+}
+    }
 
         public void Delete(int userId, int friendId)
         {
@@ -70,5 +71,4 @@ namespace ITI.KDO.DAL
             }
         }
 
-    }
-}
+            {

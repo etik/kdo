@@ -10,13 +10,10 @@ import store from './vuex/store';
 import VueRouter from 'vue-router';
 
 import App from './components/App.vue';
-import Acc from './components/Acc.vue';
 import Home from './components/Home.vue';
 import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
 
-
-import UserProfile from './components/user/UserProfile.vue';
 import UserProfileEdit from './components/user/UserProfileEdit.vue';
 
 import PresentList from './components/present/PresentList.vue';
@@ -24,6 +21,11 @@ import PresentEdit from './components/present/PresentEdit.vue';
 
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
+
+import Contact from './components/Contact/Contact.vue';
+import ContactList from './components/Contact/ContactList.vue'
+
+import NotificationUser from './components/Notification.vue';
 
 import AppDefault from './components/AppDefault.vue';
 
@@ -73,11 +75,8 @@ const router = new VueRouter({
     mode: 'history',
     base: '/Home',
     routes: [
-        { path: '/login', component: Login },
         { path: '/logout', component: Logout, beforeEnter: requireAuth },
-        { path: '/acc', component: Acc, beforeEnter: requireAuth },
 
-        { path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
         { path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
 
         { path: '/appDefault', component: AppDefault },
@@ -87,6 +86,11 @@ const router = new VueRouter({
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
+
+        { path: '/contact', component: Contact, beforeEnter: requireAuth },
+        { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
+
+        { path: '/notification/:id?', component: NotificationUser, beforeEnter: requireAuth },
 
         { path: '', component: App, beforeEnter: requireAuth },
     ]
@@ -114,6 +118,14 @@ AuthService.registerProjectEndpoint = '/Project/Register';
 
 AuthService.modifyPasswordEndpoint = '/Account/ModifyPassword';
 
+AuthService.emailTypes = {
+    'FriendInvitation': {
+        endpoint: '/Email/FriendInvitation'
+    },
+    'OccasionInvitation': {
+        endpoint: ''
+    }
+}
 
 AuthService.providers = {
     'Base': {

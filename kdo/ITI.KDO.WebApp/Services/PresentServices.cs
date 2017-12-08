@@ -20,16 +20,16 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, _presentGateway.GetAllByUserId(userId));
         }
 
-        public Result<Present> GetById(int id)
+        public Result<Present> GetById(int presentId)
         {
             Present present;
-            if ((present = _presentGateway.FindById(id)) == null) return Result.Failure<Present>(Status.NotFound, "Present not found.");
+            if ((present = _presentGateway.FindByPresentId(presentId)) == null) return Result.Failure<Present>(Status.NotFound, "Present not found.");
             return Result.Success(Status.Ok, present);
         }
 
         public Result<int> Delete(int presentId)
         {
-            if (_presentGateway.FindById(presentId) == null) return Result.Failure<int>(Status.NotFound, "Present not found.");
+            if (_presentGateway.FindByPresentId(presentId) == null) return Result.Failure<int>(Status.NotFound, "Present not found.");
             _presentGateway.Delete(presentId);
             return Result.Success(Status.Ok, presentId);
         }
@@ -39,7 +39,7 @@ namespace ITI.KDO.WebApp.Services
             if (!IsNameValid(presentName)) return Result.Failure<Present>(Status.BadRequest, "The present's name is not valid.");
             if (!IsPriceValid(price)) return Result.Failure<Present>(Status.BadRequest, "The present's price is not valid.");
             Present present;
-            if((present = _presentGateway.FindById(presentId)) == null)
+            if((present = _presentGateway.FindByPresentId(presentId)) == null)
             {
                 return Result.Failure<Present>(Status.NotFound, "Present not found.");
             }
