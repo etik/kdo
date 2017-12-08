@@ -35,7 +35,6 @@
 <script>
     import { mapActions } from 'vuex';
     import AuthService from "../../services/AuthService";
-    import EventApiService from '../../services/EventApiService';
     import UserApiService from '../../services/UserApiService';
     import ContactApiService from '../../services/ContactApiService';
 

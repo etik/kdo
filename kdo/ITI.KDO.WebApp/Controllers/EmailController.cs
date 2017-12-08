@@ -10,6 +10,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using ITI.KDO.WebApp.Services;
+using ITI.KDO.DAL;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -57,12 +58,14 @@ namespace ITI.KDO.WebApp.Controllers
                 emailMessage.Subject = _subject;
                 emailMessage.Body = new TextPart("plain") { Text = model.Descriptions };
 
+
                 //The final step is to send the message and to do that we use a SmtpClient. 
                 //This isn’t the SmtpClient from system.net.mail, it is part of the MailKit library. 
 
                 //Create an instance of the SmtpClient wrapped with a using statement to ensure that it is disposed of when we’re done with it. 
                 using (var client = new SmtpClient())
                 {
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                     //You can if required set the LocalDomain used when communicating with the SMTP server. 
                     //This will be presented as the origin of the emails. 
                     //In this case I needed to supply the domain so that our internal testing SMTP server would accept and relay my emails. 
@@ -70,8 +73,7 @@ namespace ITI.KDO.WebApp.Controllers
 
                     //The ConnectAsync method can take just the uri of the SMTP server or as I’ve done here be overloaded with a port and SSL option. 
                     //In this case, when testing with our local test SMTP server no SSL was required so I specified this explicitly to make it work. 
-                    await client.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.None).ConfigureAwait(false);
-
+                    await client.ConnectAsync("smtp.gmail.com", 587, true);
                     //Finally we can send the message asynchronously and then close the connection. 
                     //At this point the email should have been fired off via the SMTP server. 
                     await client.SendAsync(emailMessage).ConfigureAwait(false);
