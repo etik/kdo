@@ -18,6 +18,7 @@
     import AuthService from "../../services/AuthService";
     import UserApiService from "../../services/UserApiService";
     import NotificationApiService from "../../services/NotificationApiService";
+    import ContactApiService from "../../services/ContactApiService";
     import Vue from "vue";
 
 export default {
@@ -34,9 +35,6 @@ export default {
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
-        
-        this.receivePerson = await UserApiService.getUserAsync("minh@gmail.com");
-        console.log(this.receivePerson.userId);
     },
 
     methods: {
@@ -51,25 +49,18 @@ export default {
 
             var errors = [];
 
-            if(this.friendEmail) errors.push("Event Name");
+            if(this.friendEmail) errors.push("Friend Email");
 
             this.errors = errors;
-            console.log("clicked.");
             if(errors.length == 0) {
                 try {
-                    this.model.userId = this.user.userId;
-                    this.model.recipientsEmail = this.recipientsEmail;
-                    this.model.senderEmail = this.user.email;
-                    this.model.descriptions = "hello";
-                    this.model.inviteAccept = false;
-                    
-                    console.log(this.model.userId);
-                    console.log(this.model.recipientsEmail);
-                    console.log(this.model.senderEmail);
-                    console.log(this.model.descriptions);
-                    console.log(this.model.inviteAccept);
+                    var recipientsUser = await UserApiService.getUserAsync(this.recipientsEmail);
 
-                    await this.executeAsyncRequest(() => NotificationApiService.createNotificationAsync(this.model));
+                    this.model.userId = this.user.userId;
+                    this.model.friendId = recipientsUser.userId;
+                    this.model.invitaion = false;
+
+                    await this.executeAsyncRequest(() => ContactApiService.createContactAsync(this.model));
                 }
                 catch(error) {
                 // Custom error management here.

@@ -1,12 +1,10 @@
 create procedure dbo.sContactDelete
 (
-    @FriendId        int,
-	@UserId			 int
+    @ContactId int
 )
 as
 begin
 	delete from dbo.tContact 
-	where (FriendId = @FriendId and UserId = @UserId) or 
-		  (FriendId = @UserId and UserId = @FriendId);
+	where ContactId = @ContactId;
 	return 0;
 end;

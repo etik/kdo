@@ -4,12 +4,12 @@ using System.Text;
 
 namespace ITI.KDO.DAL
 {
-    public class Contact
+    public class Notification
     {
         public int ContactId { get; set; }
 
-        public string UserEmail { get; set; }
+        public string RecipientsEmail { get; set; }
 
-        public string FriendEmail { get; set; }
+        public string SenderEmail { get; set; }
     }
 }

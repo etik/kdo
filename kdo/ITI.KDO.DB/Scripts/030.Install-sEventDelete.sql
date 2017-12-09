@@ -4,6 +4,7 @@ create procedure dbo.sEventDelete
 )
 as
 begin
-    delete from dbo.tEvent where EventId = @EventId;
+    delete from dbo.tEvent 
+	where EventId = @EventId;
 	return 0;
 end;

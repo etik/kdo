@@ -8,9 +8,9 @@ create table dbo.tUser
 	Phone nvarchar(12),
 	Photo nvarchar(max)
 
-    constraint PK_tUsers_UserId primary key(UserId),
-    constraint CK_tUsers_FirstName check(FirstName <> N''),
-    constraint CK_tUsers_LastName check(LastName <> N'')
+    constraint PK_tUser_UserId primary key(UserId),
+    constraint CK_tUser_FirstName check(FirstName <> N''),
+    constraint CK_tUser_LastName check(LastName <> N'')
 );
 insert into dbo.tUser(FirstName, LastName, Birthdate   , Email              , Phone       , Photo)
                values('N'      , 'N'     , '0001-01-01', 'nameEx@outlook.fr', '0712548565', 'aze');

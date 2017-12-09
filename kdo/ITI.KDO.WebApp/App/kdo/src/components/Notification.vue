@@ -10,8 +10,6 @@
                     <th>Notification Id</th>
                     <th>From</th>
                     <th>To</th>
-                    <th>Description</th>
-                    <th>Invite Accept</th>
                     <th>Options</th>
                 </tr>
             </thead>
@@ -22,14 +20,12 @@
                 </tr>
 
                 <tr v-for="i of notificationList">
-                    <td>{{ i.notificationId }}</td>
+                    <td>{{ i.contactId }}</td>
                     <td>{{ i.senderEmail }}</td>
                     <td>{{ i.recipientsEmail }}</td>
-                    <td>{{ i.descriptions }}</td>
-                    <td>{{ i.inviteAccept }}</td>
                     <td>
-                        <button @click="responseInvitation('yes', i.senderEmail, i.recipientsEmail, i.notificationId)" class="btn btn-primary">Accept</button>
-                        <button @click="responseInvitation('no', i.senderEmail, i.recipientsEmail, i.notificationId)" class="btn btn-primary">Decline</button>
+                        <button @click="responseInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-primary">Accept</button>
+                        <button @click="responseInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-primary">Decline</button>
                     </td>
                 </tr>
             </tbody>
@@ -58,7 +54,6 @@
         async mounted() {
             var userEmail = AuthService.emailUser();
             this.user = await UserApiService.getUserAsync(userEmail);
-            console.log(this.user.userId);
             await this.refreshList();
         },
 
@@ -72,32 +67,21 @@
             async responseInvitation(response, firstEmail, secondEmail, notificationId){
                 if(response == 'yes'){
                     try {
-                        this.model.firstEmail = firstEmail;
-                        this.model.secondEmail = secondEmail;
-
-                        console.log(this.model.firstEmail);
-                        console.log(this.model.secondEmail);
-                        console.log(notificationId);
+                        this.model.senderEmail = firstEmail;
+                        this.model.recipientsEmail = secondEmail;
                         
-                        await ContactApiService.createContactAsync(this.model);
+                        await ContactApiService.setContactInvitation(this.model);
                     } catch (error) {
                         
                     }
                 }else{
-
+                    try {
+                        await ContactApiService.deleteContactAsync(notificationId);
+                    } catch (error) {
+                        
+                    }
                 }
-                await NotificationApiService.deleteNotificationAsync(notificationId);
                 await this.refreshList();
-            },
-
-            async deleteNotification(notificationId) {
-                try {
-                    await NotificationApiService.deleteNotificationAsync(notificationId);
-                    await this.refreshList();
-                }
-                catch(error) {
-
-                }
             }
         }
     };

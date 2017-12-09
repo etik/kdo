@@ -39,20 +39,42 @@ namespace ITI.KDO.DAL
 
 
         /// <summary>
-        /// Get all contacts by userId
+        /// Get all friend contacts by userId
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Contact> FindAllByUserId(int userId)
+        public IEnumerable<ContactData> FindAllByUserId(int userId)
         {
             using(SqlConnection con = new SqlConnection(_connectionString))
             {
-                return con.Query<Contact>(
-                    @"select c.UserId,
+                return con.Query<ContactData>(
+                    @"select c.ContactId,
+                             c.UserId,
                              c.FriendId
                     from dbo.vContact c
                     where c.Invitation = 1 and
                          (c.UserId = @UserId or c.FriendId = @UserId);", 
+                    new { UserId = userId });
+            }
+        }
+
+
+        /// <summary>
+        /// Get all notifications by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<ContactData> FindAllNotificationByUserId(int userId)
+        {
+            using(SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<ContactData>(
+                    @"select c.ContactId,
+                             c.UserId,
+                             c.FriendId
+                    from dbo.vContact c
+                    where c.Invitation = 0 and
+                          c.FriendId = @UserId;",
                     new { UserId = userId });
             }
         }
@@ -64,10 +86,10 @@ namespace ITI.KDO.DAL
         /// <param name="userId"></param>
         /// <param name="friendId"></param>
         /// <returns></returns>
-        public Contact FindByIds(int userId, int friendId)
+        public ContactData FindByIds(int userId, int friendId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
-                return con.Query<Contact>(
+                return con.Query<ContactData>(
                     @"select c.UserId,
                              c.FriendId,
                              c.Invitation
@@ -79,17 +101,54 @@ namespace ITI.KDO.DAL
         }
 
         /// <summary>
-        /// Delete a Contact
+        /// Find Contact by ContactId
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <returns></returns>
+        public ContactData FindByContactId(int contactId)
+        {
+            using(SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<ContactData>(
+                    @"select c.UserId,
+                             c.FriendId,
+                             c.Invitation
+                      from dbo.vContact c
+                      where c.ContactId = @ContactId",
+                    new { ContactId = contactId })
+                    .FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Set friend relation between 2 users
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="friendId"></param>
-        public void Delete(int userId, int friendId)
+        public void SetContactInvitation(int userId, int friendId)
+        {
+            using(SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    @"UPDATE dbo.tContact 
+                      SET Invitation = 1 
+                      WHERE (UserId = @UserId and FriendId = @FriendId) or 
+                            (FriendId = @UserId and UserId = @FriendId)",
+                    new { UserId = userId, friendId = friendId });
+            }
+        }
+        
+        /// <summary>
+        /// Delete a Contactd
+        /// </summary>
+        /// <param name="contactId"></param>
+        public void Delete(int contactId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "dbo.sContactDelete",
-                    new { UserId = userId, FriendId = friendId },
+                    new { ContactId = contactId },
                     commandType: CommandType.StoredProcedure);
             }
         }

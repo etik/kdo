@@ -32,7 +32,7 @@ namespace ITI.KDO.DAL.Tests
 
             User user = sut.FindById(userId);
 
-            Contact contact = ContactGateway.FindByIds(userId, friendId);
+            ContactData contact = ContactGateway.FindByIds(userId, friendId);
 
             {
                 Assert.That(contact.UserId, Is.EqualTo(userId));

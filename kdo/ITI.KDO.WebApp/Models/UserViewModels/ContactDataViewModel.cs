@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace ITI.KDO.WebApp.Models.UserViewModels
 {
-    public class ContactViewModel
+    public class ContactDataViewModel
     {
         public int ContactId { get; set; }
 
-        public string UserEmail { get; set; }
+        public int UserId { get; set; }
 
-        public string FriendEmail { get; set; }
+        public int FriendId { get; set; }
+
+        public bool Invitation { get; set; }
     }
 }

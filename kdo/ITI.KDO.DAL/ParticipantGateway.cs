@@ -49,7 +49,7 @@ namespace ITI.KDO.DAL
             }
         }
 
-        public  void Delete(int userId, int eventId)
+        public void Delete(int userId, int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {

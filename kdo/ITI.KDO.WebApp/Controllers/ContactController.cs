@@ -8,6 +8,7 @@ using ITI.KDO.WebApp.Authentification;
 using ITI.KDO.WebApp.Services;
 using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Models.UserViewModels;
+using ITI.KDO.WebApp.Models.NotificationViewModels;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -16,10 +17,12 @@ namespace ITI.KDO.WebApp.Controllers
     public class ContactController : Controller
     {
         readonly ContactServices _contactServices;
+        readonly UserServices _userServices;
 
-        public ContactController(ContactServices contactServices)
+        public ContactController(ContactServices contactServices, UserServices userServices)
         {
             _contactServices = contactServices;
+            _userServices = userServices;
         }
 
         [HttpGet("{userId}/getAll")]
@@ -32,27 +35,37 @@ namespace ITI.KDO.WebApp.Controllers
             });
         }
 
-        [HttpPost]
-        public IActionResult CreateContact([FromBody] ContactViewModel model)
+        [HttpPost("createContact")]
+        public IActionResult CreateContact([FromBody] ContactDataViewModel model)
         {
-            Result result = _contactServices.CreateContact(model.FirstEmail, model.SecondEmail);
+            Result result = _contactServices.CreateContact(model.UserId, model.FriendId, model.Invitation);
             return this.CreateResult(result);
         }
 
-        [HttpGet("{firstEmail}/{secondEmail}")]
-        public IActionResult GetContactByEmails(string firstEmail, string secondEmail)
+        [HttpPost("setInvitation")]
+        public IActionResult SetContactInvitation([FromBody] NotificationViewModel model)
         {
-            Result<Contact> result = _contactServices.GetByEmails(firstEmail, secondEmail);
-            return this.CreateResult<Contact, ContactViewModel>(result, o =>
+            Result result = _contactServices.SetContactInvitation(
+                _userServices.FindUserByEmail(model.SenderEmail).UserId, 
+                _userServices.FindUserByEmail(model.RecipientsEmail).UserId
+                );
+            return this.CreateResult(result);
+        }
+
+        [HttpGet("{userId}/{friendId}")]
+        public IActionResult GetContactByIds(int userId, int friendId)
+        {
+            Result<ContactData> result = _contactServices.FindByIds(userId, friendId);
+            return this.CreateResult<ContactData, ContactDataViewModel>(result, o =>
             {
-                o.ToViewModel = s => s.ToContactViewModel();
+                o.ToViewModel = s => s.ToContactDataViewModel();
             });
         }
 
         [HttpDelete("{contactId}")]
         public IActionResult DeleteContact(int contactId)
         {
-            Result<int> result = _contactServices.Delete(contactId);
+            Result result = _contactServices.Delete(contactId);
             return this.CreateResult(result);
         }
     }

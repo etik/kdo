@@ -10,6 +10,7 @@
                     <th>Contact Id</th>
                     <th>First Email</th>
                     <th>Second Email</th>
+                    <th>Options</th>
                 </tr>
             </thead>
 
@@ -20,8 +21,8 @@
 
                 <tr v-for="i of contactList">
                     <td>{{ i.contactId }}</td>
-                    <td>{{ i.firstEmail }}</td>
-                    <td>{{ i.secondEmail}}</td>
+                    <td>{{ i.userEmail }}</td>
+                    <td>{{ i.friendEmail}}</td>
                     <td>
                         <button @click="deleteContact(i.contactId)"  class="btn btn-primary">Unfriend</button>
                     </td>
@@ -49,7 +50,6 @@
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
-
         await this.refreshList();
     },
 
@@ -57,17 +57,16 @@
       ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
       async refreshList() {
-            this.contactList = await ContactApiService.getContactListAsync(this.user.userId);
+        this.contactList = await ContactApiService.getContactListAsync(this.user.userId);
       },
 
       async deleteContact(contactId) {
-          try {
-              await ContactApiService.deleteContactAsync(contactId);
-              await this.refreshList();
-          }
-          catch(error) {
-
-          }
+        try {
+            await ContactApiService.deleteContactAsync(contactId);
+        } catch (error) {
+            
+        }
+        await this.refreshList();
       }
   }
   };

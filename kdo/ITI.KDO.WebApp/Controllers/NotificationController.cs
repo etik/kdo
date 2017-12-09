@@ -16,10 +16,22 @@ namespace ITI.KDO.WebApp.Controllers
     public class NotificationController : Controller
     {
         readonly NotificationServices _notificationServices;
+        readonly ContactServices _contactServices;
 
-        public NotificationController(NotificationServices notificationServices)
+        public NotificationController(NotificationServices notificationServices, ContactServices contactServices)
         {
             _notificationServices = notificationServices;
+            _contactServices = contactServices;
+        }
+
+        [HttpGet("{userId}/getAll")]
+        public IActionResult GetAllNotificationByUserId(int userId)
+        {
+            Result<IEnumerable<Notification>> result = _notificationServices.GetAllByUserId(userId);
+            return this.CreateResult<IEnumerable<Notification>, IEnumerable<NotificationViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToNotificationViewModel());
+            });
         }
     }
 }

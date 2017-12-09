@@ -19,22 +19,22 @@ namespace ITI.KDO.WebApp.Services
 
         public Result<IEnumerable<Contact>> GetAllByUserId(int userId)
         {
-            User user = _userGateway.FindById(userId);
-            return Result.Success(Status.Ok, _contactGateway.FindAllByUserId(userId));
+            IEnumerable<Contact> listContact = GetContactList(_contactGateway.FindAllByUserId(userId));
+            return Result.Success(Status.Ok, listContact);
         }
 
-        public Result<Contact> GetByIds(int userId, int friendId)
+        public Result<ContactData> FindByIds(int userId, int friendId)
         {
-            Contact contact;
-            if ((contact = _contactGateway.GetByEmails(firstEmail, secondEmail)) == null) return Result.Failure<Contact>(Status.NotFound, "Contact not found.");
+            ContactData contact;
+            if ((contact = _contactGateway.FindByIds(userId, friendId)) == null) return Result.Failure<ContactData>(Status.NotFound, "Contact not found.");
             return Result.Success(Status.Ok, contact);
         }
 
-        public Result<int> Delete(int contactId)
+        public Result Delete(int contactId)
         {
-            if (_contactGateway.GetById(contactId) == null) return Result.Failure<int>(Status.NotFound, "Contact not found.");
+            if (_contactGateway.FindByContactId(contactId) == null) return Result.Failure(Status.NotFound, "Contact not found.");
             _contactGateway.Delete(contactId);
-            return Result.Success(Status.Ok, contactId);
+            return Result.Success(Status.Ok);
         }
 
         public Result CreateContact(int userId, int friendId, bool invitation)
@@ -45,6 +45,32 @@ namespace ITI.KDO.WebApp.Services
 
             _contactGateway.CreateContact(userId, friendId, false);
             return Result.Success(Status.Ok);
+        }
+
+        public Result SetContactInvitation(int userId, int friendId)
+        {
+            if (_userGateway.FindById(userId) == null) return Result.Failure(Status.NotFound, "User not found.");
+            if (_userGateway.FindById(friendId) == null) return Result.Failure(Status.NotFound, "User not found.");
+            if (_contactGateway.FindByIds(userId, friendId) == null) return Result.Failure(Status.BadRequest, "Contact not found.");
+            if (_contactGateway.FindByIds(userId, friendId) != null && _contactGateway.FindByIds(userId, friendId).Invitation == true)
+                return Result.Failure(Status.BadRequest, "Contact existed.");
+
+            _contactGateway.SetContactInvitation(userId, friendId);
+            return Result.Success(Status.Ok);
+        }
+
+        public IEnumerable<Contact> GetContactList(IEnumerable<ContactData> listContactData)
+        {
+            List<Contact> listContact = new List<Contact>();
+            foreach(ContactData contactData in listContactData)
+            {
+                Contact contact = new Contact();
+                contact.ContactId = contactData.ContactId;
+                contact.UserEmail = _userGateway.FindById(contactData.UserId).Email; ;
+                contact.FriendEmail = _userGateway.FindById(contactData.FriendId).Email; ;
+                listContact.Add(contact);
+            }
+            return listContact;
         }
     }
 }

@@ -15,8 +15,12 @@ class ContactApiService{
         return await getAsync(`${endpoint}/${contactId}`);
     }
 
+    async setContactInvitation(model){
+        return await postAsync(`${endpoint}/setInvitation`, model);
+    }
+
     async createContactAsync(model){
-        return await postAsync(endpoint, model);
+        return await postAsync(`${endpoint}/createContact`, model);
     }
 
     async deleteContactAsync(contactId){

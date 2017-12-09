@@ -13,7 +13,6 @@ namespace ITI.KDO.WebApp.Controllers
     [Authorize(ActiveAuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme)]
     public class EventController: Controller
     {
-        readonly EventServices _eventService;
 
     }
 }

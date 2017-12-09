@@ -50,25 +50,34 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
-        /*public static NotificationViewModel ToNotificationViewModel(this Notification @this)
+        public static NotificationViewModel ToNotificationViewModel(this Notification @this)
         {
             return new NotificationViewModel
             {
-                NotificationId = @this.NotificationId,
+                ContactId = @this.ContactId,
                 RecipientsEmail = @this.RecipientsEmail,
-                SenderEmail = @this.SenderEmail,
-                Descriptions = @this.Descriptions,
-                InviteAccept = @this.InviteAccept
+                SenderEmail = @this.SenderEmail
             };
-        }*/
+        }
+
+        public static ContactDataViewModel ToContactDataViewModel(this ContactData @this)
+        {
+            return new ContactDataViewModel
+            {
+                ContactId = @this.ContactId,
+                UserId = @this.UserId,
+                FriendId = @this.FriendId,
+                Invitation = @this.Invitation
+            };
+        }
 
         public static ContactViewModel ToContactViewModel(this Contact @this)
         {
             return new ContactViewModel
             {
-                UserId = @this.UserId,
-                FriendId = @this.FriendId,
-                Invitation = @this.Invitation
+                ContactId = @this.ContactId,
+                UserEmail = @this.UserEmail,
+                FriendEmail = @this.FriendEmail
             };
         }
     }
