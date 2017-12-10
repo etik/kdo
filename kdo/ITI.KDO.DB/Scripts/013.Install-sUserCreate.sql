@@ -13,8 +13,3 @@ begin
 	               values(@FirstName, @LastName, @Birthdate, @Email, @Phone, @Photo);
 	return scope_identity();
 end
-
-
-
-		
-

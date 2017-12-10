@@ -15,11 +15,3 @@ begin
 	where EventId = @EventId;
 	return 0;
 end;
-
-
-
-
-
-
-		
-
