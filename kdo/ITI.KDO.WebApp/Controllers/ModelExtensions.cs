@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ITI.KDO.WebApp.Models.ParticipantViewModels;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -48,6 +49,16 @@ namespace ITI.KDO.WebApp.Controllers
                 Descriptions = @this.Descriptions,
                 Dates = @this.Dates,
                 UserId = @this.UserId
+            };
+        }
+
+        public static ParticipantViewModel ToParticipantViewModel(this Participant @this)
+        {
+            return new ParticipantViewModel
+            {
+                UserId = @this.UserId,
+                EventId = @this.EventId,
+                ParticipantType = @this.ParticipantType
             };
         }
 

@@ -8,23 +8,21 @@
       <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Event Name</th>
-                    <th>Description</th>
-                    <th>Date</th>
+                    <th>Participant</th>
+                    <th>userId</th>
+                    <th>eventId</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr v-if="eventList.length == 0">
-                    <td colspan="7" class="text-center">Event</td>
+                <tr v-if="participantList.length == 0">
+                    <td colspan="7" class="text-center">Participant</td>
                 </tr>
 
-                <tr v-for="i of eventList">
-                    <td>{{ i.eventName }}</td>
-                    <td>{{ i.description}}</td>
-                    <td>{{ i.date }}</td>
-                    <td>
-                    </td>
+                <tr v-for="i of participantList">
+                    <td>{{ i.ParticipantType }}</td>
+                    <td>{{ i.userId }}</td>
+                    <td>{{ i.eventId }}</td>
                 </tr>
             </tbody>
         </table>
@@ -34,6 +32,7 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import ParticipantApiService from '../../services/ParticipantApiService';
     import AuthService from "../../services/AuthService";
     import EventApiService from '../../services/EventApiService';
     import UserApiService from '../../services/UserApiService';
@@ -42,25 +41,39 @@
     data() {
         return {
             user: {},
-            eventList: []
+            eventId: null,
+            event: [],
+            participantList: []
         };
     },
 
     async mounted() {
         var userEmail = AuthService.emailUser();
+        this.eventId = this.$route.params.id;
+        
         this.user = await UserApiService.getUserAsync(userEmail);
 
+        console.log(this.user.userId);
+        console.log(this.eventId);
+        
         await this.refreshList();
+        await this.refreshParticipantList();
+        console.log(this.participantList);
     },
 
     methods: {
       ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
       async refreshList() {
-            this.eventList = await EventApiService.getEventListAsync(this.user.userId);
-      }
+            this.event = await EventApiService.getEventAsync(this.eventId);
+      },
+       async refreshParticipantList(){
+            this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
+      },
 
   }
+  
+  
   };
 </script>
 

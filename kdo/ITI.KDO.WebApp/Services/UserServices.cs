@@ -81,16 +81,14 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, _userGateway.GetAll());
         }
 
-        public Result<User> CreateUser(string firstName, string lastName, string email, DateTime birthdate, string phone, string photo)
+        public Result<User> CreateUser(string firstName, string lastName, string email, DateTime birthdate)
         {
             if (!IsNameValid(firstName)) return Result.Failure<User>(Status.BadRequest, "The first name is invalid.");
             if (!IsNameValid(lastName)) return Result.Failure<User>(Status.BadRequest, "The last name is invalid.");
             if (!IsNameValid(email)) return Result.Failure<User>(Status.BadRequest, "The email is invalid.");
-            if (!IsPhoneTelValid(phone)) return Result.Failure<User>(Status.BadRequest, "The phone number is invalid.");
-            if (!IsPhotoValid(photo)) return Result.Failure<User>(Status.BadRequest, "The photo  is invalid.");
             if (!IsDateTimeValid(birthdate)) return Result.Failure<User>(Status.BadRequest, "The birthdate is invalid.");
 
-            _userGateway.Create(firstName, lastName, birthdate, email, phone, photo);
+            _userGateway.Create(firstName, lastName, birthdate, email);
             User user = _userGateway.FindByEmail(email);
             return Result.Success(Status.Ok, user);
         }

@@ -35,6 +35,7 @@
 
                     </td>
                 </tr>
+
             </tbody>
         </table>
 
@@ -44,6 +45,7 @@
 <script>
     import { mapActions } from 'vuex';
     import AuthService from "../../services/AuthService";
+    import ParticipantApiService from '../../services/ParticipantApiService';
     import EventApiService from '../../services/EventApiService';
     import UserApiService from '../../services/UserApiService';
 
@@ -52,6 +54,7 @@
         return {
             user: {},
             eventList: []
+
         };
     },
 
@@ -68,7 +71,6 @@
       async refreshList() {
             this.eventList = await EventApiService.getEventListAsync(this.user.userId);
       },
-
       async deleteEvent(eventId) {
           try {
               await EventApiService.deleteEventAsync(eventId);
