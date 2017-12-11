@@ -28,7 +28,7 @@ import EventView from './components/event/EventView.vue'
 
 //import Carousel from './components/carousel.vue'
 import AppDefault from './components/AppDefault.vue';
-import SideBar from './components/UIComponents/SidebarPlugin';
+
 
 
 //import Register from './components/Register.vue';
@@ -44,7 +44,7 @@ import AuthService from './services/AuthService';
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-Vue.use(SideBar)
+
 /**
  * Filter for routes requiring an authenticated user
  * @param {*} to 
