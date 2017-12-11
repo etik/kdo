@@ -3,7 +3,7 @@ as
 	select
 		ContactId = c.ContactId,
         UserId = c.UserId,
-        FriendFacebookId = c.FriendFacebookId,
+        FacebookId = c.FacebookId,
 		Email = c.Email,
 		FirstName = c.FirstName,
 		LastName = c.LastName,
@@ -11,5 +11,5 @@ as
 		Phone = c.Phone
 		
 	from dbo.tFacebookContact c
-		left outer join dbo.tFacebookContactInfo i on i.FacebookId = c.FriendFacebookId
+		left outer join dbo.tFacebookContactInfo i on i.FacebookId = c.FacebookId
 	where c.UserId <> 0;

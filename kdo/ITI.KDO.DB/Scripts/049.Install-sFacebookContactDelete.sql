@@ -4,7 +4,7 @@ create procedure dbo.sFacebookContactDelete
 )
 as
 begin
-    delete from dbo.tFacebookContact where FriendFacebookId = @FacebookId;
+    delete from dbo.tFacebookContact where FacebookId = @FacebookId;
     delete from dbo.tFacebookContactInfo where FacebookId = @FacebookId;
 	return 0;
 end;

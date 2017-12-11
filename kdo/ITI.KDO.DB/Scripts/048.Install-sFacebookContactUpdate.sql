@@ -2,7 +2,7 @@ create procedure dbo.sFacebookContactUpdate
 (
     @ContactId          int,
 	@UserId			    int,
-	@FriendFacebookId   int
+	@FacebookId   int
 )
 as
 begin
@@ -10,7 +10,7 @@ begin
 	set 
 		UserId = @UserId,
 		UserFacebookId = @UserFacebookId,
-		FriendFacebookId = @FriendFacebookId
+		FacebookId = @FacebookId
 	where ContactId = @ContactId;
 	return 0;
 end;

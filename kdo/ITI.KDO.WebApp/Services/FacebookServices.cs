@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace ITI.KDO.WebApp.Services
 {
-    public class FacebookService
+    public class FacebookServices
     {
         readonly FacebookClient _facebookClient;
         readonly UserGateway _userGateway;
 
-        public FacebookService(FacebookClient facebookClient, UserGateway userGateway)
+        public FacebookServices(FacebookClient facebookClient, UserGateway userGateway)
         {
             _facebookClient = facebookClient;
             _userGateway = userGateway;
         }
 
-        public async Task<Result<IEnumerable<string>>> GetFacebookContact(int userId)
+        public async Task<Result<IEnumerable<string>>> GetFacebookContacts(int userId)
         {
             User user = _userGateway.FindById(userId);
             if (user == null) return Result.Failure<IEnumerable<string>>(Status.NotFound, "User not found.");

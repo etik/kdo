@@ -80,5 +80,20 @@ namespace ITI.KDO.WebApp.Controllers
                 FriendEmail = @this.FriendEmail
             };
         }
+
+        public static FacebookContactViewModel ToFacebookContactViewModel(this FacebookContact @this)
+        {
+            return new FacebookContactViewModel
+            {
+                ContactId = @this.ContactId,
+                UserId = @this.UserId,
+                FacebookId = @this.FacebookId,
+                Email = @this.Email,
+                FirstName = @this.FirstName,
+                LastName = @this.LastName,
+                BirthDate = @this.BirthDate,
+                Phone = @this.Phone
+            };
+        }
     }
 }
