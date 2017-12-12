@@ -17,6 +17,12 @@ namespace ITI.KDO.DAL
             _connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Create Participant
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
+        /// <param name="participantType"></param>
         public void Create(int userId, int eventId, Byte participantType)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -34,6 +40,12 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Find a participant with the userId and eventId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         public Participant FindById(int userId, int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -49,6 +61,11 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Delete a participant with userId and eventId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
         public  void Delete(int userId, int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))

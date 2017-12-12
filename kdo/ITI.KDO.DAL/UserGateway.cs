@@ -321,6 +321,7 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
+
         /// <summary>
         /// Update FacebookToken
         /// </summary>
@@ -337,6 +338,12 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
+
+        /// <summary>
+        /// Update GoogleToken, with the userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="refreshToken"></param>
         public void UpdateGoogleToken(int userId, string refreshToken)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -348,6 +355,11 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Find password with the userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public int FindPasswordUserId(int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -361,6 +373,11 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Create a PasswordHashed with the userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="passwordHashed"></param>
         public void CreatePasswordIdUser(int userId, byte[] passwordHashed)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -372,6 +389,11 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Add a google token with userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="refreshToken"></param>
         public void AddGoogleToken(int userId, string refreshToken)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -383,6 +405,12 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Add Facebook token with userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="facebookId"></param>
+        /// <param name="accessToken"></param>
         public void AddFacebookToken(int userId, string facebookId, string accessToken)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -394,6 +422,11 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// GetAuthenticationProviders
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public IEnumerable<string> GetAuthenticationProviders(string userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
