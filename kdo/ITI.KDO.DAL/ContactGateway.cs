@@ -59,6 +59,11 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Delete a Contact with the UserId and FriendId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="friendId"></param>
         public void Delete(int userId, int friendId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
