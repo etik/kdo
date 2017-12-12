@@ -5,9 +5,12 @@
             <h1 v-else>Edit your event</h1>
         </div>
 
+
         <div class="row">
         <div class="com-sm-4">
-           <b-card title="Create your Event">
+        <b-card>
+        <h1 v-if="mode == 'create'">Create a event</h1>
+        <h1 v-else>Edit your event</h1>
         <b-form  @submit="onSubmit($event)">
                     <div class="alert alert-danger" v-if="errors.length > 0">
                 <b>Les champs suivants semblent invalides : </b>
@@ -155,7 +158,6 @@
         mode: null,
         eventId: null,
         participantList: [],
-        event: [],
         errors: [],
         selected: [], // Must be an array reference!
         options: [

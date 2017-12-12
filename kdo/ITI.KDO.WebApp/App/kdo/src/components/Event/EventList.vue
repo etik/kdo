@@ -54,7 +54,6 @@
         return {
             user: {},
             eventList: []
-
         };
     },
 
