@@ -10,5 +10,5 @@ as
 begin
 	insert into dbo.tPresent(PresentName, Price, LinkPresent, CategoryPresentId, UserId)
 	values(@PresentName, @Price, @LinkPresent, @CategoryPresentId, @UserId);
-	return 0;
+	return scope_identity();
 end
