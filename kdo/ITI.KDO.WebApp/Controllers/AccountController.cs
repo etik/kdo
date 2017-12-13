@@ -56,7 +56,6 @@ namespace ITI.KDO.WebApp.Controllers
                     return RedirectToAction(nameof(Authenticated));
                 }
 
-
                 user = _userService.FindUser(model.Email, model.OldPassword);
                 Console.WriteLine("User is authenticated {0}", user != null);
                 if (user == null)

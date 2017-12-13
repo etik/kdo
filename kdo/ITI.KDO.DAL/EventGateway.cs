@@ -73,7 +73,7 @@ namespace ITI.KDO.DAL
         /// <param name="descriptions"></param>
         /// <param name="dates"></param>
         /// <param name="userId"></param>
-        public void Update(int eventId, string eventName, string descriptions,DateTime dates)
+        public void Update(int eventId, string eventName, string descriptions, DateTime dates)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {

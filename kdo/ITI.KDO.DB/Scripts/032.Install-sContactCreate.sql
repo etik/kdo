@@ -2,7 +2,7 @@ create procedure dbo.sContactCreate
 (
     @FriendId        int,
 	@UserId			 int,
-	@Invitation 		 bit
+	@Invitation 	 bit
 )
 
 as

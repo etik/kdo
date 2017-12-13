@@ -28,10 +28,11 @@ namespace ITI.KDO.DAL.Tests
             var userId = sut.Create(firstName, lastName, birthDate, email, phone, photo);
             var friendId = sut.Create(firstName, lastName, birthDate, email, phone, photo);
 
-            ContactGateway.Add(userId, friendId, invitation);
+            ContactGateway.CreateContact(userId, friendId, invitation);
 
             User user = sut.FindById(userId);
-            Contact contact = ContactGateway.FindByIds(userId, friendId);
+
+            ContactData contact = ContactGateway.FindByIds(userId, friendId);
 
             {
                 Assert.That(contact.UserId, Is.EqualTo(userId));

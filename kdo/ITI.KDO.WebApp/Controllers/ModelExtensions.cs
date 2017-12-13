@@ -1,5 +1,7 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
+using ITI.KDO.WebApp.Models.EmailViewModels;
+using ITI.KDO.WebApp.Models.NotificationViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using ITI.KDO.WebApp.Models.EventViewModels;
@@ -39,18 +41,6 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
-        public static EventViewModel ToEventViewModel(this Event @this)
-        {
-            return new EventViewModel
-            {
-                EventId = @this.EventId,
-                EventName = @this.EventName,
-                Descriptions = @this.Descriptions,
-                Dates = @this.Dates,
-                UserId = @this.UserId
-            };
-        }
-
         public static CategoryPresentViewModel ToCategoryPresentViewModel(this CategoryPresent @this)
         {
             return new CategoryPresentViewModel
@@ -60,5 +50,76 @@ namespace ITI.KDO.WebApp.Controllers
                 Link = @this.Link
             };
         }
+
+        public static NotificationViewModel ToNotificationViewModel(this Notification @this)
+        {
+            return new NotificationViewModel
+            {
+                ContactId = @this.ContactId,
+                RecipientsEmail = @this.RecipientsEmail,
+                SenderEmail = @this.SenderEmail
+            };
+        }
+
+        public static ContactDataViewModel ToContactDataViewModel(this ContactData @this)
+        {
+            return new ContactDataViewModel
+            {
+                ContactId = @this.ContactId,
+                UserId = @this.UserId,
+                FriendId = @this.FriendId,
+                Invitation = @this.Invitation
+            };
+        }
+
+        public static ContactViewModel ToContactViewModel(this Contact @this)
+        {
+            return new ContactViewModel
+            {
+                ContactId = @this.ContactId,
+                UserEmail = @this.UserEmail,
+                FriendEmail = @this.FriendEmail
+            };
+        }
+
+        public static FacebookContactViewModel ToFacebookContactViewModel(this FacebookContact @this)
+        {
+            return new FacebookContactViewModel
+            {
+                ContactId = @this.ContactId,
+                UserId = @this.UserId,
+                FacebookId = @this.FacebookId,
+                Email = @this.Email,
+                FirstName = @this.FirstName,
+                LastName = @this.LastName,
+                BirthDate = @this.BirthDate,
+                Phone = @this.Phone
+            };
+        }
     }
 }
+
+        public static PresentViewModel ToPresentViewModel(this Present @this)
+        {
+            return new PresentViewModel
+            {
+                PresentId = @this.PresentId,
+                PresentName = @this.PresentName,
+                Price = @this.Price,
+                LinkPresent = @this.LinkPresent,
+                CategoryPresentId = @this.CategoryPresentId,
+                CategoryName = @this.CategoryName,
+                UserId = @this.UserId
+            };
+        }
+
+        public static EventViewModel ToEventViewModel(this Event @this)
+        {
+            return new EventViewModel
+            {
+                EventId = @this.EventId,
+                EventName = @this.EventName,
+                Descriptions = @this.Descriptions,
+                Dates = @this.Dates,
+                UserId = @this.UserId
+            };
