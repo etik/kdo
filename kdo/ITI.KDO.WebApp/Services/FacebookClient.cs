@@ -22,7 +22,7 @@ namespace ITI.KDO.WebApp.Services
             using (HttpClient client = new HttpClient())
             {
                 HttpRequestHeaders headers = client.DefaultRequestHeaders;
-                headers.Add("Authorization", string.Format("token{0}", facebookAccessToken));
+                headers.Add("Authorization", string.Format("Bearer {0}", facebookAccessToken));
                 headers.Add("User-Agent", "KDO");
                 HttpResponseMessage response = await client.GetAsync(urlBase + "me?fields=friends{id,first_name,last_name}");
 

@@ -2,7 +2,7 @@ create procedure dbo.sFacebookUserCreate
 (
 	@Email	  nvarchar(64),
     @FacebookId   varchar(100),
-    @AccessToken varchar(64),
+    @AccessToken varchar(256),
 	@FirstName nvarchar(32),
 	@LastName nvarchar(32)
 )

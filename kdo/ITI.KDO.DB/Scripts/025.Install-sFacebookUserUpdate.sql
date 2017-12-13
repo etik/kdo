@@ -2,7 +2,7 @@
 (
 	@UserId      int,
 	@FacebookId	 varchar(32),
-	@AccessToken varchar(64)
+	@AccessToken varchar(256)
 )
 as
 begin
