@@ -46,14 +46,21 @@ namespace ITI.KDO.DAL
         /// <param name="description"></param>
         /// <param name="dates"></param>
         /// <param name="userId"></param>
-
+<<<<<<< HEAD
         public int Create(string eventName, string descriptions, DateTime dates, int userId)
+=======
+        public int Create(string eventName, string description, DateTime dates, int userId)
+>>>>>>> EventsCreation
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@EventName", eventName, DbType.String);
+<<<<<<< HEAD
                 dynamicParameters.Add("@Descriptions", descriptions, DbType.String);
+=======
+                dynamicParameters.Add("@Descriptions", description, DbType.String);
+>>>>>>> EventsCreation
                 dynamicParameters.Add("@Dates", dates, DbType.DateTime2);
                 dynamicParameters.Add("@UserId", userId, DbType.Int32);
                 dynamicParameters.Add("@Id", DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -126,6 +133,13 @@ namespace ITI.KDO.DAL
                     new { UserId = userId });
             }
         }
+<<<<<<< HEAD
+        /// <summary>
+        /// Get Event by the EventName
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <returns></returns>
+=======
 
         public void Update(string eventName, string descriptions, DateTime dates, int userId)
         {
@@ -161,6 +175,7 @@ namespace ITI.KDO.DAL
         }
 
 
+>>>>>>> EventsCreation
         public Event FindByName(string eventName)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -176,7 +191,5 @@ namespace ITI.KDO.DAL
                     .FirstOrDefault();
             }
         }
-
-
     }
 }

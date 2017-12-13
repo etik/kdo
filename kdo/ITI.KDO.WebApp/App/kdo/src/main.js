@@ -29,6 +29,8 @@ import EventView from './components/event/EventView.vue'
 //import Carousel from './components/carousel.vue'
 import AppDefault from './components/AppDefault.vue';
 
+
+
 //import Register from './components/Register.vue';
 
 //import User from './components/User/User.vue';

@@ -17,50 +17,38 @@
     <form asp-controller="Account" asp-action="Register" method="post">
         @if (!ViewContext.ViewData.ModelState.IsValid)
         {
-            <div asp-validation-summary="All" class="alert alert-danger"></div>
+            <div asp-validation-summary="All" alert alert-danger"></div>
         }
 
         <div class="form-group">
-            <label asp-for="FirstName">FirstName : </label>
-            <input asp-for="FirstName" class="form-control" />
+            <label class="required" asp-for="FirstName">FirstName : </label>
+            <input asp-for="FirstName" class="form-control" required/>
             <span asp-validation-for="FirstName"></span>
         </div>
         <div class="form-group">
-            <label asp-for="LastName">LastName : </label>
-            <input asp-for="LastName" class="form-control" />
+            <label class="required" asp-for="LastName">LastName : </label>
+            <input asp-for="LastName" class="form-control" required />
             <span asp-validation-for="LastName"></span>
         </div>
-        <div class="form-group">
-            <label asp-for="Phone">Phone : </label>
-            <input asp-for="Phone" class="form-control" />
-            <span asp-validation-for="Phone"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Photo">Photo : </label>
-            <input asp-for="Photo" class="form-control" />
-            <span asp-validation-for="Photo"></span>
-        </div>
-
         <div class="form-group">
             <label asp-for="Birthdate">BirthDate : </label>
             <input asp-for="Birthdate" class="form-control" />
             <span asp-validation-for="Birthdate"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Email">Email : </label>
-            <input asp-for="Email" class="form-control" />
+            <label class="required" asp-for="Email">Email : </label>
+            <input asp-for="Email" class="form-control" required />
             <span asp-validation-for="Email"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="Password">Password : </label>
-            <input asp-for="Password" class="form-control" />
+            <label class="required" asp-for="Password">Password : </label>
+            <input asp-for="Password" class="form-control" required/>
             <span asp-validation-for="Password"></span>
         </div>
         <div class="form-group">
-            <label asp-for="ConfirmPassword">Confirm Password: </label>
-            <input asp-for="ConfirmPassword" class="form-control" />
+            <label class="required" asp-for="ConfirmPassword">Confirm Password: </label>
+            <input asp-for="ConfirmPassword" class="form-control" required/>
             <span asp-validation-for="ConfirmPassword"></span>
         </div>
         <button type="submit" class="btn btn-primary btn-block">S'enregistrer</button>

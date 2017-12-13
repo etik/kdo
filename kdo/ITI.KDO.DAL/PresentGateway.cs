@@ -108,7 +108,11 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
-
+        /// <summary>
+        /// Get all by the User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public IEnumerable<Present> GetAllByUserId(int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -127,7 +131,14 @@ namespace ITI.KDO.DAL
                     new { UserId = userId });
             }
         }
-
+        /// <summary>
+        /// Create present
+        /// </summary>
+        /// <param name="presentName"></param>
+        /// <param name="price"></param>
+        /// <param name="linkPresent"></param>
+        /// <param name="categoryPresentId"></param>
+        /// <param name="userId"></param>
         public void Create(string presentName, float price, string linkPresent, int categoryPresentId, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -145,7 +156,15 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
-
+        /// <summary>
+        /// Update present
+        /// </summary>
+        /// <param name="presentId"></param>
+        /// <param name="presentName"></param>
+        /// <param name="price"></param>
+        /// <param name="linkPresent"></param>
+        /// <param name="categoryPresentId"></param>
+        /// <param name="userId"></param>
         public void Update(int presentId, string presentName, float price, string linkPresent, int categoryPresentId, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -164,7 +183,11 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
-
+        /// <summary>
+        /// Find a present by the PresentId
+        /// </summary>
+        /// <param name="presentId"></param>
+        /// <returns></returns>
         public Present FindByPresentId(int presentId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -184,8 +207,11 @@ namespace ITI.KDO.DAL
                     .FirstOrDefault();
             }
         }
-
-
+        /// <summary>
+        /// Find a present by the PresentName
+        /// </summary>
+        /// <param name="presentName"></param>
+        /// <returns></returns>
         public Present FindByName(string presentName)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))

@@ -14,8 +14,7 @@ using Microsoft.AspNetCore.Http.Authentication;
 
 namespace ITI.KDO.WebApp.Controllers
 {
-    //controller chứa các action method có tác dụng xác thực người dùng như Login, Register, ForgotPassword,...
-    //controller chứa các action method có tác dụng quản lý user (khi user đã login vào web) như ChangePassword, SetPassword, ...
+   
     public class AccountController : Controller
     {
         readonly UserServices _userService;
@@ -150,8 +149,7 @@ namespace ITI.KDO.WebApp.Controllers
             return View();
         }
 
-        // Nội dung action này đơn giản chỉ trả về 1 view Registe. 
-        // Nội dung của view Register được tìm thấy file Views/Account/Register.cshtml. 
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

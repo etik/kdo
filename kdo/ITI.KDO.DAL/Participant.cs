@@ -4,13 +4,12 @@ using System.Text;
 
 namespace ITI.KDO.DAL
 {
-    public class Contact
+    public class Participant
     {
-        public int FriendId { get; set; }
-
         public int UserId { get; set; }
 
-        public bool Invitation { get; set; }
+        public int EventId { get; set; }
 
+        public bool ParticipantType { get; set; }
     }
 }
