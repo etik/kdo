@@ -62,8 +62,9 @@ import $ from 'jquery'
 import UserApiService from "../services/AuthService";
 import { mapGetters, mapActions } from "vuex";
 import "../directives/requiredProviders";
+import '../directives/bsDropdown';
 //import Vue from 'vue';
-//import Vuex from 'vuex';
+
 
 export default {
   data() {

@@ -1,6 +1,6 @@
 create procedure dbo.sFacebookContactInfoUpdate
 (
-	@FacebookId int not null,
+	@FacebookId int,
     @Email 		nvarchar(64),
     @FirstName 	nvarchar(64),
     @LastName 	nvarchar(64),

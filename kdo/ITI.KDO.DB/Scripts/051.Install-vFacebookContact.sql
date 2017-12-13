@@ -1,14 +1,13 @@
 create view dbo.vFacebookContact
 as
 	select
-		ContactId = c.ContactId,
         UserId = c.UserId,
         FacebookId = c.FacebookId,
-		Email = c.Email,
-		FirstName = c.FirstName,
-		LastName = c.LastName,
-		BirthDate = c.BirthDate,
-		Phone = c.Phone
+		Email = i.Email,
+		FirstName = i.FirstName,
+		LastName = i.LastName,
+		BirthDate = i.BirthDate,
+		Phone = i.Phone
 		
 	from dbo.tFacebookContact c
 		left outer join dbo.tFacebookContactInfo i on i.FacebookId = c.FacebookId

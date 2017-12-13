@@ -9,17 +9,19 @@
                 <button type="submit" class="btn btn-primary">Send friend request</button>
             </form>
             <router-link :to="`contacts`">Contact List</router-link>
+            <router-link :to="`facebookContacts`">Facebook Contact List</router-link>
         </div>
     </div>
 </template>
 
 <script>
+    import Vue from "vue";
     import { mapActions } from 'vuex';
     import AuthService from "../../services/AuthService";
     import UserApiService from "../../services/UserApiService";
     import NotificationApiService from "../../services/NotificationApiService";
     import ContactApiService from "../../services/ContactApiService";
-    import Vue from "vue";
+    
 
 export default {
     data() {
@@ -29,6 +31,7 @@ export default {
             receivePerson: {},
             recipientsEmail: null,
             model:{},
+            listFacebookFriends: {}
         };
     },
 
@@ -42,6 +45,19 @@ export default {
 
         sendEmail(mailType){
             AuthService.sendEmail(mailType);
+        },
+
+        async getFacebookFriends(){
+            try {
+                    this.listFacebookFriends = await FacebookApiService.getFacebookFriends();
+                }
+                catch(error) {
+                // Custom error management here.
+                // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
+                // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
+                // By the way, you can handle errors manually for each component if you need it...
+                }
+            
         },
 
         async onSubmit(e){

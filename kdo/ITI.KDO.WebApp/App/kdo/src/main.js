@@ -24,6 +24,7 @@ import EventEdit from './components/event/EventEdit.vue';
 
 import Contact from './components/Contact/Contact.vue';
 import ContactList from './components/Contact/ContactList.vue'
+import FacebookContactList from './components/Contact/FacebookContact.vue';
 
 import NotificationUser from './components/Notification.vue';
 
@@ -89,6 +90,7 @@ const router = new VueRouter({
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
+        { path: '/facebookContacts', component: FacebookContactList, beforeEnter: requireAuth },
 
         { path: '/notification/:id?', component: NotificationUser, beforeEnter: requireAuth },
 

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ITI.KDO.WebApp.Services
@@ -15,7 +16,7 @@ namespace ITI.KDO.WebApp.Services
     {
         public string urlBase = "https://graph.facebook.com/v2.11/";
 
-        public async Task<IEnumerable<FacebookContact>> GetFacebookFriends(string facebookAccessToken)
+        public async Task<IEnumerable<FacebookContact>> GetFacebookFriends(string facebookAccessToken, int userId)
         {
             JObject jsonFile;
             using (HttpClient client = new HttpClient())
@@ -30,8 +31,25 @@ namespace ITI.KDO.WebApp.Services
                 {
                     JToken json = JToken.Load(jsonReader);
                     jsonFile = json[json["friends"]].Value<JObject>();
-                    JToken datas = jsonFile.SelectToken("data");
                 }
+                string[] id = jsonFile["data"].Select(m => (string)m.SelectToken("id")).ToArray();
+                string[] firstName = jsonFile["data"].Select(m => (string)m.SelectToken("id")).ToArray();
+                string[] lastName = jsonFile["data"].Select(m => (string)m.SelectToken("id")).ToArray();
+
+                List<FacebookContact> listFacebookContact = new List<FacebookContact>();
+                for(int i = 0; i < id.Length; i++)
+                {
+                    FacebookContact facebookContact = new FacebookContact();
+                    facebookContact.FacebookId = Int32.Parse(id[i]);
+                    facebookContact.FirstName = firstName[i];
+                    facebookContact.LastName = lastName[i];
+                    facebookContact.UserId = userId;
+                    facebookContact.Email = "N";
+                    facebookContact.Phone = "0123456789";
+                    facebookContact.BirthDate = DateTime.UtcNow.AddDays(new Random().Next(90));
+                    listFacebookContact.Add(facebookContact);
+                }
+                return listFacebookContact;
             }
         }
     }

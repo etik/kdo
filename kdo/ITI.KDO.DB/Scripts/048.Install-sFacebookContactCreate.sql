@@ -1,7 +1,7 @@
 create proc dbo.sFacebookContactCreate
 (
-	@UserId int not null,
-    @FacebookId int not null,
+	@UserId int,
+    @FacebookId int,
 	@Email nvarchar(128),
 	@FirstName nvarchar(128),
 	@LastName nvarchar(128),
