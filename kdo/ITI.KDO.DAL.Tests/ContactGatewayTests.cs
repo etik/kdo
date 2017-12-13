@@ -41,7 +41,7 @@ namespace ITI.KDO.DAL.Tests
             }
 
             {
-                ContactGateway.Delete(userId, friendId);
+                ContactGateway.Delete(contact.ContactId);
                 Assert.That(ContactGateway.FindByIds(userId, friendId), Is.Null);
             }
 

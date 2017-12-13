@@ -14,7 +14,7 @@ namespace ITI.KDO.WebApp.Controllers
 {
     public static class ModelExtensions
     {
-        public static UserViewModel ToUserViewModel( this User @this )
+        public static UserViewModel ToUserViewModel(this User @this)
         {
             return new UserViewModel
             {
@@ -22,7 +22,7 @@ namespace ITI.KDO.WebApp.Controllers
                 FirstName = @this.FirstName,
                 LastName = @this.LastName,
                 Birthdate = @this.Birthdate,
-                Phone = @this.Phone,                
+                Phone = @this.Phone,
                 Photo = @this.Photo
             };
         }
@@ -96,30 +96,19 @@ namespace ITI.KDO.WebApp.Controllers
                 Phone = @this.Phone
             };
         }
+        
+        public static EventViewModel ToEventViewModel(this Event @this)
+        {
+            return new EventViewModel
+            {
+                EventId = @this.EventId,
+                EventName = @this.EventName,
+                Descriptions = @this.Descriptions,
+                Dates = @this.Dates,
+                UserId = @this.UserId
+            };
+        }
     }
 }
 
-        public static PresentViewModel ToPresentViewModel(this Present @this)
-        {
-            return new PresentViewModel
-            {
-                PresentId = @this.PresentId,
-                PresentName = @this.PresentName,
-                Price = @this.Price,
-                LinkPresent = @this.LinkPresent,
-                CategoryPresentId = @this.CategoryPresentId,
-                CategoryName = @this.CategoryName,
-                UserId = @this.UserId
-            };
-        }
-
-        public static EventViewModel ToEventViewModel(this Event @this)
-        {
-            return new EventViewModel
-            {
-                EventId = @this.EventId,
-                EventName = @this.EventName,
-                Descriptions = @this.Descriptions,
-                Dates = @this.Dates,
-                UserId = @this.UserId
-            };
+        

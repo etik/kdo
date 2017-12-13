@@ -107,7 +107,7 @@
         <b-nav vertical class="icon-bar" >
           <b-nav-item href="userProfile" class="row">Profil</b-nav-item>
           <b-nav-item href="events"class="row">Event</b-nav-item>
-          <b-nav-item  href="#" class="row" >Mes contacts</b-nav-item>
+          <b-nav-item href="contact" class="row" >Mes contacts</b-nav-item>
           <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
           <b-nav-item href="presents" class="row">Ma liste de cadeaux</b-nav-item>
         </b-nav>

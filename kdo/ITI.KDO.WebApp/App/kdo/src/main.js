@@ -30,8 +30,6 @@ import FacebookContactList from './components/Contact/FacebookContact.vue';
 import NotificationUser from './components/Notification.vue';
 
 import AppDefault from './components/AppDefault.vue';
-import SideBar from './components/UIComponents/SidebarPlugin';
-
 
 //import Register from './components/Register.vue';
 
@@ -46,7 +44,7 @@ import AuthService from './services/AuthService';
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-Vue.use(SideBar)
+
 /**
  * Filter for routes requiring an authenticated user
  * @param {*} to 

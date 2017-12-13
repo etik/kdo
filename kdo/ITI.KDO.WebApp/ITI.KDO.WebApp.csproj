@@ -54,4 +54,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ITI.KDO.DAL\ITI.KDO.DAL.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/appveyor" /></VisualStudio></ProjectExtensions>
 </Project>
