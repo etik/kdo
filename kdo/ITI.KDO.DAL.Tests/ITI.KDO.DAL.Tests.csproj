@@ -12,4 +12,8 @@
     <PackageReference Include="NUnitLite" Version="3.6.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ITI.KDO.DAL\ITI.KDO.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

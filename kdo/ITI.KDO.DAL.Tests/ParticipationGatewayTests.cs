@@ -109,7 +109,7 @@ namespace ITI.KDO.DAL.Tests
 
             {
                 PresentGateway.Delete(presentId);
-                Assert.That(PresentGateway.FindById(presentId), Is.Null);
+                Assert.That(PresentGateway.FindByPresentId(presentId), Is.Null);
             }
 
             {
