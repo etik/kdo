@@ -105,25 +105,25 @@
         </div>
     </section>
     </div>
-   <b-row class="bg-light" style="height: 100%; margin-top: 0px; margin-bottom: 0px;">
-      <b-col md="2" class="bg-light " style="height:100%;">
-      <b-navbar-nav v-if="auth.isConnected">
-        <b-nav vertical class="icon-bar" >
+  <div>
+   <b-row style="height: 100%; margin-top: 15px; margin-bottom: 0px;">
+      <b-col md="2" class="bg-light" style="height:100%;">
+        <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
           <b-nav-item href="userProfile" class="row">Profil</b-nav-item>
           <b-nav-item href="events"class="row">Event</b-nav-item>
           <b-nav-item  href="#" class="row" >Mes contacts</b-nav-item>
           <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
           <b-nav-item href="presents" class="row">Ma liste de cadeaux</b-nav-item>
         </b-nav>
-        </b-navbar-nav>
       </b-col>
 
-      <b-col md="8" class="bg-light" style="height:100%;">
+      <b-col md="8" style="height:100%;">
         <router-view class="child"></router-view>
       </b-col>
       <b-col md="2" class="bg-light" style="height:100%;">
       </b-col>
    </b-row>
+  </div>
 
 <div class="footer">
   <p>Footer</p>

@@ -26,7 +26,7 @@
 
                 <tr v-for="i of eventList">
                     <td>{{ i.eventName }}</td>
-                    <td>{{ i.description}}</td>
+                    <td>{{ i.description }}</td>
                     <td>{{ i.date }}</td>
                     <td>
                         <button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
