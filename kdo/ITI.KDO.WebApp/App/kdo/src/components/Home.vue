@@ -243,7 +243,7 @@ color: #bcbcbc;
     .icon-bar a {font-size: 18px;}
 }
 .footer {
-   position: fixed;
+   position:sticky;
    left: 0;
    bottom: 0;
    width: 100%;
