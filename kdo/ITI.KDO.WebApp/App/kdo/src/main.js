@@ -14,6 +14,8 @@ import Home from './components/Home.vue';
 import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
 
+
+import UserProfile from './components/user/UserProfile.vue';
 import UserProfileEdit from './components/user/UserProfileEdit.vue';
 
 import PresentList from './components/present/PresentList.vue';
@@ -77,8 +79,10 @@ const router = new VueRouter({
     mode: 'history',
     base: '/Home',
     routes: [
+        { path: '/login', component: Login },
         { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
+        { path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
         { path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
 
         { path: '/appDefault', component: AppDefault },

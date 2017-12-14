@@ -235,7 +235,7 @@ namespace ITI.KDO.DAL
         /// <param name="phone"></param>
         /// <param name="photo"></param>
         /// <returns></returns>
-        public int Create(string firstName, string lastName, DateTime birthDate, string email, string phone, string photo)
+        public int Create(string firstName, string lastName, DateTime birthDate, string email)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -244,8 +244,6 @@ namespace ITI.KDO.DAL
                 dynamicParameters.Add("@LastName", lastName, DbType.String);
                 dynamicParameters.Add("@Email", email, DbType.String);
                 dynamicParameters.Add("@BirthDate", birthDate, DbType.DateTime2);
-                dynamicParameters.Add("@Phone", phone, DbType.String);
-                dynamicParameters.Add("@Photo", photo, DbType.String);
                 dynamicParameters.Add("@Id", DbType.Int32, direction: ParameterDirection.ReturnValue);
 
                 con.Execute(

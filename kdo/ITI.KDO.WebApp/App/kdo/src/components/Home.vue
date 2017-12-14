@@ -86,18 +86,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>About</h2>
+                    <h2>Do you want a gift as you prefer ?</h2>
                     <hr class="star-light">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+                    <p>Start to add your list of gift on your account.</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+                    <p>Create an event where you add your friends and your gift from your list.</p>
+                </div>
+                 <div class="col-lg-4">
+                    <p>Your friends will dicuss and decide for buying your gift.</p>
                 </div>
             </div>
+            
         </div>
     </section>
     </div>
@@ -209,10 +213,10 @@ export default {
 }
 
 header {
-  background: url(https://cdn01.vulcanpost.com/wp-uploads/2015/12/Screen-Shot-2015-12-10-at-12.27.01-pm.png) repeat;
+  background-image: url(../assets/noel.jpg);
   width: 100%;
   background-size: 100%;
-  height:600px;
+  height:400px;
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
@@ -240,7 +244,7 @@ color: #bcbcbc;
     .icon-bar a {font-size: 18px;}
 }
 .footer {
-   position: fixed;
+   position:sticky;
    left: 0;
    bottom: 0;
    width: 100%;

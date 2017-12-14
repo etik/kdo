@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ITI.KDO.WebApp.Models.ParticipantViewModels;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -108,7 +109,27 @@ namespace ITI.KDO.WebApp.Controllers
                 UserId = @this.UserId
             };
         }
+
+        public static ParticipantViewModel ToParticipantViewModel(this Participant @this)
+        {
+            return new ParticipantViewModel
+            {
+                UserId = @this.UserId,
+                EventId = @this.EventId,
+                ParticipantType = @this.ParticipantType
+            };
+        }
+
+        public static CategoryPresentViewModel ToCategoryPresentViewModel(this CategoryPresent @this)
+        {
+            return new CategoryPresentViewModel
+            {
+                CategoryPresentId = @this.CategoryPresentId,
+                CategoryName = @this.CategoryName,
+                Link = @this.Link
+            };
+        }
     }
 }
 
-        
+        

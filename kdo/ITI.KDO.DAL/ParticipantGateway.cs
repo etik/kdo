@@ -40,13 +40,12 @@ namespace ITI.KDO.DAL
             }
         }
 
-        /// <summary>
+        public IEnumerable<Participant> FindById(int userId, int eventId)
         /// Find a participant with the userId and eventId
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
         /// <returns></returns>
-        public Participant FindById(int userId, int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -55,9 +54,8 @@ namespace ITI.KDO.DAL
                              p.EventId,
                              p.ParticipantType    
                   from dbo.vParticipant p
-                    where p.UserId = @UserId and p.EventId = @EventId",
-                    new { UserId = userId, EventId = eventId })
-                    .FirstOrDefault();
+                    where p.EventId = @EventId",
+                    new { EventId = eventId });
             }
         }
 
@@ -76,5 +74,6 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
+
     }
 }

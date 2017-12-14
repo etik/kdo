@@ -25,14 +25,6 @@ namespace ITI.KDO.WebApp.Models.AccountViewModels
         [Display(Name = "Birthdate")]
         public DateTime Birthdate { get; set; }
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [Display(Name = "Phone")]
-        public string Phone { get; set; }
-
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [Display(Name = "Photo")]
-        public string Photo { get; set; }
-
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
