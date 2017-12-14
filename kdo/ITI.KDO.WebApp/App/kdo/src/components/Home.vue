@@ -125,10 +125,6 @@
       </b-col>
    </b-row>
 
-<div class="footer">
-  <p>Footer</p>
-
-</div>
   </div>
     </div>
 </template>

@@ -12,6 +12,7 @@ namespace ITI.KDO.WebApp.Models.UserViewModels
 
         public string Email { get; set; }
 
+
         public DateTime Birthdate { get; set; }
 
         public string Phone { get; set; }
