@@ -26,7 +26,7 @@ namespace ITI.KDO.DAL.Tests
             string linkPresent = TestHelpers.RandomLink();
             int categoryPresentId = 0;
 
-            var userId = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
+            var userId = UserGateway.Create(firstName, lastName, birthDate, email);
 
             var presentId = PresentGateway.AddToUser(presentName, price, linkPresent, categoryPresentId, userId);
             Present present = PresentGateway.FindByPresentId(presentId);

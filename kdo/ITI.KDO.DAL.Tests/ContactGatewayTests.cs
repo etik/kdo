@@ -25,8 +25,8 @@ namespace ITI.KDO.DAL.Tests
             string photo = TestHelpers.RandomPhoto();
             bool invitation = false;
 
-            var userId = sut.Create(firstName, lastName, birthDate, email, phone, photo);
-            var friendId = sut.Create(firstName, lastName, birthDate, email, phone, photo);
+            var userId = sut.Create(firstName, lastName, birthDate, email);
+            var friendId = sut.Create(firstName, lastName, birthDate, email);
 
             ContactGateway.CreateContact(userId, friendId, invitation);
 

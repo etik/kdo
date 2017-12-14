@@ -90,7 +90,8 @@ namespace ITI.KDO.DAL
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
                 return con.Query<ContactData>(
-                    @"select c.UserId,
+                    @"select c.ContactId,
+                             c.UserId,
                              c.FriendId,
                              c.Invitation
                       from dbo.vContact c

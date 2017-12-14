@@ -29,7 +29,7 @@ namespace ITI.KDO.DAL.Tests
             string descriptions = TestHelpers.RandomTestName();
             DateTime date = TestHelpers.RandomBirthDate(10);
             
-            var userId = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
+            var userId = UserGateway.Create(firstName, lastName, birthDate, email);
             var eventId = EventGateway.Create(eventName, descriptions, date, userId);
 
             Event events = EventGateway.FindById(eventId);
