@@ -16,7 +16,7 @@ namespace ITI.KDO.WebApp.Services
         }
         public Result <IEnumerable<Participant>>FindById(int userId,int eventId)
         {
-            return Result.Success(Status.Ok, _participantGateway.FindById(userId, eventId));
+            return Result.Success(Status.Ok, _participantGateway.FindParticipantsForEvent(eventId));
         }
     }
 }

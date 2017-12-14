@@ -120,15 +120,15 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
-        public static CategoryPresentViewModel ToCategoryPresentViewModel(this CategoryPresent @this)
-        {
-            return new CategoryPresentViewModel
-            {
-                CategoryPresentId = @this.CategoryPresentId,
-                CategoryName = @this.CategoryName,
-                Link = @this.Link
-            };
-        }
+        //public static CategoryPresentViewModel ToCategoryPresentViewModel(this CategoryPresent @this)
+        //{
+        //    return new CategoryPresentViewModel
+        //    {
+        //        CategoryPresentId = @this.CategoryPresentId,
+        //        CategoryName = @this.CategoryName,
+        //        Link = @this.Link
+        //    };
+        //}
     }
 }
 
