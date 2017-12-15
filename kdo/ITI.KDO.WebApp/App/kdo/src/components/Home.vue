@@ -109,9 +109,9 @@
       <b-row class="bg-light" style="height: 100%; margin-top: 15px; margin-bottom: 0px;">
           <b-col md="2" class="bg-light " style="height:100%;">
             <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
-              <b-nav-item href="userProfile" class="row">Profil</b-nav-item>
-              <b-nav-item href="events"class="row">Event</b-nav-item>
-              <b-nav-item href="contact" class="row" >Mes contacts</b-nav-item>
+              <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>
+              <b-nav-item href="/Home/events"class="row">Event</b-nav-item>
+              <b-nav-item href="/Home/contact" class="row" >Mes contacts</b-nav-item>
               <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
               <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
             </b-nav>
