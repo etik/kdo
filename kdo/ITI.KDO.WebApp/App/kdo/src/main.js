@@ -10,7 +10,6 @@ import store from './vuex/store';
 import VueRouter from 'vue-router';
 
 import App from './components/App.vue';
-import Acc from './components/Acc.vue';
 import Home from './components/Home.vue';
 import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
@@ -26,10 +25,13 @@ import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue'
 
-//import Carousel from './components/carousel.vue'
+import Contact from './components/Contact/Contact.vue';
+import ContactList from './components/Contact/ContactList.vue'
+import FacebookContactList from './components/Contact/FacebookContact.vue';
+
+import NotificationUser from './components/Notification.vue';
+
 import AppDefault from './components/AppDefault.vue';
-
-
 
 //import Register from './components/Register.vue';
 
@@ -79,7 +81,6 @@ const router = new VueRouter({
     routes: [
         { path: '/login', component: Login },
         { path: '/logout', component: Logout, beforeEnter: requireAuth },
-        { path: '/acc', component: Acc, beforeEnter: requireAuth },
 
         { path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
         { path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
@@ -94,6 +95,11 @@ const router = new VueRouter({
         { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
        // { path: '/carousel', component: Carousel, beforeEnter: requireAuth },
 
+        { path: '/contact', component: Contact, beforeEnter: requireAuth },
+        { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
+        { path: '/facebookContacts', component: FacebookContactList, beforeEnter: requireAuth },
+
+        { path: '/notification/:id?', component: NotificationUser, beforeEnter: requireAuth },
 
         { path: '', component: App, beforeEnter: requireAuth },
     ]
@@ -121,6 +127,14 @@ AuthService.registerProjectEndpoint = '/Project/Register';
 
 AuthService.modifyPasswordEndpoint = '/Account/ModifyPassword';
 
+AuthService.emailTypes = {
+    'FriendInvitation': {
+        endpoint: '/Email/FriendInvitation'
+    },
+    'OccasionInvitation': {
+        endpoint: ''
+    }
+}
 
 AuthService.providers = {
     'Base': {

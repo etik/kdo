@@ -6,11 +6,10 @@ namespace ITI.KDO.DAL
 {
     public class Contact
     {
-        public int FriendId { get; set; }
+        public int ContactId { get; set; }
 
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
 
-        public bool Invitation { get; set; }
-
+        public string FriendEmail { get; set; }
     }
 }

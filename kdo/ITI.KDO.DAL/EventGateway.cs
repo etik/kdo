@@ -74,7 +74,7 @@ namespace ITI.KDO.DAL
         /// <param name="descriptions"></param>
         /// <param name="dates"></param>
         /// <param name="userId"></param>
-        public void Update(int eventId, string eventName, string descriptions,DateTime dates)
+        public void Update(int eventId, string eventName, string descriptions, DateTime dates)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -127,6 +127,13 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Update Event
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <param name="descriptions"></param>
+        /// <param name="dates"></param>
+        /// <param name="userId"></param>
         public void Update(string eventName, string descriptions, DateTime dates, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -144,6 +151,11 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Find Event with the eventId
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         public Event FindByEventId(int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -159,8 +171,12 @@ namespace ITI.KDO.DAL
                     .FirstOrDefault();
             }
         }
-
-
+        
+        /// <summary>
+        /// Find Event by this name
+        /// </summary>
+        /// <param name="eventName"></param>
+        /// <returns></returns>
         public Event FindByName(string eventName)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -176,7 +192,5 @@ namespace ITI.KDO.DAL
                     .FirstOrDefault();
             }
         }
-
-
     }
 }

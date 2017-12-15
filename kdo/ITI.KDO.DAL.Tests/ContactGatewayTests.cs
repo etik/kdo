@@ -25,13 +25,14 @@ namespace ITI.KDO.DAL.Tests
             string photo = TestHelpers.RandomPhoto();
             bool invitation = false;
 
-            var userId = sut.Create(firstName, lastName, birthDate, email, phone, photo);
-            var friendId = sut.Create(firstName, lastName, birthDate, email, phone, photo);
+            var userId = sut.Create(firstName, lastName, birthDate, email);
+            var friendId = sut.Create(firstName, lastName, birthDate, email);
 
-            ContactGateway.Add(userId, friendId, invitation);
+            ContactGateway.CreateContact(userId, friendId, invitation);
 
             User user = sut.FindById(userId);
-            Contact contact = ContactGateway.FindByIds(userId, friendId);
+
+            ContactData contact = ContactGateway.FindByIds(userId, friendId);
 
             {
                 Assert.That(contact.UserId, Is.EqualTo(userId));
@@ -40,7 +41,7 @@ namespace ITI.KDO.DAL.Tests
             }
 
             {
-                ContactGateway.Delete(userId, friendId);
+                ContactGateway.Delete(contact.ContactId);
                 Assert.That(ContactGateway.FindByIds(userId, friendId), Is.Null);
             }
 

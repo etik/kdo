@@ -155,21 +155,21 @@ namespace ITI.KDO.WebApp.Services
             return false;
         }
 
-        public bool CreateOrUpdateFacebookUser(string email, string facebookId, string refreshToken)
+        public bool CreateOrUpdateFacebookUser(string email, string facebookId, string accessToken)
         {
             User user = _userGateway.FindByEmail(email);
             if(user == null)
             {
-                _userGateway.CreateFacebookUser(email, facebookId, refreshToken, "N", "N");
+                _userGateway.CreateFacebookUser(email, facebookId, accessToken, "N", "N");
                 return true;
             }
             if(user.FacebookAccessToken == string.Empty)
             {
-                _userGateway.AddFacebookToken(user.UserId, facebookId, refreshToken);
+                _userGateway.AddFacebookToken(user.UserId, facebookId, accessToken);
             }
             else
             {
-                _userGateway.UpdateFacebookToken(user.UserId, user.FacebookId, refreshToken);
+                _userGateway.UpdateFacebookToken(user.UserId, user.FacebookId, accessToken);
             }
             return false;
         }

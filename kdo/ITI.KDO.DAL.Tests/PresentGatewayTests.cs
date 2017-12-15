@@ -1,5 +1,4 @@
-﻿using ITI.KDO.DAL;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 
 namespace ITI.KDO.DAL.Tests
@@ -27,10 +26,10 @@ namespace ITI.KDO.DAL.Tests
             string linkPresent = TestHelpers.RandomLink();
             int categoryPresentId = 0;
 
-            var userId = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
+            var userId = UserGateway.Create(firstName, lastName, birthDate, email);
 
             var presentId = PresentGateway.AddToUser(presentName, price, linkPresent, categoryPresentId, userId);
-            Present present = PresentGateway.FindById(presentId);
+            Present present = PresentGateway.FindByPresentId(presentId);
 
             {
                 Assert.That(present.PresentName, Is.EqualTo(presentName));
@@ -50,7 +49,7 @@ namespace ITI.KDO.DAL.Tests
             }
 
             {
-                present = PresentGateway.FindById(presentId);
+                present = PresentGateway.FindByPresentId(presentId);
                 Assert.That(present.LinkPresent, Is.EqualTo(linkPresent));
                 Assert.That(present.PresentName, Is.EqualTo(presentName));
                 Assert.That(present.Price, Is.EqualTo(price));
@@ -59,7 +58,7 @@ namespace ITI.KDO.DAL.Tests
 
             {
                 PresentGateway.Delete(presentId);
-                Assert.That(PresentGateway.FindById(presentId), Is.Null);   
+                Assert.That(PresentGateway.FindByPresentId(presentId), Is.Null);   
             }
 
             {

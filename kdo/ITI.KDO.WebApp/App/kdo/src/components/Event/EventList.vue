@@ -14,8 +14,6 @@
             <thead>
                 <tr>
                     <th>Event Name</th>
-                    <th>Description</th>
-                    <th>Date</th>
                 </tr>
             </thead>
 
@@ -26,12 +24,15 @@
 
                 <tr v-for="i of eventList">
                     <td>{{ i.eventName }}</td>
-                    <td>{{ i.description }}</td>
-                    <td>{{ i.date }}</td>
-                    <td>
-                        <button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
+
+                    <b-button-group>
+                        <b-button  :to="`events/edit/${i.eventId}`" >Edit</b-button>
+                        <b-button :to="`events/view/${i.eventId}`">View</b-button>
+                        <b-button @click="deleteEvent(i.eventId)">Remove</b-button>
+                    </b-button-group>
+                        <!--button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
                         <router-link :to="`events/edit/${i.eventId}`">Edit event</router-link>
-                        <router-link :to="`events/view/${i.eventId}`">View</router-link>
+                        <router-link :to="`events/view/${i.eventId}`">View</router-link-->
 
                     </td>
                 </tr>

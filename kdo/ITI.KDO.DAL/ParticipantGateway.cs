@@ -17,6 +17,12 @@ namespace ITI.KDO.DAL
             _connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Create Participant
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
+        /// <param name="participantType"></param>
         public void Create(int userId, int eventId, Byte participantType)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -34,7 +40,12 @@ namespace ITI.KDO.DAL
             }
         }
 
-        public IEnumerable<Participant> FindById(int userId, int eventId)
+        /// Find a all participant with the userId for 1 Event
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
+        public IEnumerable<Participant> FindParticipantsForEvent(int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -48,6 +59,32 @@ namespace ITI.KDO.DAL
             }
         }
 
+        /// <summary>
+        /// Find 1 participant For 1 event with the UserId And EventId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
+        public Participant FindById(int userId, int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Participant>(
+                    @"select p.UserId,
+                             p.EventId,
+                             p.ParticipantType    
+                  from dbo.vParticipant p
+                    where p.EventId = @EventId and p.UserId = @UserId",
+                    new { EventId = eventId, UserId = userId})
+                    .FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Delete a participant with userId and eventId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
         public  void Delete(int userId, int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
