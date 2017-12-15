@@ -107,8 +107,9 @@
             <div class="form-group">
                 <label class="">Description</label>
                 <textarea type="text" v-model="event.descriptions" class="form-control" ></textarea>
-            </div-->
+            </div>
 
+            </div-->
             <!--div class="form-group">
                 <label>Participants</label>
                 <b-dropdown right text="Menu">
@@ -123,7 +124,6 @@
                 <label class="required">Date</label>
                 <input type="text" v-model="item.date" class="form-control" required>
             </div-->
-
             <!--div class="form-group row">
             <label for="example-datetime-local-input" class="">Date and time</label>
             <div class="col-10">

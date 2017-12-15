@@ -52,81 +52,79 @@
     </b-navbar>
     
     <header id="page-top" v-if="!auth.isConnected">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <img class="img-responsive" src="http://ironsummitmedia.github.io/startbootstrap-freelancer/img/profile.png" alt="">
-            </div>
-        </div>
-    </div>
-</header>
-<div class="content-wrapper">
-    <section class="primary" id="portfolio"  v-if="!auth.isConnected">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>All ABOUT US</h2>
-                    <hr class="star-primary">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <img src="http://lorempixel.com/360/260/nature/">    
-                </div>
-                <div class="col-sm-4">
-                    <img src="http://lorempixel.com/360/260/animals/">    
-                </div>
-                <div class="col-sm-4">
-                    <img src="http://lorempixel.com/360/260/abstract/">    
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="success" id="about"  v-if="!auth.isConnected">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Do you want a gift as you prefer ?</h2>
-                    <hr class="star-light">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Start to add your list of gift on your account.</p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Create an event where you add your friends and your gift from your list.</p>
-                </div>
-                 <div class="col-lg-4">
-                    <p>Your friends will dicuss and decide for buying your gift.</p>
-                </div>
-            </div>
-            
-        </div>
-    </section>
-    </div>
-   <b-row class="bg-light" style="height: 100%; margin-top: 0px; margin-bottom: 0px;">
-      <b-col md="2" class="bg-light " style="height:100%;">
-      <b-navbar-nav v-if="auth.isConnected">
-        <b-nav vertical class="icon-bar" >
-          <b-nav-item href="userProfile" class="row">Profil</b-nav-item>
-          <b-nav-item href="events"class="row">Event</b-nav-item>
-          <b-nav-item href="contact" class="row" >Mes contacts</b-nav-item>
-          <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
-          <b-nav-item href="presents" class="row">Ma liste de cadeaux</b-nav-item>
-        </b-nav>
-        </b-navbar-nav>
-      </b-col>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <img class="img-responsive" src="http://ironsummitmedia.github.io/startbootstrap-freelancer/img/profile.png" alt="">
+              </div>
+          </div>
+      </div>
+    </header>
 
-      <b-col md="8" class="bg-light" style="height:100%;">
-        <router-view class="child"></router-view>
-      </b-col>
-      <b-col md="2" class="bg-light" style="height:100%;">
-      </b-col>
-   </b-row>
+    <div class="content-wrapper">
+      <section class="primary" id="portfolio"  v-if="!auth.isConnected">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12 text-center">
+                      <h2>All ABOUT US</h2>
+                      <hr class="star-primary">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-4">
+                      <img src="http://lorempixel.com/360/260/nature/">    
+                  </div>
+                  <div class="col-sm-4">
+                      <img src="http://lorempixel.com/360/260/animals/">    
+                  </div>
+                  <div class="col-sm-4">
+                      <img src="http://lorempixel.com/360/260/abstract/">    
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section class="success" id="about"  v-if="!auth.isConnected">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12 text-center">
+                      <h2>Do you want a gift as you prefer ?</h2>
+                      <hr class="star-light">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-4 col-lg-offset-2">
+                      <p>Start to add your list of gift on your account.</p>
+                  </div>
+                  <div class="col-lg-4">
+                      <p>Create an event where you add your friends and your gift from your list.</p>
+                  </div>
+                  <div class="col-lg-4">
+                      <p>Your friends will dicuss and decide for buying your gift.</p>
+                  </div>
+              </div>
+          </div>
+      </section>
+    </div>
+    <div>
+      <b-row class="bg-light" style="height: 100%; margin-top: 15px; margin-bottom: 0px;">
+          <b-col md="2" class="bg-light " style="height:100%;">
+            <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
+              <b-nav-item href="userProfile" class="row">Profil</b-nav-item>
+              <b-nav-item href="events"class="row">Event</b-nav-item>
+              <b-nav-item href="contact" class="row" >Mes contacts</b-nav-item>
+              <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
+              <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
+            </b-nav>
+          </b-col>
 
+          <b-col md="8" style="height:100%;">
+            <router-view class="child"></router-view>
+          </b-col>
+          <b-col md="2" class="bg-light" style="height:100%;">
+          </b-col>
+      </b-row>
+    </div>
   </div>
-    </div>
 </template>
 
 <script>

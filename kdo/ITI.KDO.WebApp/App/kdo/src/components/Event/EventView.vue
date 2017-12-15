@@ -77,6 +77,7 @@
             </thead>
 
             <tbody>
+
                 <tr v-if="participantList.length == 0">
                     <td colspan="7" class="text-center">Participant</td>
                 </tr>
@@ -173,10 +174,7 @@
        async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
       },
-
-  }
-  
-  
+    }
   };
 </script>
 

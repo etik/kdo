@@ -49,6 +49,7 @@ namespace ITI.KDO.WebApp.Services
             }
             _eventGateway.Update(eventId, eventName, descriptions,dates);
             events = _eventGateway.FindById(eventId);
+
             return Result.Success(Status.Ok, events);
         }
         public Result<Event> CreateEvent(int userId, string eventName, string descriptions, DateTime dates)

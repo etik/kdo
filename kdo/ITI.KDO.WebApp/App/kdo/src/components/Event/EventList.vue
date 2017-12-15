@@ -24,6 +24,7 @@
 
                 <tr v-for="i of eventList">
                     <td>{{ i.eventName }}</td>
+
                     <b-button-group>
                         <b-button  :to="`events/edit/${i.eventId}`" >Edit</b-button>
                         <b-button :to="`events/view/${i.eventId}`">View</b-button>
