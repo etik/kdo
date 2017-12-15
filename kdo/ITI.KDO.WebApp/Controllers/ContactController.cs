@@ -62,6 +62,16 @@ namespace ITI.KDO.WebApp.Controllers
             });
         }
 
+        [HttpGet("{userId}/getFriends")]
+        public IActionResult GetFriends(int userId)
+        {
+            Result<IEnumerable<User>> result = _contactServices.GetFriendsByUserId(userId);
+            return this.CreateResult<IEnumerable<User>, IEnumerable<UserViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToUserViewModel());
+            });
+        }
+
         [HttpDelete("{contactId}")]
         public IActionResult DeleteContact(int contactId)
         {

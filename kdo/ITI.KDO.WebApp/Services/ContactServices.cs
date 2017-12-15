@@ -19,8 +19,12 @@ namespace ITI.KDO.WebApp.Services
 
         public Result<IEnumerable<Contact>> GetAllByUserId(int userId)
         {
-            IEnumerable<Contact> listContact = GetContactList(_contactGateway.FindAllByUserId(userId));
-            return Result.Success(Status.Ok, listContact);
+            return Result.Success(Status.Ok, GetContactList(_contactGateway.FindAllByUserId(userId)));
+        }
+
+        public Result<IEnumerable<User>> GetFriendsByUserId(int userId)
+        {
+            return Result.Success(Status.Ok, GetFriendsByUserIdaux(userId));
         }
 
         public Result<ContactData> FindByIds(int userId, int friendId)
@@ -71,6 +75,27 @@ namespace ITI.KDO.WebApp.Services
                 listContact.Add(contact);
             }
             return listContact;
+        }
+
+        public IEnumerable<User> GetFriendsByUserIdaux(int userId)
+        {
+            IEnumerable<ContactData> listContact = _contactGateway.FindAllByUserId(userId);
+            List<User> listFriends = new List<User>();
+            foreach (ContactData couple in listContact)
+            {
+                if (couple.Invitation != false)
+                {
+                    if (couple.FriendId != userId)
+                    {
+                        listFriends.Add(_userGateway.FindById(couple.FriendId));
+                    }
+                    else
+                    {
+                        listFriends.Add(_userGateway.FindById(couple.UserId));
+                    }
+                }
+            }
+            return listFriends;
         }
     }
 }

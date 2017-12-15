@@ -54,12 +54,34 @@
         <b-col md="12">
         <b-card>
             <h5 class="mt-3">Your friends</h5>
-            <b-form-checkbox-group stacked v-model="selected" name="flavour2" :options="options">
-            </b-form-checkbox-group>
-            <b-button variant="success">Success</b-button>
+            <div v-for="i of friendList" :key="i.id">
+            <input type="checkbox" :id="i.id" name="flavour1" :value="i.firstName" v-model="selected" :for="i.id">{{i.firstName}} {{i.lastName}}
+            </div>
+            <b-button @click="addParticipant()" variant="success">Success</b-button>
         </b-card>
         </b-col>
         </div>
+
+        <span>Noms cochés : {{ selected }}</span>
+
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>FirstName</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-if="friendList.length == 0">
+                    <td colspan="7" class="text-center">No Contact found</td>
+                </tr>
+
+                <tr v-for="i of friendList">
+                    <td>{{ i.firstName }}</td>
+                </tr>
+            </tbody>
+        </table>
 
         <div v-if="mode == 'edit'" class="com-sm-4">
         <b-col md="12">
@@ -149,6 +171,8 @@
     import EventApiService from '../../services/EventApiService';
     import UserApiService from "../../services/UserApiService";
     import AuthService from "../../services/AuthService";
+    import ContactApiService from '../../services/ContactApiService';
+
 
   export default {
     data() {
@@ -157,9 +181,11 @@
         event:{},
         mode: null,
         eventId: null,
+        participant:{},
         participantList: [],
+        friendList:[],
+        selected:[],
         errors: [],
-        selected: [], // Must be an array reference!
         options: [
         {text: 'Xavier F', value: 'Xavier F'},
         {text: 'Eric H', value: 'Eric H'},
@@ -176,7 +202,10 @@
         this.mode = this.$route.params.mode;
         this.eventId = this.$route.params.id;
         
+
        await this.refreshParticipantList();
+       await this.refreshfriendList();
+       await this.addParticipant();
 
         if(this.mode == 'edit'){
                 try {
@@ -195,6 +224,12 @@
       ...mapActions(['executeAsyncRequest']),
        async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
+      },
+      async refreshfriendList() {
+        this.friendList = await ContactApiService.getFriendsAsync(this.user.userId);
+      },
+      async addParticipant() {
+          this.selected = await ParticipantApiService.createParticipantAsync();
       },
       async onSubmit(e){
         e.preventDefault();

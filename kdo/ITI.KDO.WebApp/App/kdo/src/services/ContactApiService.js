@@ -11,6 +11,10 @@ class ContactApiService{
         return await getAsync(`${endpoint}/${userId}/getAll`);
     }
 
+    async getFriendsAsync(userId){
+        return await getAsync(`${endpoint}/${userId}/getFriends`);
+    }
+
     async getContactAsync(contactId){
         return await getAsync(`${endpoint}/${contactId}`);
     }
