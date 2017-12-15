@@ -177,7 +177,7 @@
 
 <style lang="less" scoped>
 .row {
-    margin-top:7%;
+    margin-top:0%;
 }
 .progress {
     margin: 0px;

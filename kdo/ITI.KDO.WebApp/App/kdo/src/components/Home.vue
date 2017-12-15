@@ -118,7 +118,9 @@
           </b-col>
 
           <b-col md="8" style="height:100%;">
-            <router-view class="child"></router-view>
+            <b-row>
+              <router-view class="child"></router-view>
+            </b-row>
           </b-col>
           <b-col md="2" class="bg-light" style="height:100%;">
           </b-col>
