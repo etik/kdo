@@ -4,61 +4,57 @@
                 style="text-shadow: 1px 1px 2px #333; margin-top: 20px; margin-bottom: 20px;"
                 controls
                 indicators
-                background="#ababab"
                 :interval="0"
                 img-width="1024"
-                img-height="512"
+                img-height="412"
                 v-model="slide"
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
 
-          <b-carousel-slide v-for="i in nbslide" img-blank img-alt="Blank image" style="background-color: #ababab;">
+          <b-carousel-slide v-for="i in nbslide" img-blank variant="dark" img-alt="Blank image">
             <b-row>
               <b-col md="4">
                 <b-card v-if="eventList[(3 * (i - 1))] != null"
-                      title="bulbizarre"
                       img-src="https://img4.hostingpics.net/pics/518638Image1.png"
                       img-alt="Image"
                       img-top
                       tag="article"
                       style="max-width: 16rem;"
                       class="mb-2">
-                <p class="card-text">
+                <h2 class="card-text">
                   {{eventList[(3 * (i - 1))].eventName}}
-                </p>
-                <b-button href="#" variant="primary">Go</b-button>
+                </h2>
+                <router-link :to="`events/view/${eventList[(3 * (i - 1))].eventId}`">Go</router-link>
                 </b-card>
               </b-col>
 
               <b-col md="4">
                 <b-card v-if="eventList[(3 * (i - 1)) + 1] != null"
-                      title="Salamèche"
                       img-src="https://img4.hostingpics.net/pics/211052Image2.png"
                       img-alt="Image"
                       img-top
                       tag="article"
                       style="max-width: 16rem;"
                       class="mb-2">
-                <p class="card-text">
+                <h2 class="card-text">
                   {{eventList[(3 * (i - 1)) + 1].eventName}}
-                </p>
-                <b-button href="#" variant="primary">Go</b-button>
+                </h2>
+                <router-link :to="`events/view/${eventList[(3 * (i - 1)) + 1].eventId}`">Go</router-link>
                 </b-card>
               </b-col>
 
               <b-col md="4">
                 <b-card v-if="eventList[(3 * (i - 1)) + 2] != null"
-                      title="Carapuce"
                       img-src="https://img4.hostingpics.net/pics/527500Image3.png"
                       img-alt="Image"
                       img-top
                       tag="article"
                       style="max-width: 16rem;"
                       class="mb-2">
-                <p class="card-text">
-                  {{eventList[(3 * (i - 1)) + 2].eventName}}
-                </p>
-                <b-button href="#" variant="primary">Go</b-button>
+                  <h2 class="card-text">
+                    {{eventList[(3 * (i - 1)) + 2].eventName}}
+                  </h2>
+                  <router-link :to="`events/view/${eventList[(3 * (i - 1)) + 2].eventId}`">Go</router-link>
                 </b-card>
               </b-col>
             </b-row>
@@ -128,4 +124,7 @@ export default {
 </script>
 
 <style>
+.img-fluid {
+    background-color: grey;
+}
 </style>
