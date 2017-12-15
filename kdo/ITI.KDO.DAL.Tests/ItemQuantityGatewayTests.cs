@@ -39,9 +39,9 @@ namespace ITI.KDO.DAL.Tests
             int categoryPresentId = 0;
             int quantity = 1;
 
-            var user1 = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
-            var user2 = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
-            var user3 = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
+            var user1 = UserGateway.Create(firstName, lastName, birthDate, email);
+            var user2 = UserGateway.Create(firstName, lastName, birthDate, email);
+            var user3 = UserGateway.Create(firstName, lastName, birthDate, email);
 
             var presentId = PresentGateway.AddToUser(presentName, price, linkPresent, categoryPresentId, user2);
 

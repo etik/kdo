@@ -40,12 +40,12 @@ namespace ITI.KDO.DAL
             }
         }
 
-        public IEnumerable<Participant> FindById(int userId, int eventId)
-        /// Find a participant with the userId and eventId
+        /// Find a all participant with the userId for 1 Event
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
         /// <returns></returns>
+        public IEnumerable<Participant> FindParticipantsForEvent(int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -56,6 +56,27 @@ namespace ITI.KDO.DAL
                   from dbo.vParticipant p
                     where p.EventId = @EventId",
                     new { EventId = eventId });
+            }
+        }
+
+        /// <summary>
+        /// Find 1 participant For 1 event with the UserId And EventId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
+        public Participant FindById(int userId, int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Participant>(
+                    @"select p.UserId,
+                             p.EventId,
+                             p.ParticipantType    
+                  from dbo.vParticipant p
+                    where p.EventId = @EventId and p.UserId = @UserId",
+                    new { EventId = eventId, UserId = userId})
+                    .FirstOrDefault();
             }
         }
 

@@ -29,17 +29,17 @@ namespace ITI.KDO.DAL.Tests
             string descriptions = TestHelpers.RandomTestName();
             DateTime date = TestHelpers.RandomBirthDate(10);
 
-            var user1 = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
-            var user2 = UserGateway.Create(firstName, lastName, birthDate, email, phone, photo);
+            var user1 = UserGateway.Create(firstName, lastName, birthDate, email);
+            var user2 = UserGateway.Create(firstName, lastName, birthDate, email);
 
             var eventId = EventGateway.Create(eventName, descriptions, date, user1);
 
             ParticipantGateway.Create(user2, eventId, 0);
-            
+
             Participant participant = ParticipantGateway.FindById(user2, eventId);
 
             {
-                        
+                                
                 Assert.That(participant.UserId, Is.EqualTo(user2));
                 Assert.That(participant.EventId, Is.EqualTo(eventId));
                 Assert.That(participant.ParticipantType, Is.EqualTo(false));
