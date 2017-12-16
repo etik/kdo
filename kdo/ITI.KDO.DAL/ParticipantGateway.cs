@@ -85,7 +85,7 @@ namespace ITI.KDO.DAL
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
-        public  void Delete(int userId, int eventId)
+        public void Delete(int userId, int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {

@@ -33,5 +33,15 @@ namespace ITI.KDO.WebApp.Controllers
                  o.ToViewModel = x => x.Select(s => s.ToParticipantViewModel());
              });
         }
+
+        [HttpPost]
+        public IActionResult CreateParticipant([FromBody] ParticipantViewModel model)
+        {
+            Result<Participant> result = _participantService.CreateParticipant(model.UserId, model.EventId,false);
+            return this.CreateResult<Participant, ParticipantViewModel>(result, o =>
+            {
+                o.ToViewModel = s => s.ToParticipantViewModel();
+            });
+        }
     }
 }

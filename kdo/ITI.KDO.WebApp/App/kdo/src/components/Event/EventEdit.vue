@@ -56,8 +56,9 @@
             <h5 class="mt-3">Your friends</h5>
             <div v-for="i of friendList" :key="i.id">
             <input type="checkbox" :id="i.id" name="flavour1" :value="i.firstName" v-model="selected" :for="i.id">{{i.firstName}} {{i.lastName}}
+            <b-button @click="addParticipant()" variant="success">{{i.firstName}} {{i.lastName}}</b-button>
             </div>
-            <b-button @click="addParticipant()" variant="success">Success</b-button>
+            
         </b-card>
         </b-col>
         </div>
