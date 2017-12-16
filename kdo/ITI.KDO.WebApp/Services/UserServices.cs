@@ -1,5 +1,6 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Models.AccountViewModels;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -155,12 +156,14 @@ namespace ITI.KDO.WebApp.Services
             return false;
         }
 
-        public bool CreateOrUpdateFacebookUser(string email, string facebookId, string accessToken)
+        public bool CreateOrUpdateFacebookUser(string email, string facebookId, string accessToken, JObject userInfo)
         {
             User user = _userGateway.FindByEmail(email);
             if(user == null)
             {
-                _userGateway.CreateFacebookUser(email, facebookId, accessToken, "N", "N");
+                string firstName = userInfo["first_name"].ToString();
+                string lastName = userInfo["last_name"].ToString();
+                _userGateway.CreateFacebookUser(email, facebookId, accessToken, firstName, lastName);
                 return true;
             }
             if(user.FacebookAccessToken == string.Empty)

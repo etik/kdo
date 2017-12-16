@@ -16,6 +16,27 @@ namespace ITI.KDO.WebApp.Services
     {
         public string urlBase = "https://graph.facebook.com/v2.11/";
 
+        public async Task<JObject> GetUserInformation(string facebookAccessToken)
+        {
+            //JObject jsonFile;
+            JObject _json;
+            using (HttpClient client = new HttpClient())
+            {
+                HttpRequestHeaders headers = client.DefaultRequestHeaders;
+                headers.Add("Authorization", string.Format("Bearer {0}", facebookAccessToken));
+                headers.Add("User-Agent", "KDO");
+                HttpResponseMessage response = await client.GetAsync(urlBase + "me?fields=id,first_name,last_name");
+
+                using (TextReader tr = new StreamReader(await response.Content.ReadAsStreamAsync()))
+                using (JsonTextReader jsonReader = new JsonTextReader(tr))
+                {
+                    _json = JObject.Load(jsonReader);
+                }
+                return _json;
+            }
+        }
+
+
         public async Task<IEnumerable<FacebookContact>> GetFacebookFriends(string facebookAccessToken, int userId)
         {
             JObject jsonFile;
