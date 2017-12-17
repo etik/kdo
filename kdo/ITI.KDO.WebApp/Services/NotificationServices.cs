@@ -10,25 +10,50 @@ namespace ITI.KDO.WebApp.Services
     {
         readonly UserGateway _userGateway;
         readonly ContactGateway _contactGateway;
+        readonly ParticipantGateway _participantGateway;
+        readonly EventGateway _eventGateway;
 
-        public NotificationServices(UserGateway userGateway, ContactGateway contactGateway)
+        public NotificationServices(UserGateway userGateway, ContactGateway contactGateway, ParticipantGateway participantGateway, EventGateway eventGateway)
         {
             _userGateway = userGateway;
             _contactGateway = contactGateway;
+            _participantGateway = participantGateway;
+            _eventGateway = eventGateway;
         }
 
-        public Result<IEnumerable<Notification>> GetAllByUserId(int userId)
+        public Result<IEnumerable<ContactNotification>> GetContactNotification(int userId)
         {
-            IEnumerable<Notification> listNotification = GetNotificationList(_contactGateway.FindAllNotificationByUserId(userId));
+            IEnumerable<ContactNotification> listNotification = GetContactNotificationList(_contactGateway.GetContactNotification(userId));
             return Result.Success(Status.Ok, listNotification);
         }
 
-        public IEnumerable<Notification> GetNotificationList(IEnumerable<ContactData> listContactData)
+        public Result<IEnumerable<EventNotification>> GetEventNotification(int userId)
         {
-            List<Notification> listNotification = new List<Notification>();
+            IEnumerable<EventNotification> listNotification = GetEventNotificationList(_participantGateway.GetInviteNotification(userId));
+            return Result.Success(Status.Ok, listNotification);
+        }
+
+        public IEnumerable<EventNotification> GetEventNotificationList(IEnumerable<Participant> listParticipant)
+        {
+            List<EventNotification> listNotification = new List<EventNotification>();
+            foreach (Participant participant in listParticipant)
+            {
+                EventNotification notification = new EventNotification();
+                notification.EventId = participant.EventId;
+                notification.EventName = _eventGateway.FindById(participant.EventId).EventName;
+                notification.EventDate = _eventGateway.FindById(participant.EventId).Dates;
+                notification.Description = _eventGateway.FindById(participant.EventId).Descriptions;
+                listNotification.Add(notification);
+            }
+            return listNotification;
+        }
+
+        public IEnumerable<ContactNotification> GetContactNotificationList(IEnumerable<ContactData> listContactData)
+        {
+            List<ContactNotification> listNotification = new List<ContactNotification>();
             foreach(ContactData contactData in listContactData)
             {
-                Notification notification = new Notification();
+                ContactNotification notification = new ContactNotification();
                 notification.ContactId = contactData.ContactId;
                 notification.SenderEmail = _userGateway.FindById(contactData.UserId).Email;
                 notification.RecipientsEmail = _userGateway.FindById(contactData.FriendId).Email;

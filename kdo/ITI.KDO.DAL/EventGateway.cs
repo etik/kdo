@@ -151,26 +151,7 @@ namespace ITI.KDO.DAL
             }
         }
 
-        /// <summary>
-        /// Find Event with the eventId
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <returns></returns>
-        public Event FindByEventId(int eventId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                return con.Query<Event>(
-                          @"select e.UserId,
-                             e.EventName,
-                             e.Descriptions,
-                             e.Dates
-                      from dbo.vEvent e
-                      where e.EventId = @EventId;",
-                        new { EventId = eventId })
-                    .FirstOrDefault();
-            }
-        }
+        
         
         /// <summary>
         /// Find Event by this name

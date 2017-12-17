@@ -11,5 +11,7 @@ namespace ITI.KDO.DAL
         public int EventId { get; set; }
 
         public bool ParticipantType { get; set; }
+
+        public bool Invitation { get; set; }
     }
 }

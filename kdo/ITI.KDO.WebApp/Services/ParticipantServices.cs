@@ -18,19 +18,45 @@ namespace ITI.KDO.WebApp.Services
             _userGateway = userGateway;
             _eventGateway = eventGateway;
         }
-        public Result <IEnumerable<Participant>>FindById(int userId,int eventId)
+
+        public Result SetEventInvitation(int userId, int eventId)
+        {
+            if (_userGateway.FindById(userId) == null) return Result.Failure(Status.NotFound, "User not found.");
+            if (_eventGateway.FindById(eventId) == null) return Result.Failure(Status.NotFound, "Event not found.");
+            if (_participantGateway.FindByIds(userId, eventId) == null) return Result.Failure(Status.BadRequest, "Event invitation not found.");
+            if (_participantGateway.FindByIds(userId, eventId) != null && _participantGateway.FindByIds(userId, eventId).Invitation == true)
+                return Result.Failure(Status.BadRequest, "Participant existed.");
+
+            _participantGateway.SetEventInvitaion(userId, eventId);
+            return Result.Success(Status.Ok);
+        }
+
+        public Result<IEnumerable<Participant>> GetInviteNotification(int userId)
+        {
+            return Result.Success(Status.Ok, _participantGateway.GetInviteNotification(userId));
+        }
+
+        public Result<IEnumerable<Participant>>FindById(int userId,int eventId)
         {
             return Result.Success(Status.Ok, _participantGateway.FindParticipantsForEvent(eventId));
         }
 
-        public Result<Participant> CreateParticipant(int userId, int eventId, bool participantType)
+        public Result<Participant> CreateParticipant(int userId, int eventId, bool participantType, bool invitation)
         {
             if (_userGateway.FindById(userId) == null) return Result.Failure<Participant>(Status.NotFound, "User not found");
-            if (_eventGateway.FindById(eventId) != null) return Result.Failure<Participant>(Status.BadRequest, "Event existed.");
+            if (_eventGateway.FindById(eventId) == null) return Result.Failure<Participant>(Status.NotFound, "Event not found.");
+            if (_participantGateway.FindByIds(userId, eventId) != null && _participantGateway.FindByIds(userId, eventId).Invitation == true) return Result.Failure<Participant>(Status.BadRequest, "Event existed.");
 
-            _participantGateway.Create(userId, eventId, 0);
-            Participant participant = _participantGateway.FindById(userId, eventId);
+            _participantGateway.Create(userId, eventId, false, false);
+            Participant participant = _participantGateway.FindByIds(userId, eventId);
             return Result.Success(Status.Ok, participant);
+        }
+
+        public Result<int> Delete(int userId, int eventId)
+        {
+            if (_participantGateway.FindByIds(userId, eventId) == null) return Result.Failure<int>(Status.NotFound, "Participant not found.");
+            _participantGateway.Delete(userId, eventId);
+            return Result.Success(Status.Ok, userId);
         }
     }
 }

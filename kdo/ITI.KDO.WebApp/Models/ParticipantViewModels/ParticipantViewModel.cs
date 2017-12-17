@@ -12,5 +12,7 @@ namespace ITI.KDO.WebApp.Models.ParticipantViewModels
         public int EventId { get; set; }
 
         public bool ParticipantType { get; set; }
+
+        public bool Invitation { get; set; }
     }
 }

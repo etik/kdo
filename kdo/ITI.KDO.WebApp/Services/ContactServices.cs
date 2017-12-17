@@ -55,7 +55,7 @@ namespace ITI.KDO.WebApp.Services
         {
             if (_userGateway.FindById(userId) == null) return Result.Failure(Status.NotFound, "User not found.");
             if (_userGateway.FindById(friendId) == null) return Result.Failure(Status.NotFound, "User not found.");
-            if (_contactGateway.FindByIds(userId, friendId) == null) return Result.Failure(Status.BadRequest, "Contact not found.");
+            if (_contactGateway.FindByIds(userId, friendId) == null) return Result.Failure(Status.BadRequest, "Contact invitation not found.");
             if (_contactGateway.FindByIds(userId, friendId) != null && _contactGateway.FindByIds(userId, friendId).Invitation == true)
                 return Result.Failure(Status.BadRequest, "Contact existed.");
 

@@ -19,6 +19,7 @@ namespace ITI.KDO.WebApp.Controllers
         {
             return new UserViewModel
             {
+                UserId = @this.UserId,
                 Email = @this.Email,
                 FirstName = @this.FirstName,
                 LastName = @this.LastName,
@@ -52,13 +53,24 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
-        public static NotificationViewModel ToNotificationViewModel(this Notification @this)
+        public static ContactNotificationViewModel ToContactNotificationViewModel(this ContactNotification @this)
         {
-            return new NotificationViewModel
+            return new ContactNotificationViewModel
             {
                 ContactId = @this.ContactId,
                 RecipientsEmail = @this.RecipientsEmail,
                 SenderEmail = @this.SenderEmail
+            };
+        }
+
+        public static EventNotificationViewModel ToEventNotificationViewModel(this EventNotification @this)
+        {
+            return new EventNotificationViewModel
+            {
+                EventId = @this.EventId,
+                EventName = @this.EventName,
+                EventDate = @this.EventDate,
+                Description = @this.Description
             };
         }
 
@@ -116,7 +128,8 @@ namespace ITI.KDO.WebApp.Controllers
             {
                 UserId = @this.UserId,
                 EventId = @this.EventId,
-                ParticipantType = @this.ParticipantType
+                ParticipantType = @this.ParticipantType,
+                Invitation = @this.Invitation
             };
         }
 

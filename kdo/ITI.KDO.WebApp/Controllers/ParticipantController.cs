@@ -24,7 +24,7 @@ namespace ITI.KDO.WebApp.Controllers
             _participantService = participantService;
         }
 
-        [HttpGet("{userId}/{eventId}/getParticipantByUserId")]
+        [HttpGet("{userId}/{eventId}/getByUserId")]
         public IActionResult GetParticipantList(int userId, int eventId)
         {
             Result<IEnumerable<Participant>> result = _participantService.FindById(userId, eventId);
@@ -37,11 +37,25 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPost]
         public IActionResult CreateParticipant([FromBody] ParticipantViewModel model)
         {
-            Result<Participant> result = _participantService.CreateParticipant(model.UserId, model.EventId,false);
+            Result<Participant> result = _participantService.CreateParticipant(model.UserId, model.EventId, false, false);
             return this.CreateResult<Participant, ParticipantViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToParticipantViewModel();
             });
+        }
+
+        [HttpDelete("{userId}/{eventId}/delete")]
+        public IActionResult DeleteNotification(int userId, int eventId)
+        {
+            Result<int> result = _participantService.Delete(userId, eventId);
+            return this.CreateResult(result);
+        }
+
+        [HttpDelete("{userId}/{eventId}/removeParticipant")]
+        public IActionResult RemoveParticipant(int eventId, int userId)
+        {
+            Result<int> result = _participantService.Delete(userId, eventId);
+            return this.CreateResult(result);
         }
     }
 }
