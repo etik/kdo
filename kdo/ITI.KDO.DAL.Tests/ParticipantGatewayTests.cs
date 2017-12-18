@@ -34,20 +34,30 @@ namespace ITI.KDO.DAL.Tests
 
             var eventId = EventGateway.Create(eventName, descriptions, date, user1);
 
-            ParticipantGateway.Create(user2, eventId, 0);
+            ParticipantGateway.Create(user1, eventId, false, true);
+            ParticipantGateway.Create(user2, eventId, true, false);
 
-            Participant participant = ParticipantGateway.FindById(user2, eventId);
+           
 
             {
-                                
+                Participant participant = ParticipantGateway.FindByIds(user2, eventId);
+
                 Assert.That(participant.UserId, Is.EqualTo(user2));
                 Assert.That(participant.EventId, Is.EqualTo(eventId));
-                Assert.That(participant.ParticipantType, Is.EqualTo(false));
+                Assert.That(participant.ParticipantType, Is.EqualTo(true));
+            }
+
+            {
+                ParticipantGateway.SetEventInvitaion(user2, eventId);
+                Participant participant = ParticipantGateway.FindByIds(user2, eventId);
+                Assert.That(participant.Invitation, Is.EqualTo(true));
             }
 
             {
                 ParticipantGateway.Delete(user2, eventId);
-                Assert.That(ParticipantGateway.FindById(user2, eventId), Is.Null);
+                Assert.That(ParticipantGateway.FindByIds(user2, eventId), Is.Null);
+                ParticipantGateway.Delete(user1, eventId);
+                Assert.That(ParticipantGateway.FindByIds(user1, eventId), Is.Null);
             }
 
             {
