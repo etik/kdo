@@ -40,6 +40,29 @@ namespace ITI.KDO.DAL
         }
 
         /// <summary>
+        /// Get event by userId and eventId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
+        public Event FindByIds(int userId, int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Event>(
+                    @"select e.UserId,
+                             e.EventId,
+                             e.EventName,
+                             e.Descriptions,
+                             e.Dates
+                          from dbo.vEvent e
+                          where e.EventId = @EventId and e.UserId = @UserId",
+                          new { EventId = eventId, UserId = userId })
+                          .FirstOrDefault();
+            }
+        }
+
+        /// <summary>
         /// Add Event to User and return the EventId
         /// </summary>
         /// <param name="eventName"></param>

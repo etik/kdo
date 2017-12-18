@@ -9,15 +9,27 @@ namespace ITI.KDO.WebApp.Services
     public class EventServices
     {
         readonly EventGateway _eventGateway;
+        readonly ParticipantGateway _participantGateway;
 
-        public EventServices(EventGateway eventGateway)
+        public EventServices(EventGateway eventGateway, ParticipantGateway participantGateway)
         {
             _eventGateway = eventGateway;
+            _participantGateway = participantGateway;
         }
 
         public Result<IEnumerable<Event>> GetAllByUserId(int userId)
         {
-            return Result.Success(Status.Ok, _eventGateway.GetAllByUserId(userId));
+            IEnumerable<Event> listEventCreator = _eventGateway.GetAllByUserId(userId);
+            IEnumerable<Event> listEventInvited = GetAllEvents( _participantGateway.FindParticipantsOfUser(userId) );
+            
+            return Result.Success(Status.Ok, listEventCreator.Concat(listEventInvited));
+        }
+
+        public Result<Event> GetByIds(int userId, int eventId)
+        {
+            Event events;
+            if ((events = _eventGateway.FindByIds(userId, eventId)) == null) return Result.Failure<Event>(Status.NotFound, "Event not found.");
+            return Result.Success(Status.Ok, events);
         }
 
         public Result<Event> GetById(int id)
@@ -63,5 +75,14 @@ namespace ITI.KDO.WebApp.Services
 
         bool IsNameValid(string name) => !string.IsNullOrWhiteSpace(name);
 
+        IEnumerable<Event> GetAllEvents(IEnumerable<Participant> listParticipant)
+        {
+            List<Event> listEvent = new List<Event>();
+            foreach(Participant participant in listParticipant)
+            {
+                listEvent.Add(_eventGateway.FindById(participant.EventId));
+            }
+            return listEvent;
+        }
     }
 }

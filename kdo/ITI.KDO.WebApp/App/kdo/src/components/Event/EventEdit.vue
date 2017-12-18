@@ -12,7 +12,7 @@
         <h1 v-if="mode == 'create'">Create a event</h1>
         <h1 v-else>Edit your event</h1>
         <b-form  @submit="onSubmit($event)">
-                    <div class="alert alert-danger" v-if="errors.length > 0">
+                <div class="alert alert-danger" v-if="errors.length > 0">
                 <b>Les champs suivants semblent invalides : </b>
 
                 <ul>

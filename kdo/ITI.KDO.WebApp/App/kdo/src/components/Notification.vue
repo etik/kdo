@@ -127,13 +127,13 @@
                         
                         await NotificationApiService.setEventInvitationAsync(this.eventModel);
                     } catch (error) {
-                        alert('error');
+
                     }
                 }else{
                     try {
                         await ParticipantApiService.deleteParticipantAsync(this.user.userId, eventId);
                     } catch (error) {
-                        alert('error');
+                        
                     }
                 }
                 await this.refreshEventNotificationList();

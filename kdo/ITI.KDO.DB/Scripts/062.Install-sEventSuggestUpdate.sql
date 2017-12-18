@@ -1,4 +1,4 @@
-create procedure dbo.sPresentSuggestUpdate
+create procedure dbo.sEventSuggestUpdate
 (
     @EventId int,
 	@UserId int,
@@ -7,7 +7,7 @@ create procedure dbo.sPresentSuggestUpdate
 )
 as
 begin
-	update dbo.tPresentSuggest
+	update dbo.tEventSuggest
 	set		DateSuggest = @DateSuggest,
 			PresentSuggest = @PresentSuggest
 	where	EventId = @EventId and UserId = @UserId;

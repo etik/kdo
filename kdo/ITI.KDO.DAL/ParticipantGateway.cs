@@ -82,6 +82,27 @@ namespace ITI.KDO.DAL
             }
         }
 
+
+        /// <summary>
+        /// Get all participants of a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<Participant> FindParticipantsOfUser(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Participant>(
+                    @"select p.UserId,
+                             p.EventId,
+                             p.ParticipantType,
+                             p.Invitation
+                  from dbo.vParticipant p
+                    where p.UserId = @UserId and p.Invitation = 1",
+                    new { UserId = userId });
+            }
+        }
+
         /// <summary>
         /// Find participant specific for an event
         /// </summary>
