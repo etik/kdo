@@ -11,12 +11,12 @@ class ContactApiService{
         return await getAsync(`${endpoint}/${userId}/getAll`);
     }
 
-    async getContactAsync(contactId){
-        return await getAsync(`${endpoint}/${contactId}`);
+    async getFriendsAsync(userId){
+        return await getAsync(`${endpoint}/${userId}/getFriends`);
     }
 
-    async setContactInvitation(model){
-        return await postAsync(`${endpoint}/setInvitation`, model);
+    async getContactAsync(contactId){
+        return await getAsync(`${endpoint}/${contactId}`);
     }
 
     async createContactAsync(model){

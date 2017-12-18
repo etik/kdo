@@ -13,7 +13,13 @@
       <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
+                    <th>User Id</th>
+                    <th>Event Id</th>
                     <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Participant Type</th>
+                    <th>Options</th>
                 </tr>
             </thead>
 
@@ -23,13 +29,26 @@
                 </tr>
 
                 <tr v-for="i of eventList">
+                    <td>{{ i.userId }}</td>
+                    <td>{{ i.eventId }}</td>
                     <td>{{ i.eventName }}</td>
-
-                    <b-button-group>
-                        <b-button  :to="`events/edit/${i.eventId}`" >Edit</b-button>
+                    <td>{{ i.descriptions }}</td>
+                    <td>{{ i.dates }}</td>
+                    <td>{{ i.participantType }}</td>
+                    <td>
+                    <b-button-group v-if = "isCreator(i.userId) == true">
+                        <b-button :to="`events/edit/${i.eventId}`">Edit</b-button>
                         <b-button :to="`events/view/${i.eventId}`">View</b-button>
-                        <b-button @click="deleteEvent(i.eventId)">Remove</b-button>
+                        <b-button @click="deleteEvent(i.eventId) ">Remove</b-button>
                     </b-button-group>
+
+                    <b-button-group v-if = "isCreator(i.userId) == false">
+                        <b-button :to="`events/edit/${i.eventId}`">Suggest another date</b-button>
+                        <b-button :to="`events/dateSuggest/${i.eventId}`">View</b-button>
+                        <b-button @click="quitEvent(i.eventId) ">Quit event</b-button>
+                    </b-button-group>
+
+                    <td>
                         <!--button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
                         <router-link :to="`events/edit/${i.eventId}`">Edit event</router-link>
                         <router-link :to="`events/view/${i.eventId}`">View</router-link-->
@@ -66,20 +85,33 @@
     },
 
     methods: {
-      ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
+        ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
-      async refreshList() {
+        async refreshList() {
             this.eventList = await EventApiService.getEventListAsync(this.user.userId);
-      },
-      async deleteEvent(eventId) {
-          try {
-              await EventApiService.deleteEventAsync(eventId);
-              await this.refreshList();
-          }
-          catch(error) {
+        },
+        async deleteEvent(eventId) {
+            try {
+                await EventApiService.deleteEventAsync(eventId);
+                await this.refreshList();
+            }
+            catch(error) {
 
-          }
-      }
+            }
+        },
+
+        isCreator(creatorId){
+            if(this.user.userId == creatorId){
+                return true;
+            }else {
+                return false;
+            }
+        },
+
+        async quitEvent(eventId){
+            await ParticipantApiService.deleteParticipantAsync(this.user.userId, eventId);
+            await this.refreshList();
+        }
   }
   };
 </script>

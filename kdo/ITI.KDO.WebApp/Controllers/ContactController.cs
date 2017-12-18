@@ -42,16 +42,6 @@ namespace ITI.KDO.WebApp.Controllers
             return this.CreateResult(result);
         }
 
-        [HttpPost("setInvitation")]
-        public IActionResult SetContactInvitation([FromBody] NotificationViewModel model)
-        {
-            Result result = _contactServices.SetContactInvitation(
-                _userServices.FindUserByEmail(model.SenderEmail).UserId, 
-                _userServices.FindUserByEmail(model.RecipientsEmail).UserId
-                );
-            return this.CreateResult(result);
-        }
-
         [HttpGet("{userId}/{friendId}")]
         public IActionResult GetContactByIds(int userId, int friendId)
         {
@@ -59,6 +49,16 @@ namespace ITI.KDO.WebApp.Controllers
             return this.CreateResult<ContactData, ContactDataViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToContactDataViewModel();
+            });
+        }
+
+        [HttpGet("{userId}/getFriends")]
+        public IActionResult GetFriends(int userId)
+        {
+            Result<IEnumerable<User>> result = _contactServices.GetFriendsByUserId(userId);
+            return this.CreateResult<IEnumerable<User>, IEnumerable<UserViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToUserViewModel());
             });
         }
 

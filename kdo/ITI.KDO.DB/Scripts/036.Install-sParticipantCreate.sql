@@ -2,12 +2,13 @@ create procedure dbo.sParticipantCreate
 (
     @UserId				int,
 	@EventId			int,
-	@ParticipantType    bit
+	@ParticipantType    bit,
+	@Invitation			bit
 )
 
 as
 begin
-	insert into dbo.tParticipant(UserId, EventId, ParticipantType)
-	values(@UserId, @EventId, @ParticipantType);
+	insert into dbo.tParticipant(UserId, EventId, ParticipantType, Invitation)
+	values(@UserId, @EventId, @ParticipantType, @Invitation);
 	return 0;
 end

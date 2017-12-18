@@ -50,7 +50,8 @@ namespace ITI.KDO.DAL
                 return con.Query<ContactData>(
                     @"select c.ContactId,
                              c.UserId,
-                             c.FriendId
+                             c.FriendId,
+                             c.Invitation
                     from dbo.vContact c
                     where c.Invitation = 1 and
                          (c.UserId = @UserId or c.FriendId = @UserId);", 
@@ -64,7 +65,7 @@ namespace ITI.KDO.DAL
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<ContactData> FindAllNotificationByUserId(int userId)
+        public IEnumerable<ContactData> GetContactNotification(int userId)
         {
             using(SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -121,6 +122,7 @@ namespace ITI.KDO.DAL
             }
         }
 
+
         /// <summary>
         /// Set friend relation between 2 users
         /// </summary>
@@ -135,7 +137,7 @@ namespace ITI.KDO.DAL
                       SET Invitation = 1 
                       WHERE (UserId = @UserId and FriendId = @FriendId) or 
                             (FriendId = @UserId and UserId = @FriendId)",
-                    new { UserId = userId, friendId = friendId });
+                    new { UserId = userId, FriendId = friendId });
             }
         }
         

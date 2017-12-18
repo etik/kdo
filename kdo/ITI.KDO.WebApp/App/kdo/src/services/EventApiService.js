@@ -15,6 +15,10 @@ class EventApiService{
         return await getAsync(`${endpoint}/${eventId}`);
     }
 
+    async GetEventAsync(userId, eventId){
+        return await getAsync(`${endpoint}/${eventId}/${userId}/getEvent`)
+    }
+
     async createEventAsync(model){
         return await postAsync(endpoint, model);
     }

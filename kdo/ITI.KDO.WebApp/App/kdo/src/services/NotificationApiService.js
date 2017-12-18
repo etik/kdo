@@ -6,9 +6,21 @@ class NotificationApiService{
     constructor(){
 
     }
+
+    async setContactInvitationAsync(model){
+        return await postAsync(`${endpoint}/setContactInvitation`, model);
+    }
     
-    async getNotificationListAsync(userId){
-        return await getAsync(`${endpoint}/${userId}/getAll`);
+    async getContactNotificationAsync(userId){
+        return await getAsync(`${endpoint}/${userId}/getContactNotification`);
+    }
+
+    async setEventInvitationAsync(model){
+        return await postAsync(`${endpoint}/setEventInvitation`, model);
+    }
+    
+    async getEventNotificationAsync(userId){
+        return await getAsync(`${endpoint}/${userId}/getEventNotification`);
     }
 }
 

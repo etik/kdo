@@ -1,5 +1,7 @@
 import 'babel-polyfill';
 
+import VueI18n from 'vue-i18n';
+
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import $ from 'jquery';
@@ -23,7 +25,9 @@ import PresentEdit from './components/present/PresentEdit.vue';
 
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
-import EventView from './components/event/EventView.vue'
+import EventView from './components/event/EventView.vue';
+import EventSuggestion from './components/event/EventSuggestion.vue';
+
 
 import Contact from './components/Contact/Contact.vue';
 import ContactList from './components/Contact/ContactList.vue'
@@ -43,10 +47,17 @@ import AppDefault from './components/AppDefault.vue';
 
 import AuthService from './services/AuthService';
 
-
+Vue.use(VueI18n);
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 
+
+import {messages} from 'vue-bootstrap4-calendar';
+
+window.i18n = new VueI18n({
+    locale: 'en',
+    messages
+});
 /**
  * Filter for routes requiring an authenticated user
  * @param {*} to 
@@ -93,7 +104,7 @@ const router = new VueRouter({
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
         { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
-       // { path: '/carousel', component: Carousel, beforeEnter: requireAuth },
+        { path: '/events/dateSuggest/:id?', component: EventSuggestion, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },

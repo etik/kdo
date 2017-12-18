@@ -7,8 +7,12 @@ class ParticipantApiService{
 
     }
 
+    async setEventInvitation(model){
+        return await postAsync(`${endpoint}/setInvitation`, model);
+    }
+
     async getParticipantListAsync(userId, eventId){
-        return await getAsync(`${endpoint}/${userId}/${eventId}/getParticipantByUserId`);
+        return await getAsync(`${endpoint}/${userId}/${eventId}/getByUserId`);
     }
 
     async getParticipantAsync(userId){
@@ -23,8 +27,8 @@ class ParticipantApiService{
         return await putAsync(`${endpoint}/${model.userId}`, model)
     }
 
-    async deleteEventAsync(userId) {
-        return await deleteAsync(`${endpoint}/${userId}`);
+    async deleteParticipantAsync(userId, eventId){
+        return await deleteAsync(`${endpoint}/${userId}/${eventId}/delete`);
     }
 }
 

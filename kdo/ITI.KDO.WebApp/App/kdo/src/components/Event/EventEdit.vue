@@ -1,6 +1,6 @@
 <template>
     <div class="container">    
-      <div class="page-header">
+        <div class="page-header">
             <h1 v-if="mode == 'create'">Create a event</h1>
             <h1 v-else>Edit your event</h1>
         </div>
@@ -12,7 +12,7 @@
         <h1 v-if="mode == 'create'">Create a event</h1>
         <h1 v-else>Edit your event</h1>
         <b-form  @submit="onSubmit($event)">
-                    <div class="alert alert-danger" v-if="errors.length > 0">
+                <div class="alert alert-danger" v-if="errors.length > 0">
                 <b>Les champs suivants semblent invalides : </b>
 
                 <ul>
@@ -29,7 +29,7 @@
 
             <b-col md="12">
             <b-form-group label="Description:">
-                <b-form-textarea asp-for="Description" class="form-control" v-model="event.Description">
+                <b-form-textarea asp-for="Description" class="form-control" v-model="event.descriptions">
                 <span asp-validation-for="Description"></span>
                 </b-form-textarea>
             </b-form-group>
@@ -37,7 +37,7 @@
 
             <b-col md="12">
             <b-form-group label="Date">
-                <b-form-input type="date" asp-for="Date" class="form-control" v-model="event.date">
+                <b-form-input type="date" asp-for="Date" class="form-control" v-model="event.dates">
                 <span asp-validation-for="Date"></span>
                 </b-form-input>
             </b-form-group>
@@ -50,16 +50,37 @@
         </b-card>
         </div>
 
-        <div class="com-sm-4">
+        <div v-if="mode == 'edit'" class="com-sm-4" >
         <b-col md="12">
         <b-card>
             <h5 class="mt-3">Your friends</h5>
-            <b-form-checkbox-group stacked v-model="selected" name="flavour2" :options="options">
-            </b-form-checkbox-group>
-            <b-button variant="success">Success</b-button>
+            <div v-for="i of friendList" :key="i.id">
+                <div>
+                    <td>{{ i.firstName }} {{ i.lastName }} {{ i.userId }}</td>
+                    <td><b-button @click="addParticipant(i.userId, i)" variant="success">Add</b-button></td>
+                </div>
+            </div>
         </b-card>
         </b-col>
         </div>
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>FirstName</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-if="friendList.length == 0">
+                    <td colspan="7" class="text-center">No Contact found</td>
+                </tr>
+
+                <tr v-for="i of friendList">
+                    <td>{{ i.firstName }}</td>
+                </tr>
+            </tbody>
+        </table>
 
         <div v-if="mode == 'edit'" class="com-sm-4">
         <b-col md="12">
@@ -140,6 +161,8 @@
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
         </form>
     </div-->
+
+
     </div>
 </template>
 
@@ -149,6 +172,8 @@
     import EventApiService from '../../services/EventApiService';
     import UserApiService from "../../services/UserApiService";
     import AuthService from "../../services/AuthService";
+    import ContactApiService from '../../services/ContactApiService';
+
 
   export default {
     data() {
@@ -157,9 +182,11 @@
         event:{},
         mode: null,
         eventId: null,
+        participant:{},
         participantList: [],
+        friendList:[],
+        selected:[],
         errors: [],
-        selected: [], // Must be an array reference!
         options: [
         {text: 'Xavier F', value: 'Xavier F'},
         {text: 'Eric H', value: 'Eric H'},
@@ -176,7 +203,8 @@
         this.mode = this.$route.params.mode;
         this.eventId = this.$route.params.id;
         
-       await this.refreshParticipantList();
+        await this.refreshParticipantList();
+        await this.refreshfriendList();
 
         if(this.mode == 'edit'){
                 try {
@@ -192,44 +220,65 @@
     },
 
     methods: {
-      ...mapActions(['executeAsyncRequest']),
-       async refreshParticipantList(){
+
+        ...mapActions(['executeAsyncRequest']),
+
+        async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
-      },
-      async onSubmit(e){
-        e.preventDefault();
+        },
 
-        var errors = [];
+        async addParticipant(userId, element){
+            var participant = {};
+            participant.eventId = this.eventId;
+            participant.userId = userId;
+            participant.participantType = false;
+            participant.invitation = false;
 
-        if(!this.event.eventName) errors.push("Event Name");
-        //if(!this.event.participants) errors.push("Participants");
-        //if(!this.event.date) errors.push("Date");
-        //if(!this.event.friendsId) errors.push("friends Id");
+            await ParticipantApiService.createParticipantAsync(participant);
+            this.removeElement(this.friendList, element);
+        },
 
-        this.errors = errors;
+        async refreshfriendList() {
+            this.friendList = await ContactApiService.getFriendsAsync(this.user.userId);
+        },
+        async inviteParticipant() {
+            this.selected = await ParticipantApiService.createParticipantAsync();
+        },
+        async onSubmit(e){
+            e.preventDefault();
 
-        if(errors.length == 0) {
-          try {
-              if(this.mode == 'create') {
-                  this.event.userId = this.user.userId;
-                  await this.executeAsyncRequest(() => EventApiService.createEventAsync(this.event));
-              }
-              else {
-                  await this.executeAsyncRequest(() => EventApiService.updateEventAsync(this.event)); 
-              }
+            var errors = [];
 
-              this.$router.replace('/events');
-          }
-          catch(error) {
-              // Custom error management here.
-              // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
-              // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
-              // By the way, you can handle errors manually for each component if you need it...
-          }
-      }
-      }
+            if(!this.event.eventName) errors.push("Event Name");
+
+            this.errors = errors;
+
+            if(errors.length == 0) {
+                try {
+                    if(this.mode == 'create') {
+                        this.event.userId = this.user.userId;
+                        await this.executeAsyncRequest(() => EventApiService.createEventAsync(this.event));
+                    }
+                    else {
+                        await this.executeAsyncRequest(() => EventApiService.updateEventAsync(this.event)); 
+                    }
+                    this.$router.replace('/events');
+                }
+                catch(error) {
+                // Custom error management here.
+                // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
+                // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
+                // By the way, you can handle errors manually for each component if you need it...
+                }
+            }
+        },
+
+        removeElement(list, i){
+            list.splice(list.indexOf(i), 1);
+            console.log(list);
+        }
     }
-  };
+};
 </script>
 
 <style lang="less">

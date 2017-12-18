@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ITI.KDO.DAL
+namespace ITI.KDO.WebApp.Models.NotificationViewModels
 {
-    public class Notification
+    public class ContactNotificationViewModel
     {
         public int ContactId { get; set; }
 
