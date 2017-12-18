@@ -55,13 +55,13 @@ namespace ITI.KDO.WebApp
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<UserServices>();
             services.AddSingleton<TokenService>();
-            services.AddSingleton<FacebookServices>();
             services.AddSingleton<PresentServices>();
             services.AddSingleton<ContactServices>();
             services.AddSingleton<ParticipantServices>();
             services.AddSingleton<NotificationServices>();
             services.AddSingleton<EventServices>();
             services.AddSingleton<CategoryPresentServices>();
+            services.AddSingleton<FacebookServices>();
             services.AddSingleton<FacebookClient>();
         }
 
@@ -120,7 +120,10 @@ namespace ITI.KDO.WebApp
 
             //Facebook Login OAuth
             ExternalAuthenticationEvents facebookAuthenticationEvents = new ExternalAuthenticationEvents(
-                new FacebookExternalAuthenticationManager(app.ApplicationServices.GetRequiredService<UserServices>()));
+                new FacebookExternalAuthenticationManager(
+                    app.ApplicationServices.GetRequiredService<UserServices>(), 
+                    app.ApplicationServices.GetRequiredService<FacebookServices>())
+                    );
 
             app.UseFacebookAuthentication(c =>
             {

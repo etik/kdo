@@ -1,4 +1,5 @@
 ﻿using ITI.KDO.DAL;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -19,6 +20,11 @@ namespace ITI.KDO.WebApp.Services
             _facebookClient = facebookClient;
             _userGateway = userGateway;
             _facebookContactGateway = facebookContactGateway;
+        }
+
+        public async Task<JObject> GetFacebookInformation(string accessToken)
+        {
+            return await _facebookClient.GetUserInformation(accessToken);
         }
 
         public async Task<Result<IEnumerable<FacebookContact>>> GetFacebookContacts(int userId)
