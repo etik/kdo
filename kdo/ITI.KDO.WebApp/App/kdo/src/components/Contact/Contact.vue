@@ -3,10 +3,10 @@
         <b-card-group deck v-for="i in nbline" class="mb-2">
             <b-card v-for="j in 6" v-if="contactList[j - 1] != null" cols="2"
                     text-variant="black"
-                    :header="contactList[j - 1].firstName"
+                    :header="contactList[j - 1].firstName + ' ' + contactList[j - 1].lastName"
                     class="text-center"
                     style="max-width: 128px;">
-                <p class="card-text">{{contactList[j-1]}}</p>
+                <p class="card-text">image</p>
             </b-card>
         </b-card-group>
 

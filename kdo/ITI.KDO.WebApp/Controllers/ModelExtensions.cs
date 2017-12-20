@@ -3,6 +3,7 @@ using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
 using ITI.KDO.WebApp.Models.EmailViewModels;
 using ITI.KDO.WebApp.Models.NotificationViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
+using ITI.KDO.WebApp.Models.QuantityViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using ITI.KDO.WebApp.Models.EventViewModels;
 using System;
@@ -40,6 +41,19 @@ namespace ITI.KDO.WebApp.Controllers
                 CategoryPresentId = @this.CategoryPresentId,
                 CategoryName = @this.CategoryName,
                 UserId = @this.UserId
+            };
+        }
+
+        public static QuantityViewModel ToQuantityViewModel(this ItemQuantity @this)
+        {
+            return new QuantityViewModel
+            {
+                QuantityId = @this.QuantityId,
+                Quantity = @this.Quantity,
+                RecipientId = @this.RecipientId,
+                NominatorId = @this.NominatorId,
+                EventId = @this.EventId,
+                PresentId = @this.PresentId
             };
         }
 

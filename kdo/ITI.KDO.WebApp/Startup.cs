@@ -56,6 +56,7 @@ namespace ITI.KDO.WebApp
             services.AddSingleton<UserServices>();
             services.AddSingleton<TokenService>();
             services.AddSingleton<PresentServices>();
+            services.AddSingleton<QuantityServices>();
             services.AddSingleton<ContactServices>();
             services.AddSingleton<ParticipantServices>();
             services.AddSingleton<NotificationServices>();
