@@ -13,12 +13,10 @@
       <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Present Name</th>
                     <th>Price</th>
                     <th>Link Present</th>
                     <th>Category Present</th>
-                    <th>User Id</th>
                     <th>Options</th>
                 </tr>
             </thead>
@@ -29,12 +27,10 @@
                 </tr>
 
                 <tr v-for="i of presentList">
-                    <td>{{ i.presentId }}</td>
                     <td>{{ i.presentName }}</td>
                     <td>{{ i.price }}</td>
                     <td>{{ i.linkPresent }}</td>
                     <td>{{ i.categoryName }}</td>
-                    <td>{{ i.userId }}</td>
                     <td>
                         <button @click="deletePresent(i.presentId)"  class="btn btn-primary">Remove</button>
                         <router-link :to="`presents/edit/${i.presentId}`">Edit Present</router-link>

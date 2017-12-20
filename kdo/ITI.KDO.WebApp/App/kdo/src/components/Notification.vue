@@ -5,7 +5,6 @@
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Notification Id</th>
                     <th>From</th>
                     <th>To</th>
                     <th>Options</th>
@@ -18,7 +17,6 @@
                 </tr>
 
                 <tr v-for="i of contactNotificationList">
-                    <td>{{ i.contactId }}</td>
                     <td>{{ i.senderEmail }}</td>
                     <td>{{ i.recipientsEmail }}</td>
                     <td>
@@ -32,7 +30,6 @@
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Event Id</th>
                     <th>Event Name</th>
                     <th>Descriptions</th>
                     <th>Options</th>
@@ -45,7 +42,6 @@
                 </tr>
 
                 <tr v-for="i of eventNotificationList">
-                    <td>{{ i.eventId }}</td>
                     <td>{{ i.eventName }}</td>
                     <td>{{ i.description }}</td>
                     <td>

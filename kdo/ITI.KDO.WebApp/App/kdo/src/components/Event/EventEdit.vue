@@ -64,7 +64,7 @@
         </b-col>
         </div>
 
-        <table class="table table-striped table-hover table-bordered">
+        <!--table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
                     <th>FirstName</th>
@@ -80,88 +80,9 @@
                     <td>{{ i.firstName }}</td>
                 </tr>
             </tbody>
-        </table>
-
-        <div v-if="mode == 'edit'" class="com-sm-4">
-        <b-col md="12">
-            <h1> Déja Participant</h1>
-           <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Participant</th>
-                    <th>userId</th>
-                    <th>eventId</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr v-if="participantList.length == 0">
-                    <td colspan="7" class="text-center">Participant</td>
-                </tr>
-
-                <tr v-for="i of participantList">
-                    <td>{{ i.ParticipantType }}</td>
-                    <td>{{ i.userId }}</td>
-                    <td>{{ i.eventId }}</td>
-                </tr>
-            </tbody>
-        </table>
-        </b-col>
-        </div>
-
+        </table-->
 
         </div>
-        <!--form @submit="onSubmit($event)">
-            <div class="alert alert-danger" v-if="errors.length > 0">
-                <b>Les champs suivants semblent invalides : </b>
-
-                <ul>
-                    <li v-for="e of errors">{{e}}</li>
-                </ul>
-            </div>
-
-            <div class="form-group">
-                <label class="required">Event Name:</label>
-                <input type="text" v-model="event.eventName" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label class="">Description</label>
-                <textarea type="text" v-model="event.descriptions" class="form-control" ></textarea>
-            </div>
-
-            </div-->
-            <!--div class="form-group">
-                <label>Participants</label>
-                <b-dropdown right text="Menu">
-                    <tr v-for="i of eventList">
-                        <b-dropdown-item>Item 1</b-dropdown-item>
-                    </tr>
-                </b-dropdown>
-                <input type="text" v-model="item.friendsId" class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label class="required">Date</label>
-                <input type="text" v-model="item.date" class="form-control" required>
-            </div-->
-            <!--div class="form-group row">
-            <label for="example-datetime-local-input" class="">Date and time</label>
-            <div class="col-10">
-                <input class="form-control" type="datetime-local" v-model="event.date" value="2011-08-19T13:45:00" id="example-datetime-local-input" >
-            </div>
-            </div>
-
-             <div>
-                <h5 class="mt-3">Your friends</h5>
-                <b-form-checkbox-group stacked v-model="selected" name="flavour2" :options="options">
-                </b-form-checkbox-group>
-              </div>
-
-            <button type="submit" class="btn btn-primary">Sauvegarder</button>
-        </form>
-    </div-->
-
 
     </div>
 </template>
