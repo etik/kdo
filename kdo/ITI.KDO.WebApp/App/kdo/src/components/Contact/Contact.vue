@@ -1,5 +1,15 @@
 <template>
     <div>
+        <b-card-group deck v-for="i in nbline" class="mb-2">
+            <b-card v-for="j in 6" v-if="contactList[j - 1] != null" cols="2"
+                    text-variant="black"
+                    :header="contactList[j - 1].firstName"
+                    class="text-center"
+                    style="max-width: 128px;">
+                <p class="card-text">{{contactList[j-1]}}</p>
+            </b-card>
+        </b-card-group>
+
         <div class="text-center" style="padding: 50px">
             <button type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
             <button type="button" @click="sendEmail('FriendInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Send Friends Invitation</button>
@@ -31,17 +41,25 @@ export default {
             receivePerson: {},
             recipientsEmail: null,
             model:{},
-            listFacebookFriends: {}
+            listFacebookFriends: {},
+            contactList: [],
+            nbline: 0
         };
     },
 
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
+        await this.refreshList();
     },
 
     methods: {
         ...mapActions(['executeAsyncRequest']),
+
+        async refreshList() {
+            this.contactList = await ContactApiService.getContactListAsync(this.user.userId);
+            this.nbline = Math.trunc((this.contactList.length + 5) / 6);
+        },
 
         sendEmail(mailType){
             AuthService.sendEmail(mailType);

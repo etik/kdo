@@ -1,5 +1,5 @@
 <template>
-  <b-jumbotron class="bg-light">
+  <div>
         <b-carousel id="friend_carousel"
                 style="text-shadow: 1px 1px 2px #333; margin-top: 20px; margin-bottom: 20px;"
                 controls
@@ -60,7 +60,7 @@
             </b-row>
         </b-carousel-slide>
     </b-carousel>
-  </b-jumbotron>
+  </div>
     
   <!--div class="row">
     <b-col class="com-sm-5" v-for="i of eventList">
