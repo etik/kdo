@@ -9,3 +9,5 @@ create table dbo.tEvent
     constraint PK_tEvent_EventId primary key(EventId),
 	constraint FK_tEvent_UserId foreign key(UserId) references dbo.tUser(UserId),
 );
+insert into dbo.tEvent(EventName, Descriptions, Dates		, UserId)
+				values('N'      , 'N'         , '0001-01-01', 0	    );

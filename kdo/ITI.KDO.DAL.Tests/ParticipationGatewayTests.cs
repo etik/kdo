@@ -50,9 +50,9 @@ namespace ITI.KDO.DAL.Tests
 
             var eventId = EventGateway.Create(eventName, descriptions, date, user1);
 
-            ParticipantGateway.Create(user1, eventId, 1);
-            ParticipantGateway.Create(user2, eventId, 0);
-            ParticipantGateway.Create(user3, eventId, 0);
+            ParticipantGateway.Create(user1, eventId, true, true);
+            ParticipantGateway.Create(user2, eventId, false, true);
+            ParticipantGateway.Create(user3, eventId, false, true);
 
             var quantityId = ItemQuantityGateway.Create(quantity, user1, user2, eventId, presentId);
 
@@ -114,11 +114,11 @@ namespace ITI.KDO.DAL.Tests
 
             {
                 ParticipantGateway.Delete(user2, eventId);
-                Assert.That(ParticipantGateway.FindById(user2, eventId), Is.Null);
+                Assert.That(ParticipantGateway.FindByIds(user2, eventId), Is.Null);
                 ParticipantGateway.Delete(user1, eventId);
-                Assert.That(ParticipantGateway.FindById(user2, eventId), Is.Null);
+                Assert.That(ParticipantGateway.FindByIds(user2, eventId), Is.Null);
                 ParticipantGateway.Delete(user3, eventId);
-                Assert.That(ParticipantGateway.FindById(user3, eventId), Is.Null);
+                Assert.That(ParticipantGateway.FindByIds(user3, eventId), Is.Null);
             }
 
             {

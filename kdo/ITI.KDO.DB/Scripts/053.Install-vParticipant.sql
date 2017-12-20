@@ -3,7 +3,8 @@ as
 	select
 		UserId = p.UserId,
 		EventId = p.EventId,
-		ParticipantType = p.ParticipantType
+		ParticipantType = p.ParticipantType,
+		Invitation = p.Invitation
 
 	from dbo.tParticipant p
 

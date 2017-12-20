@@ -1,13 +1,10 @@
 <template>
     <div class="container">
-      <div class="page-header">
-            <h1>Notifications List</h1>
-      </div>
+        <h1>Contact Notifications List</h1>
 
-      <table class="table table-striped table-hover table-bordered">
+        <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Notification Id</th>
                     <th>From</th>
                     <th>To</th>
                     <th>Options</th>
@@ -15,17 +12,41 @@
             </thead>
 
             <tbody>
-                <tr v-if="notificationList.length == 0">
+                <tr v-if="contactNotificationList.length == 0">
                     <td colspan="7" class="text-center">No notification</td>
                 </tr>
 
-                <tr v-for="i of notificationList">
-                    <td>{{ i.contactId }}</td>
+                <tr v-for="i of contactNotificationList">
                     <td>{{ i.senderEmail }}</td>
                     <td>{{ i.recipientsEmail }}</td>
                     <td>
-                        <button @click="responseInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-primary">Accept</button>
-                        <button @click="responseInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-primary">Decline</button>
+                        <button @click="responseContactInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-primary">Accept</button>
+                        <button @click="responseContactInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-primary">Decline</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Descriptions</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-if="eventNotificationList.length == 0">
+                    <td colspan="7" class="text-center">No notification</td>
+                </tr>
+
+                <tr v-for="i of eventNotificationList">
+                    <td>{{ i.eventName }}</td>
+                    <td>{{ i.description }}</td>
+                    <td>
+                        <button @click="responseEventInvitation('yes', i.eventId)" class="btn btn-primary">Accept</button>
+                        <button @click="responseEventInvitation('no', i.eventId)" class="btn btn-primary">Decline</button>
                     </td>
                 </tr>
             </tbody>
@@ -41,36 +62,44 @@
     import UserApiService from '../services/UserApiService';
     import NotificationApiService from '../services/NotificationApiService';
     import ContactApiService from '../services/ContactApiService';
+    import ParticipantApiService from '../services/ParticipantApiService';
 
     export default {
         data() {
             return {
                 user: {},
-                notificationList: [],
-                model: {}
+                contactNotificationList: [],
+                eventNotificationList: [],
+                contactModel: {},
+                eventModel: {}
             };
         },
 
         async mounted() {
             var userEmail = AuthService.emailUser();
             this.user = await UserApiService.getUserAsync(userEmail);
-            await this.refreshList();
+            await this.refreshContactNotificationList();
+            await this.refreshEventNotificationList();
         },
 
         methods: {
             ...mapActions(['executeAsyncRequest']),
 
-            async refreshList() {
-                this.notificationList = await NotificationApiService.getNotificationListAsync(this.user.userId);
+            async refreshContactNotificationList() {
+                this.contactNotificationList = await NotificationApiService.getContactNotificationAsync(this.user.userId);
             },
 
-            async responseInvitation(response, firstEmail, secondEmail, notificationId){
+            async refreshEventNotificationList(){
+                this.eventNotificationList = await NotificationApiService.getEventNotificationAsync(this.user.userId);
+            },
+
+            async responseContactInvitation(response, firstEmail, secondEmail, notificationId){
                 if(response == 'yes'){
                     try {
-                        this.model.senderEmail = firstEmail;
-                        this.model.recipientsEmail = secondEmail;
-                        
-                        await ContactApiService.setContactInvitation(this.model);
+                        this.contactModel.senderEmail = firstEmail;
+                        this.contactModel.recipientsEmail = secondEmail;
+
+                        await NotificationApiService.setContactInvitationAsync(this.contactModel);
                     } catch (error) {
                         
                     }
@@ -81,7 +110,29 @@
                         
                     }
                 }
-                await this.refreshList();
+                await this.refreshContactNotificationList();
+            },
+
+            async responseEventInvitation(response, eventId){
+                
+                if(response == 'yes'){
+                    try {
+                        var modelEvent = {};
+                        this.eventModel.userId = this.user.userId;
+                        this.eventModel.eventId = eventId;
+                        
+                        await NotificationApiService.setEventInvitationAsync(this.eventModel);
+                    } catch (error) {
+
+                    }
+                }else{
+                    try {
+                        await ParticipantApiService.deleteParticipantAsync(this.user.userId, eventId);
+                    } catch (error) {
+                        
+                    }
+                }
+                await this.refreshEventNotificationList();
             }
         }
     };

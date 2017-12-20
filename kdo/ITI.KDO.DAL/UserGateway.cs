@@ -106,13 +106,13 @@ namespace ITI.KDO.DAL
         /// <param name="refreshToken"></param>
         /// <param name="firstName"></param>
         /// <param name="lastname"></param>
-        public void CreateGoogleUser(string email, string googleId, string refreshToken)
+        public void CreateGoogleUser(string email, string googleId, string refreshToken, string firstName, string lastName)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "dbo.sGoogleUserCreate",
-                    new { Email = email, GoogleId = googleId, RefreshToken = refreshToken, FirstName = 'N', lastname = 'N' },
+                    new { Email = email, GoogleId = googleId, RefreshToken = refreshToken, FirstName = firstName, lastname = lastName },
                     commandType: CommandType.StoredProcedure);
             }
         }

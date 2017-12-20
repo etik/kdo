@@ -61,7 +61,7 @@ namespace ITI.KDO.DAL.Tests
             string googleId = "azertyuiop";
             string refreshToken = "azertyuiop";
 
-            sut.CreateGoogleUser(email, googleId, refreshToken);
+            sut.CreateGoogleUser(email, googleId, refreshToken,firstName,lastName);
             User user = sut.FindByEmail(email);
 
             Assert.That(user.GoogleRefreshToken, Is.EqualTo(refreshToken));

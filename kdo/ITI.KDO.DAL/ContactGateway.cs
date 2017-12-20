@@ -65,7 +65,7 @@ namespace ITI.KDO.DAL
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<ContactData> FindAllNotificationByUserId(int userId)
+        public IEnumerable<ContactData> GetContactNotification(int userId)
         {
             using(SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -137,7 +137,7 @@ namespace ITI.KDO.DAL
                       SET Invitation = 1 
                       WHERE (UserId = @UserId and FriendId = @FriendId) or 
                             (FriendId = @UserId and UserId = @FriendId)",
-                    new { UserId = userId, friendId = friendId });
+                    new { UserId = userId, FriendId = friendId });
             }
         }
         

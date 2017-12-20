@@ -36,7 +36,6 @@ namespace ITI.KDO.DAL
                         UserId = userId,
                         EventId = eventId,
                         AmountUserPrice = amountUserPrice
-
                     },
                     commandType: CommandType.StoredProcedure);
             }

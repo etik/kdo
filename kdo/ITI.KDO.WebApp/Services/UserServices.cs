@@ -1,5 +1,6 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Models.AccountViewModels;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -136,12 +137,18 @@ namespace ITI.KDO.WebApp.Services
             return false;
         }
 
-        public bool CreateOrUpdateGoogleUser(string email, string googleId, string refreshToken)
+        public bool CreateOrUpdateGoogleUser(string email, string googleId, string refreshToken, JObject userInformation)
         {
             User user = _userGateway.FindByEmail(email);
             if (user == null)
             {
-                _userGateway.CreateGoogleUser(email, googleId, refreshToken);
+                _userGateway.CreateGoogleUser(
+                    email, 
+                    googleId, 
+                    refreshToken, 
+                    userInformation["name"]["givenName"].ToString(), 
+                    userInformation["name"]["familyName"].ToString()
+                    );
                 return true;
             }
             if (user.GoogleRefreshToken == string.Empty)
@@ -155,12 +162,12 @@ namespace ITI.KDO.WebApp.Services
             return false;
         }
 
-        public bool CreateOrUpdateFacebookUser(string email, string facebookId, string accessToken)
+        public bool CreateOrUpdateFacebookUser(string email, string facebookId, string accessToken, JObject userInfo)
         {
             User user = _userGateway.FindByEmail(email);
             if(user == null)
             {
-                _userGateway.CreateFacebookUser(email, facebookId, accessToken, "N", "N");
+                _userGateway.CreateFacebookUser(email, facebookId, accessToken, userInfo["first_name"].ToString(), userInfo["last_name"].ToString());
                 return true;
             }
             if(user.FacebookAccessToken == string.Empty)

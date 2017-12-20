@@ -26,6 +26,8 @@ namespace ITI.KDO.WebApp.Controllers
         public IActionResult GetEventList(int userId)
         {
             Result<IEnumerable<Event>> result = _eventService.GetAllByUserId(userId);
+
+
             return this.CreateResult<IEnumerable<Event>, IEnumerable<EventViewModel>>(result, o =>
             {
                 o.ToViewModel = x => x.Select(s => s.ToEventViewModel());
@@ -36,6 +38,16 @@ namespace ITI.KDO.WebApp.Controllers
         public IActionResult GetEventById(int eventId)
         {
             Result<Event> result = _eventService.GetById(eventId);
+            return this.CreateResult<Event, EventViewModel>(result, o =>
+            {
+                o.ToViewModel = s => s.ToEventViewModel();
+            });
+        }
+
+        [HttpGet("{eventId}/{userId}/getEvent")]
+        public IActionResult GetEventByUserIdEventId(int eventId, int userId)
+        {
+            Result<Event> result = _eventService.GetByIds(userId, eventId);
             return this.CreateResult<Event, EventViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToEventViewModel();
