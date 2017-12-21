@@ -88,6 +88,8 @@
         
         await this.refreshList();
         await this.refreshParticipantList();
+        await this.refreshQuantityList();
+        
         console.log(this.participantList);
     },
 

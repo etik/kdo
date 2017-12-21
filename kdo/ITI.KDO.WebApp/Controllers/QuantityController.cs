@@ -32,7 +32,7 @@ namespace ITI.KDO.WebApp.Controllers
             });
         }
 
-        [HttpGet("{eventId}", Name = "GetQuantityByEvent")]
+        [HttpGet("{eventId}/getQuantityByEventId")]
         public IActionResult FindQuantityByEventId(int eventId)
         {
             Result<IEnumerable<ItemQuantity>> result = _quantityService.GetByEventId(eventId);
