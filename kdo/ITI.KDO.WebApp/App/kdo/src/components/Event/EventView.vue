@@ -1,39 +1,62 @@
 <template>
-    <div class="container">
-        <div class="page-header" style="margin-bottom:-64px;">
-                <h1>Events</h1>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <b-card-group>
+    <b-col style="height:100%; margin-top:-64px;" class="bv-example-row">
+        <b-row>
+            <b-col sm="3" class="bordered">
                 <b-img rounded blank width="120" height="150" blank-color="#777" alt="img" class="m-1" />
-                    <div class="col-sm-6">
-                        <b-list-group>
-                        <b-list-group-item>
-                            {{event.eventName}}
-                        </b-list-group-item>
-                        <b-list-group-item>
-                            Date
-                        </b-list-group-item>
-                        </b-list-group>
-                    
-                        <b-button :to="`/events/edit/${eventId}`" variant="primary"> Edit </b-button>
-                    </div>
-                </b-card-group>
-            </div>
-        </div>
 
-        <div class="carou">
-            <b-card
+                <b-list-group>
+                    <b-list-group-item>{{event.eventName}}</b-list-group-item>
+                    <b-list-group-item>Date</b-list-group-item>
+                </b-list-group>
+                <b-button :to="`/events/edit/${eventId}`" variant="primary"> Edit </b-button>
+            </b-col>
+
+            <b-col sm="9" class="bordered">
+                <b-row>
+                    <b-col sm="2">
+                        Present for :
+                    </b-col>
+                    <b-col sm="10">
+                        <b-form-select v-model="selected" :options="participantList" class="mb-3">
+                        </b-form-select>
+                    </b-col>
+                </b-row>
+                <b-row class="bordered">
+                    <b-card
+                            tag="article"
+                            style="max-width: 16rem; height: 256px;"
+                            class="mb-2">
+                        <h2 class="card-text" href="#">
+                            <b-dropdown id="ddown1" text="Add a present" class="m-md-2">
+                                <b-dropdown-item href="#">Create a new present</b-dropdown-item>
+                                <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
+                            </b-dropdown>
+                        </h2>
+                    </b-card>
+                    <b-card v-for="i in quantityList"
+                            tag="article"
+                            style="max-width: 16rem; Sheight: 256px;"
+                            class="mb-2">
+                        <h2 class="card-text" href="#">
+                            {{i.presentId}}
+                        </h2>
+                    </b-card>
+                </b-row>
+            </b-col>
+        </b-row>
+
+        <b-row class="bordered">
+            <b-card v-for="i in participantList"
                     tag="article"
                     style="max-width: 16rem;"
                     class="mb-2">
-            <h2 class="card-text" href="#">
-               oui
-            </h2>
+                <h2 class="card-text" href="#">
+                    {{i.firstname}}
+                    {{i.lastname}}
+                </h2>
             </b-card>
-        </div>
-    </div>
+        </b-row>
+    </b-col>
 </template>
 
 <script>
@@ -42,6 +65,7 @@
     import AuthService from "../../services/AuthService";
     import EventApiService from '../../services/EventApiService';
     import UserApiService from '../../services/UserApiService';
+    import QuantityApiService from '../../services/QuantityApiService';
 
   export default {
     data() {
@@ -49,7 +73,9 @@
             user: {},
             eventId: null,
             event: {},
-            participantList: []
+            participantList: [],
+            quantityList: [],
+            selected: null
         };
     },
 
@@ -57,12 +83,8 @@
         var userEmail = AuthService.emailUser();
         this.eventId = this.$route.params.id;
         this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
-
         
         this.user = await UserApiService.getUserAsync(userEmail);
-
-        console.log(this.user.userId);
-        console.log(this.eventId);
         
         await this.refreshList();
         await this.refreshParticipantList();
@@ -78,6 +100,9 @@
        async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
       },
+      async refreshQuantityList(){
+            this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
+      }
     }
   };
 </script>
@@ -86,11 +111,10 @@
 .row {
     margin-top:10%;
 }
-.carou {
-    width: 100px;
-    //overflow-x: scroll;
-    //background: grey;
-    display: block; 
+
+.bordered {
+    border-style: solid;
+    border-width: 1px;
 }
 
 </style>

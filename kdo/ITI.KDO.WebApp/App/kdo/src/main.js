@@ -26,6 +26,7 @@ import PresentEdit from './components/present/PresentEdit.vue';
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue';
+import EventImportPresent from './components/event/EventImportPresent.vue';
 import EventSuggestion from './components/event/EventSuggestion.vue';
 
 
@@ -36,14 +37,6 @@ import FacebookContactList from './components/Contact/FacebookContact.vue';
 import NotificationUser from './components/Notification.vue';
 
 import AppDefault from './components/AppDefault.vue';
-
-//import Register from './components/Register.vue';
-
-//import User from './components/User/User.vue';
-//import UserModificationMP from './components/User/UserEditPassword.vue';
-//import QuiSommesNous from './components/QuiSommesNous.vue';
-
-//import Simi from './components/Simulateur.vue';
 
 import AuthService from './services/AuthService';
 
@@ -104,6 +97,7 @@ const router = new VueRouter({
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
         { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
+        { path: '/events/importPresent/:id?', component: EventImportPresent, beforeEnter: requireAuth },
         { path: '/events/dateSuggest/:id?', component: EventSuggestion, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },

@@ -26,17 +26,27 @@ namespace ITI.KDO.WebApp.Controllers
         public IActionResult GetQuantityById(int quantityId)
         {
             Result<ItemQuantity> result = _quantityService.GetById(quantityId);
-            return this.CreateResult<ItemQuantity, QuantityViewModel>(result, o =>
+            return this.CreateResult<ItemQuantity, ItemQuantityViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToQuantityViewModel();
             });
         }
 
+        [HttpGet("{eventId}", Name = "GetQuantityByEvent")]
+        public IActionResult FindQuantityByEventId(int eventId)
+        {
+            Result<IEnumerable<ItemQuantity>> result = _quantityService.GetByEventId(eventId);
+            return this.CreateResult<IEnumerable<ItemQuantity>, IEnumerable<ItemQuantityViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToQuantityViewModel());
+            });
+        }
+
         [HttpPost]
-        public IActionResult CreatePresent([FromBody] QuantityViewModel model)
+        public IActionResult CreateQuantity([FromBody] ItemQuantityViewModel model)
         {
             Result<ItemQuantity> result = _quantityService.CreateQuantity(model.QuantityId, model.Quantity, model.RecipientId, model.NominatorId, model.EventId, model.PresentId);
-            return this.CreateResult<ItemQuantity, QuantityViewModel>(result, o =>
+            return this.CreateResult<ItemQuantity, ItemQuantityViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToQuantityViewModel();
                 o.RouteName = "GetQuantity";
@@ -45,17 +55,17 @@ namespace ITI.KDO.WebApp.Controllers
         }
 
         [HttpPut("{quantityId}")]
-        public IActionResult UpdatePresent(int quantityId, [FromBody] QuantityViewModel model)
+        public IActionResult UpdateQuantity(int quantityId, [FromBody] ItemQuantityViewModel model)
         {
             Result<ItemQuantity> result = _quantityService.UpdateQuantity(model.QuantityId, model.Quantity, model.RecipientId, model.NominatorId, model.EventId, model.PresentId);
-            return this.CreateResult<ItemQuantity, QuantityViewModel>(result, o =>
+            return this.CreateResult<ItemQuantity, ItemQuantityViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToQuantityViewModel();
             });
         }
 
         [HttpDelete("{quantityId}")]
-        public IActionResult DeletePresent(int quantityId)
+        public IActionResult DeleteQuantity(int quantityId)
         {
             Result<int> result = _quantityService.Delete(quantityId);
             return this.CreateResult(result);

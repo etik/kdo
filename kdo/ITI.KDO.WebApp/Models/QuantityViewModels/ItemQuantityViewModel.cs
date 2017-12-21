@@ -2,7 +2,7 @@
 
 namespace ITI.KDO.WebApp.Models.QuantityViewModels
 {
-    public class QuantityViewModel
+    public class ItemQuantityViewModel
     {
         public int QuantityId { get; set; }
 

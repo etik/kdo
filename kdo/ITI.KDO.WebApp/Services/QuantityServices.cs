@@ -22,6 +22,13 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, itemquantity);
         }
 
+        public Result<IEnumerable<ItemQuantity>> GetByEventId(int eventId)
+        {
+            IEnumerable<ItemQuantity> itemquantity;
+            if ((itemquantity = _quantityGateway.FindByEventId(eventId)) == null) return Result.Failure<IEnumerable<ItemQuantity>>(Status.NotFound, "ItemQuantity not found.");
+            return Result.Success(Status.Ok, itemquantity);
+        }
+
         public Result<int> Delete(int quantityId)
         {
             if (_quantityGateway.FindById(quantityId) == null) return Result.Failure<int>(Status.NotFound, "Quantity not found.");

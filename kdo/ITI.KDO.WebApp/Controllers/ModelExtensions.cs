@@ -44,9 +44,9 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
-        public static QuantityViewModel ToQuantityViewModel(this ItemQuantity @this)
+        public static ItemQuantityViewModel ToQuantityViewModel(this ItemQuantity @this)
         {
-            return new QuantityViewModel
+            return new ItemQuantityViewModel
             {
                 QuantityId = @this.QuantityId,
                 Quantity = @this.Quantity,
