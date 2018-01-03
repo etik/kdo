@@ -26,7 +26,7 @@ import PresentEdit from './components/present/PresentEdit.vue';
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue';
-import EventSuggestion from './components/event/EventSuggestion.vue';
+import EventSuggestion from './components/event/calendar/Cal.vue';
 
 
 import Contact from './components/Contact/Contact.vue';
