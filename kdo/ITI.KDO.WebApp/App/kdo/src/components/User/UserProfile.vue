@@ -1,7 +1,7 @@
 <template>
 <div>
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <b-card title=" Your Profile"
        img-src="https://www.walldevil.com/wallpapers/a18/thumb/background-lemons-web-nvstormygetaway-images-profile-naver.jpg"
             img-alt="Image"
@@ -19,7 +19,7 @@
         </p>
     </b-card>
       </div>
-  <div class="col-sm-8">
+  <div class="col-sm-9">
    <b-card title="Edit your Profile">
 <!--form class="form-inline" asp-controller="Account" asp-action="Register" method="post" @submit="onSubmit($event)">
             <div class="col-md-12">
@@ -178,6 +178,7 @@
 <style lang="less" scoped>
 .row {
     margin-top:7%;
+    margin-left:3%;
 }
 .progress {
     margin: 0px;
