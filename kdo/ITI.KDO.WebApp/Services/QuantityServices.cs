@@ -56,6 +56,13 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, itemQuantity);
         }
 
+        public Result<IEnumerable<ItemPresentQuantity>> GetUserPresentEvent(int userId, int eventId)
+        {
+            IEnumerable<ItemPresentQuantity> itempresentquantity;
+            if ((itempresentquantity = _quantityGateway.GetUserPresentEvent(userId, eventId)) == null) return Result.Failure<IEnumerable<ItemPresentQuantity>>(Status.NotFound, "ItemPresentQuantity not found.");
+            return Result.Success(Status.Ok, itempresentquantity);
+        }
+        
         bool IsNameValid(string name) => !string.IsNullOrWhiteSpace(name);
 
         bool IsPriceValid(float price)

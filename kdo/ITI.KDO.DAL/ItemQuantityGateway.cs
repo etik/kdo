@@ -123,11 +123,11 @@ namespace ITI.KDO.DAL
             }
         }
 
-        public IEnumerable<ItemQuantity> GetUserPresentEvent(int userId, int eventId)
+        public IEnumerable<ItemPresentQuantity> GetUserPresentEvent(int userId, int eventId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                return con.Query<ItemQuantity>(
+                return con.Query<ItemPresentQuantity>(
                     @"select PresentId,
                              PresentName,
                              Price,
@@ -141,7 +141,7 @@ namespace ITI.KDO.DAL
                              Invitation,
                              EventId
                       from dbo.vUserPresentEvent
-                      where RecipientId = @UserId and EventId = @EventId;",
+                      where RecipientId = @RecipientId and EventId = @EventId;",
                     new { RecipientId = userId, EventId = eventId });
             }
         }

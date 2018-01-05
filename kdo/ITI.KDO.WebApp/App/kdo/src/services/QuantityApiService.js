@@ -23,8 +23,12 @@ class QuantityApiService{
         return await putAsync(`${endpoint}/${model.quantityId}`, model)
     }
 
-    async deleteQuantityAsync(quantityId) {
+    async deleteQuantityAsync(quantityId){
         return await deleteAsync(`${endpoint}/${quantityId}`);
+    }
+
+    async getQuantityPresentListAsync(userId, eventId){
+        return await getAsync(`${endpoint}/${userId}/${eventId}`);
     }
 }
 

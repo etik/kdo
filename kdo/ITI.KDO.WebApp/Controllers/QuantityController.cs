@@ -70,5 +70,15 @@ namespace ITI.KDO.WebApp.Controllers
             Result<int> result = _quantityService.Delete(quantityId);
             return this.CreateResult(result);
         }
+
+        [HttpGet("{userId}/{eventId}")]
+        public IActionResult GetUserPresentEvent(int userId, int eventId)
+        {
+            Result <IEnumerable<ItemPresentQuantity>> result = _quantityService.GetUserPresentEvent(userId, eventId);
+            return this.CreateResult<IEnumerable<ItemPresentQuantity>, IEnumerable<ItemQuantityPresentViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToQuantityPresentViewModel());
+            });
+        }
     }
 }

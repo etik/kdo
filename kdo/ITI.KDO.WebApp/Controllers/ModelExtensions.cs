@@ -39,7 +39,6 @@ namespace ITI.KDO.WebApp.Controllers
                 Price = @this.Price,
                 LinkPresent = @this.LinkPresent,
                 CategoryPresentId = @this.CategoryPresentId,
-                CategoryName = @this.CategoryName,
                 UserId = @this.UserId
             };
         }
@@ -54,6 +53,24 @@ namespace ITI.KDO.WebApp.Controllers
                 NominatorId = @this.NominatorId,
                 EventId = @this.EventId,
                 PresentId = @this.PresentId
+            };
+        }
+
+        public static ItemQuantityPresentViewModel ToQuantityPresentViewModel(this ItemPresentQuantity @this)
+        {
+            return new ItemQuantityPresentViewModel
+            {
+                QuantityId = @this.QuantityId,
+                Quantity = @this.Quantity,
+                RecipientId = @this.RecipientId,
+                NominatorId = @this.NominatorId,
+                PresentId = @this.PresentId,
+                PresentName = @this.PresentName,
+                LinkPresent = @this.LinkPresent,
+                CategoryPresentId = @this.CategoryPresentId,
+                ParticipantType = @this.ParticipantType,
+                Invitation = @this.Invitation,
+                EventId = @this.EventId,
             };
         }
 

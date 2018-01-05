@@ -31,14 +31,15 @@
                                 <b-dropdown-item href="#">Create a new present</b-dropdown-item>
                                 <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
                             </b-dropdown>
+                            {{quantityPresentList.length}}
                         </h2>
                     </b-card>
-                    <b-card v-for="i in quantityList"
+                    <b-card v-for="i in quantityPresentList"
                             tag="article"
                             style="max-width: 16rem; Sheight: 256px;"
                             class="mb-2">
                         <h2 class="card-text" href="#">
-                            {{getPresent(i.presentId)}}                
+                            {{i.presentName}}              
                         </h2>
                     </b-card>
                 </b-row>
@@ -76,7 +77,8 @@
             event: {},
             participantList: [],
             quantityList: [],
-            selected: null
+            selected: null,
+            quantityPresentList: []
         };
     },
 
@@ -90,25 +92,24 @@
         await this.refreshList();
         await this.refreshParticipantList();
         await this.refreshQuantityList();
+        await this.refreshQuantitPresentyList();
     },
 
     methods: {
-      ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
+        ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
-      async refreshList() {
+        async refreshList() {
             this.event = await EventApiService.getEventAsync(this.eventId);
-      },
-      async refreshParticipantList(){
+        },
+        async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
-      },
-      async refreshQuantityList(){
+        },
+        async refreshQuantityList(){
             this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
-      },
-      async getPresent(id){
-           var present;
-            present = PresentApiService.getPresentAsync(id);
-                return present.presentName;
-      }
+        },
+        async refreshQuantitPresentyList(){
+            this.quantityPresentList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityPresentListAsync(1, this.eventId));
+        }
     }
   };
 </script>
