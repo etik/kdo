@@ -38,7 +38,7 @@
                             style="max-width: 16rem; Sheight: 256px;"
                             class="mb-2">
                         <h2 class="card-text" href="#">
-                            {{i.presentId}}
+                            {{getPresent(i.presentId)}}                
                         </h2>
                     </b-card>
                 </b-row>
@@ -66,6 +66,7 @@
     import EventApiService from '../../services/EventApiService';
     import UserApiService from '../../services/UserApiService';
     import QuantityApiService from '../../services/QuantityApiService';
+    import PresentApiService from '../../services/PresentApiService';
 
   export default {
     data() {
@@ -89,8 +90,6 @@
         await this.refreshList();
         await this.refreshParticipantList();
         await this.refreshQuantityList();
-        
-        console.log(this.participantList);
     },
 
     methods: {
@@ -99,11 +98,16 @@
       async refreshList() {
             this.event = await EventApiService.getEventAsync(this.eventId);
       },
-       async refreshParticipantList(){
+      async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
       },
       async refreshQuantityList(){
             this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
+      },
+      async getPresent(id){
+           var present;
+            present = PresentApiService.getPresentAsync(id);
+                return present.presentName;
       }
     }
   };

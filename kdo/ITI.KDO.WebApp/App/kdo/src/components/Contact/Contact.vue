@@ -3,7 +3,7 @@
         <b-card-group deck v-for="i in nbline" class="mb-2">
             <b-card v-for="j in 6" v-if="contactList[j - 1] != null" cols="2"
                     text-variant="black"
-                    :header="contactList[j - 1].firstName + ' ' + contactList[j - 1].lastName"
+                    :header="contactList[j - 1].firstName + ' ' + contactList[j - 1].lastName + ' ' + j"
                     class="text-center"
                     style="max-width: 128px;">
                 <p class="card-text">image</p>
@@ -59,6 +59,7 @@ export default {
         async refreshList() {
             this.contactList = await ContactApiService.getContactListAsync(this.user.userId);
             this.nbline = Math.trunc((this.contactList.length + 5) / 6);
+            console.log(this.contactList);
         },
 
         sendEmail(mailType){
