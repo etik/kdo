@@ -105,5 +105,28 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
+
+        public IEnumerable<ItemQuantity> GetUserPresentEvent(int userId, int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<ItemQuantity>(
+                    @"select PresentId,
+                             PresentName,
+                             Price,
+                             LinkPresent,
+                             CategoryPresentId,
+                             QuantityId,
+                             Quantity,
+                             RecipientId,
+                             NominatorId,
+                             ParticipantType,
+                             Invitation,
+                             EventId
+                      from dbo.vUserPresentEvent
+                      where RecipientId = @UserId and EventId = @EventId;",
+                    new { RecipientId = userId, EventId = eventId });
+            }
+        }
     }
 }
