@@ -19,6 +19,7 @@ import Logout from './components/Logout.vue';
 
 import UserProfile from './components/user/UserProfile.vue';
 import UserProfileEdit from './components/user/UserProfileEdit.vue';
+import UserProfileDisplay from './components/user/UserProfileDisplay.vue';
 
 import PresentList from './components/present/PresentList.vue';
 import PresentEdit from './components/present/PresentEdit.vue';
@@ -95,6 +96,7 @@ const router = new VueRouter({
 
         { path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
         { path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
+        { path: '/userProfile/display/:email?', component: UserProfileDisplay, beforeEnter: requireAuth },
 
         { path: '/appDefault', component: AppDefault },
 
