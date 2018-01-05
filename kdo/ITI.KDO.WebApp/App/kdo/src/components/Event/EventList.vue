@@ -36,20 +36,31 @@
                         <b-button @click="deleteEvent(i.eventId) ">Remove</b-button>
                     </b-button-group>
 
+                    <b-button v-b-toggle.collapse1 variant="primary" v-if = "isCreator(i.userId) == false">Suggest another date</b-button>
+                    <b-collapse id="collapse1" class="mt-2">
+                                <form @submit="onSubmit($event, i.eventId)">
+                                <div class="form-group">
+                                    <label asp-for="Birthdate">Date : </label>
+                                    <input asp-for="Birthdate" class="form-control" type="date" v-model="eventSuggest.dateSuggest"/>
+                                    <span asp-validation-for="Birthdate"></span>
+                                </div>
+                            <b-form-group label="Description:">
+                                <b-form-textarea asp-for="Description" class="form-control" v-model="eventSuggest.descriptions">
+                                <span asp-validation-for="Description"></span>
+                                </b-form-textarea>
+                            </b-form-group>
+                            <button type="submit" class="btn btn-primary" v-b-modal.modal2 v-b-toggle="'collapse1'">Sauvegarder</button>
+                                <b-modal id="modal2" title="Bootstrap-Vue">
+                                <p class="my-4">Suggest Date sent !</p>
+                                </b-modal>
+                            </form>
+                    </b-collapse>
                     <b-button-group v-if = "isCreator(i.userId) == false">
-                        <b-button :to="`events/edit/${i.eventId}`">Suggest another date</b-button>
                         <b-button :to="`events/dateSuggest/${i.eventId}`">View</b-button>
                         <b-button @click="quitEvent(i.eventId) ">Quit event</b-button>
                     </b-button-group>
-
-                    <td>
-                        <!--button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
-                        <router-link :to="`events/edit/${i.eventId}`">Edit event</router-link>
-                        <router-link :to="`events/view/${i.eventId}`">View</router-link-->
-
                     </td>
                 </tr>
-
             </tbody>
         </table>
     </div>
@@ -66,7 +77,8 @@
     data() {
         return {
             user: {},
-            eventList: []
+            eventList: [],
+            eventSuggest: {}
         };
     },
 
@@ -85,6 +97,7 @@
         },
         async deleteEvent(eventId) {
             try {
+                
                 await EventApiService.deleteEventAsync(eventId);
                 await this.refreshList();
             }
@@ -104,6 +117,22 @@
         async quitEvent(eventId){
             await ParticipantApiService.deleteParticipantAsync(this.user.userId, eventId);
             await this.refreshList();
+        },
+
+        async onSubmit(e, eventId){
+            e.preventDefault();
+
+            try {
+                this.eventSuggest.eventId = eventId;
+                this.eventSuggest.userId = this.user.userId;
+                await EventApiService.createEventSuggestAsync(this.eventSuggest);
+            }
+            catch(error) {
+                // Custom error management here.
+                // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
+                // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
+                // By the way, you can handle errors manually for each component if you need it...
+            }
         }
   }
   };

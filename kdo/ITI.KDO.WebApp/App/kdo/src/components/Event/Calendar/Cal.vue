@@ -1,73 +1,53 @@
 <template>
     <div id="app"
          class="demo">
-        <h1 class="demo-title">Vue Schedule Calendar</h1>
+        <h1 class="demo-title">Calendar</h1>
         <div class="demo-container">
-            <schedule-calendar :originData="data"></schedule-calendar>
+            <scheduleCalendar :originData="eventList"></scheduleCalendar>
         </div>
     </div>
 </template>
 <script>
 import scheduleCalendar from './scheduleCalendar'
+import EventApiService from '../../../services/EventApiService'
+import UserApiService from '../../../services/UserApiService'
+import AuthService from '../../../services/AuthService'
+
 export default {
     name: 'app',
     components: {
         scheduleCalendar
     },
+
     data() {
         return {
-            data: [
+            eventList: [
                 {
                     id: 111,
-                    date: '2018-01-06',
-                    text: 'event1'
+                    date: '2018-01-15',
+                    text: "event1"
                 },
                 {
                     id: 222,
-                    date: '2018-01-16',
-                    text: 'event2'
+                    date: '2018-01-15',
+                    text: "event2"
                 },
-                {
-                    id: 333,
-                    date: '2017-04-03',
-                    text: 'event3'
-                },
-                {
-                    id: 444,
-                    date: '2017-04-03',
-                    text: 'event4'
-                },
-                {
-                    id: 555,
-                    date: '2017-04-03',
-                    text: 'event5'
-                },
-                {
-                    id: 666,
-                    date: '2017-04-09',
-                    text: 'event6'
-                },
-                {
-                    id: 777,
-                    date: '2017-04-09',
-                    text: 'event7'
-                },
-                {
-                    id: 888,
-                    date: '2017-04-09',
-                    text: 'event8'
-                },
-                {
-                    id: 999,
-                    date: '2017-04-09',
-                    text: 'event9'
-                },
-                {
-                    id: 1010,
-                    date: '2017-04-09',
-                    text: 'event10'
-                }
-            ]
+            ],
+            user: {}
+        }
+    },
+
+    async mounted() {
+        var userEmail = AuthService.emailUser();
+        this.user = await UserApiService.getUserAsync(userEmail);
+
+        await this.refreshList();
+    },
+    
+    methods: {
+        async refreshList() {
+            //this.eventList = await EventApiService.getEventSuggestListByUserIdAsync(this.user.userId);
+            //console.log(eventList);
         }
     }
 }

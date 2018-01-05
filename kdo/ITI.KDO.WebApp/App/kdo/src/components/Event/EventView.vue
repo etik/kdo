@@ -146,7 +146,7 @@
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.eventId = this.$route.params.id;
-        this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
+        this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
 
         
         this.user = await UserApiService.getUserAsync(userEmail);
@@ -169,7 +169,7 @@
       ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
       async refreshList() {
-            this.event = await EventApiService.getEventAsync(this.eventId);
+            this.event = await EventApiService.getEventByIdAsync(this.eventId);
       },
        async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);

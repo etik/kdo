@@ -16,7 +16,7 @@
     </header>
 </template>
 <script>
-import { calcPrevMonth, calcNextMonth } from './utils'
+import { calcPrevMonth, calcNextMonth } from './utils';
 
 export default {
     props: {
@@ -27,7 +27,6 @@ export default {
     },
     async mounted(){
         this.months = ["bla", "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "Obtober", "November", "December"];
-        this.refreshMonth(this.month);
     },
 
     computed: {

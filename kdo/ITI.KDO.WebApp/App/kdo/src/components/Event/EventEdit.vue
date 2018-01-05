@@ -131,7 +131,7 @@
                 try {
                     // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
                     // It is useful when we have to know if an error occurred, in order to adapt the user experience.
-                    this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
+                    this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
                 }
                 catch(error) {
                     // So if an exception occurred, we redirect the user to the students list.

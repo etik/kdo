@@ -11,9 +11,9 @@
     </div>
 </template>
 <script>
-import { EventBus } from './utils'
-import scHeader from './scHeader.vue'
-import scBody from './scBody.vue'
+import { EventBus } from './utils';
+import scHeader from './scHeader.vue';
+import scBody from './scBody.vue';
 
 export default {
     name: 'schedule-calendar',

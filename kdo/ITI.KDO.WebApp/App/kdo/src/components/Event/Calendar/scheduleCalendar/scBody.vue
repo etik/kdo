@@ -9,8 +9,8 @@
     </div>
 </template>
 <script>
-import scWeek from './scWeek.vue'
-import scMonth from './scMonth.vue'
+import scWeek from './scWeek.vue';
+import scMonth from './scMonth.vue';
 
 export default {
     components: {

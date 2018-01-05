@@ -9,14 +9,13 @@
             <button type="button"
                     class="schedule-calendar-counter"
                     v-if="details.length > volume"
-                    @click.stop.prevent="expandAll">共 {{details.length}} 项</button>
+                    @click.stop.prevent="expandAll">{{details.length}} events</button>
         </div>
         <div class="schedule-calendar-details"
              :class="{ expanded }"
              :style="detailsPost"
              ref="details">
-            <div v-if="expanded"
-                 class="schedule-calendar-details-hd">{{ dateString }}</div>
+            <div v-if="expanded" class="schedule-calendar-details-hd">Events Info</div>
             <div class="schedule-calendar-details-bd">
                 <scItem v-if="details.length"
                          v-for="item in displayDetails"
@@ -30,8 +29,8 @@
     </div>
 </template>
 <script>
-import { EventBus, isSameDay, format } from './utils'
-import scItem from './scItem.vue'
+import { EventBus, isSameDay, format } from './utils';
+import scItem from './scItem.vue';
 
 export default {
     components: {

@@ -22,15 +22,36 @@ namespace ITI.KDO.WebApp.Controllers
             _eventService = eventService;
         }
 
-        [HttpGet("{userId}/getEventByUserId")]
+        [HttpGet("{userId}/getEventList")]
         public IActionResult GetEventList(int userId)
         {
-            Result<IEnumerable<Event>> result = _eventService.GetAllByUserId(userId);
-
+            Result<IEnumerable<Event>> result = _eventService.GetAllEvents(userId);
 
             return this.CreateResult<IEnumerable<Event>, IEnumerable<EventViewModel>>(result, o =>
             {
                 o.ToViewModel = x => x.Select(s => s.ToEventViewModel());
+            });
+        }
+
+        [HttpGet("{eventId}/{userId}/getEventSuggestList")]
+        public IActionResult GetEventSuggestList(int userId, int eventId)
+        {
+            Result<IEnumerable<EventSuggest>> result = _eventService.GetAllEventsSuggest(userId, eventId);
+
+            return this.CreateResult<IEnumerable<EventSuggest>, IEnumerable<EventSuggestViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToEventSuggestViewModel());
+            });
+        }
+
+        [HttpGet("{userId}/getEventSuggestListByUserId")]
+        public IActionResult GetEventSuggestListByUserId(int userId)
+        {
+            Result<IEnumerable<EventSuggest>> result = _eventService.GetAllEventsSuggestByUserId(userId);
+
+            return this.CreateResult<IEnumerable<EventSuggest>, IEnumerable<EventSuggestViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToEventSuggestViewModel());
             });
         }
 
@@ -45,7 +66,7 @@ namespace ITI.KDO.WebApp.Controllers
         }
 
         [HttpGet("{eventId}/{userId}/getEvent")]
-        public IActionResult GetEventByUserIdEventId(int eventId, int userId)
+        public IActionResult GetEventIds(int eventId, int userId)
         {
             Result<Event> result = _eventService.GetByIds(userId, eventId);
             return this.CreateResult<Event, EventViewModel>(result, o =>
@@ -54,7 +75,7 @@ namespace ITI.KDO.WebApp.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("{createEvent}")]
         public IActionResult CreateEvent([FromBody] EventViewModel model)
         {
             Result<Event> result = _eventService.CreateEvent(model.UserId, model.EventName, model.Descriptions, model.Dates);
@@ -81,6 +102,28 @@ namespace ITI.KDO.WebApp.Controllers
         {
             Result<int> result = _eventService.Delete(eventId);
             return this.CreateResult(result);
+        }
+
+        [HttpPost("createEventSuggest")]
+        public IActionResult CreateSuggestEvent([FromBody] EventSuggestViewModel model)
+        {
+            Result<EventSuggest> result = _eventService.CreateEventSuggest(model.EventId, model.UserId, model.DateSuggest, model.Descriptions);
+            return this.CreateResult<EventSuggest, EventSuggestViewModel>(result, o =>
+            {
+                o.ToViewModel = s => s.ToEventSuggestViewModel();
+                o.RouteName = "GetEventSuggest";
+                o.RouteValues = s => new { eventId = s.EventId, userId = s.UserId };
+            });
+        }
+
+        [HttpGet("{eventId}/{userId}/getEventSuggest", Name = "GetEventSuggest")]
+        public IActionResult GetEventSuggestByIds(int eventId, int userId)
+        {
+            Result<EventSuggest> result = _eventService.GetEventSuggestByIds(userId, eventId);
+            return this.CreateResult<EventSuggest, EventSuggestViewModel>(result, o =>
+            {
+                o.ToViewModel = s => s.ToEventSuggestViewModel();
+            });
         }
     }
 }
