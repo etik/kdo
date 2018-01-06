@@ -1,3 +1,8 @@
+Feature:
+    -adding event;
+    -showing event;
+
+
 <template>
     <div class="schedule-calendar-date"
          :class="[type, { today: isToday, dragged: draggedIndex === index }]"
@@ -179,6 +184,10 @@ export default {
         display: flex;
         justify-content: space-between;
         align-content: center;
+        cursor: pointer;
+        border-radius: 2px;
+        overflow: hidden;
+        transition: .2s ease-in-out;
         &:hover {
             transform: translateY(-2px);
             box-shadow: 0 3px 8px rgba(0, 0, 0, .2), 0 -3px 8px rgba(0, 0, 0, .2)
