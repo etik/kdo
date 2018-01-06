@@ -3,7 +3,7 @@
          class="demo">
         <h1 class="demo-title">Calendar</h1>
         <div class="demo-container">
-            <schedule-Calendar :originData="eventList2"></schedule-Calendar>
+            <schedule-Calendar :originData="eventList"></schedule-Calendar>
         </div>
     </div>
 </template>
@@ -21,24 +21,8 @@ export default {
 
     data() {
         return {
-            eventList2: [
-                {
-                    eventId: 111,
-                    userId: 1,
-                    dates: '2018-01-15',
-                    eventName: "event1",
-                    descriptions: "blabla"
-                },
-                {
-                    eventId: 222,
-                    userId: 2,
-                    dates: '2018-01-15',
-                    eventName: "event2",
-                    descriptions: "balblabal"
-                },
-            ],
-            user: Object,
-            eventList: Array
+            user: {},
+            eventList: []
         }
     },
 
@@ -53,6 +37,9 @@ export default {
         async refreshList() {
             this.eventList = await EventApiService.getEventListAsync(this.user.userId);
             console.log(this.eventList);
+            for (var i = 0; i < this.eventList.length; i++){
+                this.eventList[i].dates = this.eventList[i].dates.slice(0, 10);
+            }
         }
     }
 }

@@ -51,8 +51,8 @@
   export default {
     data() {
         return {
-            user: Object,
-            presentList: Array,
+            user: {},
+            presentList: [],
         };
     },
 

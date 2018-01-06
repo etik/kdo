@@ -26,7 +26,7 @@ import PresentEdit from './components/present/PresentEdit.vue';
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue';
-import EventSuggestion from './components/event/calendar/Cal.vue';
+import Calendar from './components/event/calendar/Cal.vue';
 
 import Contact from './components/Contact/Contact.vue';
 import ContactList from './components/Contact/ContactList.vue'
@@ -103,7 +103,7 @@ const router = new VueRouter({
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
         { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
-        { path: '/events/dateSuggest/:id?', component: EventSuggestion, beforeEnter: requireAuth },
+        { path: '/events/calendar', component: Calendar, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },

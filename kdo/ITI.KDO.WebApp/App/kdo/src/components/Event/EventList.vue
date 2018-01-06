@@ -7,6 +7,7 @@
       <div class="panel panel-default">
             <div class="panel-body text-right">
                 <router-link class="btn btn-primary" :to="`events/create`"><i class="glyphicon glyphicon-plus"></i>Add an event</router-link>
+                <b-button :to="`events/calendar`">Calendar</b-button>
             </div>
       </div>
 
@@ -56,7 +57,6 @@
                             </form>
                     </b-collapse>
                     <b-button-group v-if = "isCreator(i.userId) == false">
-                        <b-button :to="`events/dateSuggest/${i.eventId}`">View</b-button>
                         <b-button @click="quitEvent(i.eventId) ">Quit event</b-button>
                     </b-button-group>
                     </td>

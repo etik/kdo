@@ -99,14 +99,14 @@
   export default {
     data() {
       return {
-        user:{},
-        event:{},
+        user: {},
+        event: {},
         mode: null,
-        eventId: null,
-        participant:{},
+        eventId: 0,
+        participant: {},
         participantList: [],
-        friendList:[],
-        selected:[],
+        friendList: [],
+        selected: [],
         errors: [],
         options: [
         {text: 'Xavier F', value: 'Xavier F'},
