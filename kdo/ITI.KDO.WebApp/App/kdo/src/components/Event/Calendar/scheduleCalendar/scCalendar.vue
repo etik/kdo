@@ -1,13 +1,13 @@
 <template>
     <div class="schedule-calendar">
-        <scHeader :year="year"
-                   :month="month"
-                   @updateValue="updateView"></scHeader>
-        <scBody :year="year"
-                 :month="month"
-                 :startWeek="startWeek"
-                 :direction="direction"
-                 :data="keepData"></scBody>
+        <scHeader   :year="year"
+                    :month="month"
+                    @updateValue="updateView"></scHeader>
+        <scBody     :year="year"
+                    :month="month"
+                    :startWeek="startWeek"
+                    :direction="direction"
+                    :data="keepData"></scBody>
     </div>
 </template>
 <script>
@@ -21,6 +21,7 @@ export default {
         scHeader,
         scBody
     },
+
     props: {
         startMonth: '',
         startWeek: {
@@ -43,7 +44,7 @@ export default {
     },
     watch: {
         originData: function (data) {
-            console.log(data)
+            console.log(data);
             if (data.length) {
                 this.keepData = [...data]
             }
@@ -63,7 +64,7 @@ export default {
         },
         itemDrop(e, date, type, index) {
             if (!this.dragItem) return
-            this.keepData.find(item => item.id === this.dragItem.id).date = date
+            this.keepData.find(item => item.eventId === this.dragItem.eventId).dates = date
         }
     },
     created() {

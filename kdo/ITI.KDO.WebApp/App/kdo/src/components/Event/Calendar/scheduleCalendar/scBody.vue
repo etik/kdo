@@ -1,7 +1,7 @@
 <template>
     <div class="schedule-calendar-body">
         <scWeek :startWeek="startWeek"></scWeek>
-        <scMonth :year="year"
+        <scMonth  :year="year"
                   :month="month"
                   :startWeek="startWeek"
                   :direction="direction"
@@ -23,7 +23,7 @@ export default {
         startWeek: Number,
         direction: String,
         data: Array
-    },
+    }
 }
 </script>
 <style lang="less">

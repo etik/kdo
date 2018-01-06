@@ -28,7 +28,6 @@ import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue';
 import EventSuggestion from './components/event/calendar/Cal.vue';
 
-
 import Contact from './components/Contact/Contact.vue';
 import ContactList from './components/Contact/ContactList.vue'
 import FacebookContactList from './components/Contact/FacebookContact.vue';

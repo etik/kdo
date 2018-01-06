@@ -2,7 +2,7 @@
     <div class="schedule-calendar-detail-item"
          draggable
          @dragstart="onDrag">
-        <span class="schedule-calendar-detail-text">{{item.text}}</span>
+        <span class="schedule-calendar-detail-text" >{{ item.eventName }}</span>
     </div>
 </template>
 <script>

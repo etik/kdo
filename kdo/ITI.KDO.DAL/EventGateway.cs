@@ -77,7 +77,7 @@ namespace ITI.KDO.DAL
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@EventName", eventName, DbType.String);
                 dynamicParameters.Add("@Descriptions", descriptions, DbType.String);
-                dynamicParameters.Add("@Dates", dates, DbType.DateTime2);
+                dynamicParameters.Add("@Dates", dates, DbType.DateTime);
                 dynamicParameters.Add("@UserId", userId, DbType.Int32);
                 dynamicParameters.Add("@Id", DbType.Int32, direction: ParameterDirection.ReturnValue);
 

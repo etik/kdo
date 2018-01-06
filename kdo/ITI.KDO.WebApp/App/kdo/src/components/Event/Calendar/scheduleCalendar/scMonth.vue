@@ -6,9 +6,9 @@
                  :type="item.type"
                  :data="data"
                  :index="index"
+                 :key="index"
                  :draggedIndex="draggedIndex"
-                 @highlight="highlight"
-                 key="index"></scDate>
+                 @highlight="highlight"></scDate>
     </div>
 </template>
 <script>

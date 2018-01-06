@@ -25,13 +25,6 @@ export default {
         monthString: String,
         months: []
     },
-    async mounted(){
-        this.months = ["bla", "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "Obtober", "November", "December"];
-    },
-
-    computed: {
-        
-    },
     methods: {
         updateValue({ direction, year, month = this.month }) {
             this.$emit('updateValue', { year, month, direction })

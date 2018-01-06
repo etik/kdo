@@ -25,7 +25,7 @@
                     <td colspan="7" class="text-center">Event</td>
                 </tr>
 
-                <tr v-for="i of eventList">
+                <tr v-for="i of eventList" :key="i.eventId">
                     <td>{{ i.eventName }}</td>
                     <td>{{ i.descriptions }}</td>
                     <td>{{ i.dates }}</td>

@@ -1,11 +1,11 @@
 <template>
     <div class="schedule-calendar-date"
          :class="[type, { today: isToday, dragged: draggedIndex === index }]"
-         @dragover.prevent=""
+         @dragover.prevent="onDrop"
          @dragenter.prevent="dragenter"
          @drop="onDrop">
-        <div class="schedule-calendar-date-hd">
-            <div class="schedule-calendar-date-label">{{date.getDate()}}</div>
+        <div class="schedule-calendar-date-hd" @click="func()">
+            <div class="schedule-calendar-date-label" >{{date.getDate()}}</div>
             <button type="button"
                     class="schedule-calendar-counter"
                     v-if="details.length > volume"
@@ -15,16 +15,17 @@
              :class="{ expanded }"
              :style="detailsPost"
              ref="details">
-            <div v-if="expanded" class="schedule-calendar-details-hd">Events Info</div>
-            <div class="schedule-calendar-details-bd">
-                <scItem v-if="details.length"
-                         v-for="item in displayDetails"
-                         :item="item"
-                         :date="date"
-                         :type="type"
-                         @item-dragstart="dragItem"
-                         key="date"></scItem>
-            </div>
+        <div v-if="expanded" class="schedule-calendar-details-hd">Events Info</div>
+        <div class="schedule-calendar-details-bd">
+            <scItem v-if="details.length"
+                    v-for="item in displayDetails"
+                    :item="item"
+                    :date="date"
+                    :type="type"
+                    :key="item.eventId"
+                    @item-dragstart="dragItem">
+            </scItem>
+        </div>
         </div>
     </div>
 </template>
@@ -54,7 +55,7 @@ export default {
             return isSameDay(new Date(), this.date)
         },
         details() {
-            return this.data.length ? this.data.filter(item => isSameDay(item.date, this.date)) : []
+            return this.data.length ? this.data.filter(item => isSameDay(item.dates, this.date)) : []
         },
         displayDetails() {
             return this.expanded ? this.details : this.details.slice(0, this.volume)
@@ -63,21 +64,21 @@ export default {
             return format(this.date)
         },
         detailsPost() {
-            let post = {}
+            let post = {};
 
             if (this.index >= 35) {
-                post.bottom = 0
+                post.bottom = 0;
             } else {
-                post.top = 0
+                post.top = 0;
             }
 
             if ((this.index + 1) % 7 === 0) {
-                post.right = 0
+                post.right = 0;
             } else {
-                post.left = 0
+                post.left = 0;
             }
 
-            return post
+            return post;
         }
     },
     methods: {
@@ -111,6 +112,12 @@ export default {
             this.$emit('highlight', -1)
             EventBus.$emit('item-drop', e, this.date, this.type, this.index)
         },
+        func(){
+            alert("this is alert balblabla");
+        },
+        func2(){
+            alert("this is event-label");
+        }
     },
     mounted() {
         this.calcVolume()
@@ -171,7 +178,11 @@ export default {
     &date-hd {
         display: flex;
         justify-content: space-between;
-        align-content: center
+        align-content: center;
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .2), 0 -3px 8px rgba(0, 0, 0, .2)
+    }
     }
     &details {
         flex: 1;
