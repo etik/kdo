@@ -17,7 +17,7 @@
                         Present for :
                     </b-col>
                     <b-col sm="10">
-                        <b-form-select v-model="selected" :options="participantList" class="mb-3">
+                        <b-form-select v-model="selected" :options="beneficiary" v-on:change="refreshQuantityList()" class="mb-3">
                         </b-form-select>
                     </b-col>
                 </b-row>
@@ -31,7 +31,6 @@
                                 <b-dropdown-item href="#">Create a new present</b-dropdown-item>
                                 <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
                             </b-dropdown>
-                            {{quantityPresentList.length}}
                         </h2>
                     </b-card>
                     <b-card v-for="i in quantityPresentList"
@@ -39,7 +38,8 @@
                             style="max-width: 16rem; Sheight: 256px;"
                             class="mb-2">
                         <h2 class="card-text" href="#">
-                            {{i.presentName}}              
+                            {{i.presentName}}<br>
+                            pour : {{i.recipientId}}
                         </h2>
                     </b-card>
                 </b-row>
@@ -47,13 +47,13 @@
         </b-row>
 
         <b-row class="bordered">
-            <b-card v-for="i in participantList"
+            <b-card v-for="i in participantUserList"
                     tag="article"
                     style="max-width: 16rem;"
                     class="mb-2">
                 <h2 class="card-text" href="#">
-                    {{i.firstname}}
-                    {{i.lastname}}
+                    {{i.firstName}}
+                    {{i.lastName}}
                 </h2>
             </b-card>
         </b-row>
@@ -76,6 +76,8 @@
             eventId: null,
             event: {},
             participantList: [],
+            beneficiary: [],
+            participantUserList: [],
             quantityList: [],
             selected: null,
             quantityPresentList: []
@@ -91,8 +93,8 @@
         
         await this.refreshList();
         await this.refreshParticipantList();
+        this.selected = this.beneficiary[0].value;
         await this.refreshQuantityList();
-        await this.refreshQuantitPresentyList();
     },
 
     methods: {
@@ -102,13 +104,23 @@
             this.event = await EventApiService.getEventAsync(this.eventId);
         },
         async refreshParticipantList(){
+            this.participantUserList = [];
+            this.beneficiary = [];
+            var aux;
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
+            
+            for(var i = 0; i < this.participantList.length; i++)
+            {
+                aux = await UserApiService.getUserByIdAsync(this.participantList[i].userId);
+
+                this.participantUserList.push(aux);
+                if (this.participantList[i].participantType == true)                    
+                    this.beneficiary.push({value: aux.userId, text: aux.firstName});
+            }
         },
         async refreshQuantityList(){
             this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
-        },
-        async refreshQuantitPresentyList(){
-            this.quantityPresentList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityPresentListAsync(1, this.eventId));
+            this.quantityPresentList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityPresentListAsync(this.selected, this.eventId));
         }
     }
   };

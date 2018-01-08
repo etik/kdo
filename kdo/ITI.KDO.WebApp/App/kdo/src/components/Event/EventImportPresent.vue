@@ -31,17 +31,19 @@
             <thead>
                 <tr>
                     <th>Present Id</th>
+                    <th>Present Name</th>
                     <th>Options</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr v-if="presentList.length == 0">
+                <tr v-if="myQuantityList.length == 0">
                     <td colspan="7" class="text-center">We-want-a-present!!!</td>
                 </tr>
 
-                <tr v-for="i of quantityList">
+                <tr v-for="i of myQuantityList">
                     <td>{{ i.presentId }}</td>
+                    <td>{{ i.presentName }}</td>
                     <td>
                         <button @click="removePresent(i.presentId)"  class="btn btn-primary">Remove</button>
                     </td>
@@ -68,6 +70,7 @@
             event: {},
             presentList: [],
             quantityList: [],
+            myQuantityList: [],
             itemQuantity: {}
         };
     },
@@ -78,7 +81,6 @@
         this.eventId = this.$route.params.id;
         this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
 
-        console.log(this.eventId);
         await this.refreshPresentList();
         await this.refreshQuantityList();
     },
@@ -90,17 +92,25 @@
             this.presentList = await PresentApiService.getPresentListAsync(this.user.userId);
       },
       async refreshQuantityList(){
-            this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
+            this.myQuantityList = [];
+            this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityPresentListAsync(this.user.userId, this.eventId));
+            
+            for (var i = 0; i < this.quantityList.length; i++)
+            {
+                if (this.quantityList[i].nominatorId == this.user.userId)
+                    this.myQuantityList.push(this.quantityList[i]);
+            }
       },
       
       async addPresent(presentId) {
-          try {/*
+          try {
+              console.log(presentId);
               itemQuantity.quantity = 1;
               itemQuantity.recipientId = this.user.userId;
               itemQuantity.nominatorId = this.user.userId;
               itemQuantity.eventId = this.eventId;
               itemQuantity.presentId = presentId;
-              await QuantityApiService.createQuantityAsync(itemQuantity);*/
+              await QuantityApiService.createQuantityAsync(itemQuantity);
               await this.refreshQuantityList();
           }
           catch(error) {
