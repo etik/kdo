@@ -4,7 +4,7 @@
 <header>
   <div class="content">
     <h1>Welcome to KDO</h1>
-    <h3 style="color: #fb9800">Your are connected {{item.firstName}}</h3>
+    <h3 style="color: rgb(38, 38, 38);">Your are connected {{item.firstName}}</h3>
   </div>
 </header>
 <b-col md="12">
@@ -21,7 +21,7 @@
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
 
-          <b-carousel-slide v-for="i in nbslide" img-blank variant="dark" img-alt="Blank image">
+          <b-carousel-slide v-for="i in nbslide" img-blank variant="dark" img-alt="Blank image" >
             <b-row>
               <b-col md="4">
                 <b-card v-if="eventList[(3 * (i - 1))] != null"
@@ -29,8 +29,10 @@
                       img-alt="Image"
                       img-top
                       tag="article"
-                      style="max-width: 16rem;"
-                      class="mb-2">
+                      style="max-width: 15rem;"
+                      class="mb-2"
+                      border-variant="dark"
+                      bg-variant="dark">
                 <h2 class="card-text">
                   {{eventList[(3 * (i - 1))].eventName}}
                 </h2>
@@ -44,8 +46,10 @@
                       img-alt="Image"
                       img-top
                       tag="article"
-                      style="max-width: 16rem;"
-                      class="mb-2">
+                      style="max-width: 15rem;"
+                      class="mb-2"
+                      border-variant="dark"
+                      bg-variant="dark">
                 <h2 class="card-text">
                   {{eventList[(3 * (i - 1)) + 1].eventName}}
                 </h2>
@@ -59,8 +63,10 @@
                       img-alt="Image"
                       img-top
                       tag="article"
-                      style="max-width: 16rem;"
-                      class="mb-2">
+                      style="max-width: 15rem;"
+                      class="mb-2"
+                      border-variant="dark"
+                      bg-variant="dark">
                   <h2 class="card-text">
                     {{eventList[(3 * (i - 1)) + 2].eventName}}
                   </h2>
@@ -94,8 +100,10 @@
                       img-alt="Image"
                       img-top
                       tag="article"
-                      style="max-width: 16rem;"
-                      class="mb-2">
+                      style="max-width: 15rem;"
+                      class="mb-2"
+                      border-variant="dark"
+                      bg-variant="dark">
                 <h2 class="card-text">
                   {{presentList[(3 * (i - 1))].presentName}}
                 </h2>
@@ -108,8 +116,10 @@
                       img-alt="Image"
                       img-top
                       tag="article"
-                      style="max-width: 16rem;"
-                      class="mb-2">
+                      style="max-width: 15rem;"
+                      class="mb-2"
+                      border-variant="dark"
+                      bg-variant="dark">
                 <h2 class="card-text">
                   {{presentList[(3 * (i - 1)) + 1].presentName}}
                 </h2>
@@ -122,8 +132,10 @@
                       img-alt="Image"
                       img-top
                       tag="article"
-                      style="max-width: 16rem;"
-                      class="mb-2">
+                      style="max-width: 15rem;"
+                      class="mb-2"
+                      border-variant="dark"
+                      bg-variant="dark">
                   <h2 class="card-text">
                     {{presentList[(3 * (i - 1)) + 2].presentName}}
                   </h2>
@@ -215,15 +227,30 @@ export default {
 
 <style>
 .img-fluid {
-    background-color: #4a4a4a;
+    background-color: #f8f9fa;
 }
+
 body {
   font-family: 'Roboto';
 }
+
 .layout {
   display: block;
   position: relative;
   background: #fff;
+} 
+
+.carousel-control-prev-icon:after
+{
+  content: '<';
+  font-size: 60px;
+  color: black;
+}
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 60px;
+  color: black;
 }
 /* header */
 header {
@@ -251,6 +278,9 @@ header .content h1 {
 header .content h3 {
   font-size: 1.5em;
   font-weight: lighter;
+}
+.carousel-control-prev-icon {
+    background-color: black;
 }
 .bg {
   display: block;

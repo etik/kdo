@@ -1,50 +1,30 @@
 <template>
+<div>
     <div class="container">
       <div class="page-header">
             <h1>Presents List</h1>
       </div>
-
       <div class="panel panel-default">
             <div class="panel-body text-right">
                 <router-link class="btn btn-primary" :to="`presents/create`"><i class="glyphicon glyphicon-plus"></i>Add a present</router-link>
             </div>
       </div>
-
-      <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Present Name</th>
-                    <th>Price</th>
-                    <th>Link Present</th>
-                    <th>Category Present</th>
-                    <th>Options</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr v-if="presentList.length == 0">
-                    <td colspan="7" class="text-center">We-want-a-present!!!</td>
-                </tr>
-
-                <tr v-for="i of presentList">
-                    <td>{{ i.presentName }}</td>
-                    <td>{{ i.price }}</td>
-                    <td>{{ i.linkPresent }}</td>
-                    <td>{{ i.categoryName }}</td>
-                    <td>
-                        <button @click="deletePresent(i.presentId)"  class="btn btn-primary">Remove</button>
-                        <router-link :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
+      </div>
+     <b-card v-for="i of presentList"
+            style="max-width: 20rem; margin-top: 100px; margin-left:10px;"
+            img-src="https://placekitten.com/380/200"
+            img-alt="Image"
+            img-top>
+        <h4 slot="header">{{i.presentName}}</h4>
+        <button @click="deletePresent(i.presentId)"  class="btn btn-primary">Remove</button>
+        <router-link :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
+    </b-card>
+  <b-img src="../assets/plus.jpg"></b-img> 
+</div>
 </template>
-
 <script>
-    import { mapActions } from 'vuex';
-    import AuthService from "../../services/AuthService";
+  import { mapActions } from 'vuex';
+   import AuthService from "../../services/AuthService";
     import PresentApiService from '../../services/PresentApiService';
     import UserApiService from '../../services/UserApiService';
 
@@ -52,17 +32,18 @@
     data() {
         return {
             user: {},
+            
             presentList: [],
+           
+            
         };
     },
-
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
 
         await this.refreshList();
     },
-
     methods: {
       ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
@@ -81,8 +62,8 @@
       }
   }
   };
-</script>
 
+</script>
 <style lang="less">
 
 </style>

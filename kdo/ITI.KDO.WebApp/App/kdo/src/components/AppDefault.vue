@@ -12,15 +12,42 @@
       <h2>RULES</h2>
     </div>
 </section>
+  
+  	<div class="row">
+						<div class="col-sm-6 col-md-3">
+							<div class="col-md-12 feature-box">
+								<span class="glyphicon glyphicon-cog icon"></span>
+								<h4>Create your Event</h4>
+								<p>Birthday party > Christmas celebration > New year party > etc...</p>
 
-<section>
-  <div class="block">
-    <p><span class="first-character sc">I</span>hello</p>
-    <p class="line-break margin-top-10"></p>
-    <p class="margin-top-10">hi</p>
-  </div>
-</section>
-
+							</div>
+						</div> <!-- End Col -->
+						<div class="col-sm-6 col-md-3">
+								<div class="col-md-12 feature-box">
+								<span class="glyphicon glyphicon-cog icon"></span>
+								<h4>Create your list of present</h4>
+								<p>Post your present > Put all detail of your present </p>
+							</div>
+						</div> <!-- End Col -->	
+						
+						<div class="col-sm-6 col-md-3">
+								<div class="feature-box">
+								<span class="glyphicon glyphicon-cog icon"></span>
+								<h4>Invite your friends</h4>
+								<p>Ask your friends availability > Fix the date </p>
+							</div>
+						</div> <!-- End Col -->
+						<div class="col-sm-6 col-md-3">
+								<div class="col-md-12 feature-box">
+								<span class="glyphicon glyphicon-cog icon"></span>
+								<h4>Open your presents</h4>
+								<p>Your friends will discuss and share to pay a present</p>
+                <p>JUST ENJOY </p>
+							</div>
+						</div> <!-- End Col -->
+						
+	
+					</div>
 <section>
   <div class="parallax-two">
     <h2>CHRISTMAS</h2>
@@ -29,7 +56,7 @@
 
 <section>
   <div class="block">
-    <p><span class="first-character ny">C</span></p>
+    <p><span class="first-character ny"></span></p>
   </div>
 </section>
 
@@ -41,12 +68,12 @@
 
 <section>
   <div class="block">
-    <p><span class="first-character atw">I</span>nvite your friends and request your ideas</p>
+    <p><span class="first-character atw"></span></p>
     <p class="line-break margin-top-10"></p>
     <p class="margin-top-10"></p>
   </div>
 </section>
-  
+
 </div>
 </template>
 <script>
@@ -129,5 +156,30 @@ export default {
 }
 @media screen and (max-width: 479px) {
   #parallax-world-of-ugg .block {padding: 30px 15px; width:290px;}
+}
+.feature-box {
+    text-align: center;
+    padding: 20px;
+    transition: .5s;
+    margin-bottom: 30px;
+    border: 1px solid #e8e8e8;
+}
+.feature-box:hover {
+   
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.feature-box h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 25px 0 15px;
+}
+.row {
+  margin-top: -2%;
+}
+/* Site Heading */
+.site-heading h3{
+    font-size : 40px;
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 </style>

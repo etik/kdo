@@ -6,7 +6,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row" style="margin-top:10px;">
         <div class="com-sm-4">
         <b-card>
         <h1 v-if="mode == 'create'">Create a event</h1>
@@ -204,7 +204,7 @@
 
 <style lang="less">
 .row {
-    margin-top: 5%;
+    margin-top: 10px;
 }
 
 </style>
