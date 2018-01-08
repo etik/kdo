@@ -13,7 +13,7 @@
             {{event.eventName}}
         </b-list-group-item>
         <b-list-group-item>
-            Date
+            {{event.dates}}
         </b-list-group-item>
         </b-list-group>
       
@@ -115,11 +115,11 @@
         </div>
         <p>
         <div class="participant">
-        <b-card bg-variant="dark" text-variant="white" title="Participant" >
-        <div v-for="i of participantList">
-        <b-button>{{i.userId}}</b-button>
-        </div>
-        </b-card>
+            <b-card bg-variant="dark" text-variant="white" title="Participant" >
+                <div v-for="i of participantList" :key="i.userId">
+                    <b-button>{{i.userId}}</b-button>
+                </div>
+            </b-card>
         </div>
     </div>
 </template>
@@ -147,7 +147,6 @@
         var userEmail = AuthService.emailUser();
         this.eventId = this.$route.params.id;
         this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
-
         
         this.user = await UserApiService.getUserAsync(userEmail);
 
@@ -170,6 +169,7 @@
 
       async refreshList() {
             this.event = await EventApiService.getEventByIdAsync(this.eventId);
+            this.event.dates = this.event.dates.slice(0, 10);
       },
        async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);

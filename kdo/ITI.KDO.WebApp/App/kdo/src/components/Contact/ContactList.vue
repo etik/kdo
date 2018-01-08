@@ -19,7 +19,7 @@
                     <td colspan="7" class="text-center">No Contact found</td>
                 </tr>
 
-                <tr v-for="i of contactList">
+                <tr v-for="i of contactList" :key="i.contactId">
                     <td>{{ i.contactId }}</td>
                     <td>{{ i.userEmail }}</td>
                     <td>{{ i.friendEmail}}</td>

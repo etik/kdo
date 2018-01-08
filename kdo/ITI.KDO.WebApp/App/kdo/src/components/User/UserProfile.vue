@@ -66,7 +66,6 @@
             </div>
             </div-->
             <!--input type="submit" class="btn btn-primary btn-block" value="Edit"/>
-
         </form--> 
   <b-form  asp-controller="Account" asp-action="Register" method="post" @submit="onSubmit($event)" >
             <b-col md="12">

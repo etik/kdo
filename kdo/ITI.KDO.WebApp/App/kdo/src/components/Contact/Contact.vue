@@ -16,9 +16,9 @@
             <router-link :to="`notification/${this.user.userId}`">Notification</router-link>
             <form @submit="onSubmit($event)">
                 <input v-model="recipientsEmail" placeholder="Find friend's email">
-                <b-button type="submit" class="btn btn-primary" v-b-modal.modal1>Send friend request</b-button>
-                <b-modal id="modal1" title="Sending Email">
-                <p class="my-4">Email sent !</p>
+                <b-btn type="submit" class="btn btn-primary" v-b-modal.modal>Send friend request</b-btn>
+                <b-modal id="modal" title="Sending Email">
+                    <p class="my-4">Email sent !</p>
                 </b-modal>
             </form>
             <router-link :to="`contacts`">Contact List</router-link>

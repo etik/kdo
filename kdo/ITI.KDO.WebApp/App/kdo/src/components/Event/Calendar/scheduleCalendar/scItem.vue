@@ -1,21 +1,16 @@
 <template>
     <div class="schedule-calendar-detail-item"
-         draggable
-         @dragstart="onDrag"
-         @click="func()"
-         :id="'exPopover-' + this.eId" variant="primary">
-        <span class="schedule-calendar-detail-text" >{{ item.eventName }}</span>
-        <b-popover 
+        :id="'exPopover-' + this.eId">
+        <b-popover
             :target = "'exPopover-' + this.eId"
             title="Event Information"
-            triggers="hover focus"
-            content="Embedding content using properties is easy">
+            triggers="hover focus">
             <div>
                 <b-form-group label="Name" label-for="pop1" horizontal class="mb-1">
-                <b-form-input id="pop1" size="sm" :value="this.item.eventName" disabled/>
+                    <b-form-input id="pop1" size="sm" :value="this.item.eventName" disabled/>
                 </b-form-group>
-                <b-form-group label="Date" label-for="pop2" horizontal class="mb-1">
-                <b-form-input id="pop2" size="sm" :value="this.item.dates" disabled/>
+                <b-form-group label="From" label-for="pop1" horizontal class="mb-1">
+                    <b-form-input id="pop1" size="sm" :value="this.item.userId" disabled/>
                 </b-form-group>
                 <strong>Descriptions</strong>
                 <b-alert show class="small">
@@ -23,13 +18,18 @@
                 </b-alert>
             </div>
         </b-popover>
+        <span class="schedule-calendar-detail-text" >{{ item.eventName }}</span>
+        <router-link class="btn btn-primary" :to="`view/${item.eventId}`"><i class="glyphicon glyphicon-mouseFace"></i></router-link>
     </div>
 </template>
+
 <script>
+import EventApiService from '../../../../services/EventApiService';
+
 export default {
     data() {
         return {
-            eId: null
+            eId: null,
         }
     },
     async mounted(){
@@ -47,6 +47,14 @@ export default {
         },
         func(){
             console.log(this.item.eventId);
+        },
+        async deleteEvent(){
+            try {
+                await this.executeAsyncRequest(() => EventApiService.deleteEventAsync(this.item.eventId));
+            }
+            catch(error) {
+                alert("error")
+            }
         }
     }
 }
