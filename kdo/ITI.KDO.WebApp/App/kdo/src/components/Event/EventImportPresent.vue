@@ -30,6 +30,7 @@
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
+                    <th>Quantity Id</th>
                     <th>Present Id</th>
                     <th>Present Name</th>
                     <th>Options</th>
@@ -42,10 +43,11 @@
                 </tr>
 
                 <tr v-for="i of myQuantityList">
+                    <td>{{ i.quantityId }}</td>
                     <td>{{ i.presentId }}</td>
                     <td>{{ i.presentName }}</td>
                     <td>
-                        <button @click="removePresent(i.presentId)"  class="btn btn-primary">Remove</button>
+                        <button @click="removePresent(i.quantityId)"  class="btn btn-primary">Remove</button>
                     </td>
                 </tr>
             </tbody>
@@ -105,22 +107,24 @@
       async addPresent(presentId) {
           try {
               console.log(presentId);
-              itemQuantity.quantity = 1;
-              itemQuantity.recipientId = this.user.userId;
-              itemQuantity.nominatorId = this.user.userId;
-              itemQuantity.eventId = this.eventId;
-              itemQuantity.presentId = presentId;
-              await QuantityApiService.createQuantityAsync(itemQuantity);
+              this.itemQuantity.quantity = 1;
+              this.itemQuantity.recipientId = this.user.userId;
+              this.itemQuantity.nominatorId = this.user.userId;
+              this.itemQuantity.eventId = this.eventId;
+              this.itemQuantity.presentId = presentId;
+              await QuantityApiService.createQuantityAsync(this.itemQuantity);
               await this.refreshQuantityList();
           }
           catch(error) {
           }
       },
 
-      async removePresent(presentId) {
+      async removePresent(quantityId) {
           try {
-              //await QuantityApiService.deletePresentAsync(presentId);
+              console.log("coucou");
+              await QuantityApiService.deleteQuantityAsync(quantityId);
               await this.refreshQuantityList();
+              console.log(quantityId);
           }
           catch(error) {
           }
