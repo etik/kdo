@@ -28,7 +28,7 @@
                             class="mb-2">
                         <h2 class="card-text" href="#">
                             <b-dropdown id="ddown1" text="Add a present" class="m-md-2">
-                                <b-dropdown-item href="#">Create a new present</b-dropdown-item>
+                                <b-dropdown-item :to="`/events/presents/create/${eventId}`">Create a new present</b-dropdown-item>
                                 <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
                             </b-dropdown>
                         </h2>
@@ -40,6 +40,7 @@
                         <h2 class="card-text" href="#">
                             {{i.presentName}}<br>
                             pour : {{i.recipientId}}
+                            <b-button :to="`/events/presents/edit/${eventId}/${i.presentId}`" v-if="i.nominatorId == user.userId">Edit</b-button>
                         </h2>
                     </b-card>
                 </b-row>

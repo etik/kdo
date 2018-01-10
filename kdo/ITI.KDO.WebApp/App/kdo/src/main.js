@@ -26,6 +26,7 @@ import PresentEdit from './components/present/PresentEdit.vue';
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue';
+import EventPresentEdit from './components/event/EventPresentEdit.vue';
 import EventImportPresent from './components/event/EventImportPresent.vue';
 import EventSuggestion from './components/event/EventSuggestion.vue';
 
@@ -98,6 +99,7 @@ const router = new VueRouter({
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
         { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
         { path: '/events/importPresent/:id?', component: EventImportPresent, beforeEnter: requireAuth },
+        { path: '/events/presents/:mode([create|edit]+)/:eid?/:pid?', component: EventPresentEdit, beforeEnter: requireAuth },
         { path: '/events/dateSuggest/:id?', component: EventSuggestion, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
