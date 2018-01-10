@@ -40,7 +40,7 @@
             <b-nav-item href="/Home/contact">Mes contacts</b-nav-item>
             <b-nav-item href="#clients">Calendrier</b-nav-item>
             <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
-            <b-nav-item href="#"@click="logout()">Logout</b-nav-item>
+            <b-nav-item  href="#"@click="logout()">Logout</b-nav-item>
             
           </b-navbar-nav>
 
@@ -58,7 +58,7 @@
     </b-navbar>
     
     <div>
-      <b-row class="bg-light" style="height: 100%; margin-top: 15px; margin-bottom: 0px;">
+      <b-row class="bg-light" style="height: 100%; margin-top: 10%; margin-bottom: 0px;">
           <!--b-col md="2" class="bg-light " style="height:100%;">
             <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
               <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>

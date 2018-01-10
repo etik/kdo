@@ -1,5 +1,10 @@
 <template>
 <div>
+<section>
+  <div class="title">
+    <h1>YOUR PROFILE</h1>
+  </div>
+</section>
 <div class="row">
   <div class="col-sm-3">
     <b-card title=" Your Profile"
@@ -180,6 +185,12 @@
     margin-top:7%;
     margin-left:3%;
 }
+
+/* Section - Title */
+/**************************/
+.title {background: white; padding: 60px; margin:0 auto; text-align:center;}
+.title h1 {font-size:35px; letter-spacing:8px;}
+
 .progress {
     margin: 0px;
     padding: 0px;

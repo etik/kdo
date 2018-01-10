@@ -289,7 +289,6 @@ header .content h3 {
   height: 100vh;
   top: 0;
   left: 0;
-  background: url('http://cs627531.vk.me/v627531615/d23c/xqkB4APcT4c.jpg') center no-repeat;
   background-size: cover;
   -moz-transition: 0.1s;
   -o-transition: 0.1s;
