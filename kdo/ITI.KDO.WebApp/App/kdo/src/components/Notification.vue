@@ -16,7 +16,7 @@
                     <td colspan="7" class="text-center">No notification</td>
                 </tr>
 
-                <tr v-for="i of contactNotificationList">
+                <tr v-for="i of contactNotificationList" :key="i.contactId">
                     <td>{{ i.senderEmail }}</td>
                     <td>{{ i.recipientsEmail }}</td>
                     <td>

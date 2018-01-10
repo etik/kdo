@@ -1,6 +1,7 @@
 <template>
     <div class="schedule-calendar-detail-item"
-        :id="'exPopover-' + this.eId">
+        :id="'exPopover-' + this.eId"
+        @click="changeRouteEvent(item.eventId)">
         <b-popover
             :target = "'exPopover-' + this.eId"
             title="Event Information"
@@ -19,7 +20,6 @@
             </div>
         </b-popover>
         <span class="schedule-calendar-detail-text" >{{ item.eventName }}</span>
-        <router-link class="btn btn-primary" :to="`view/${item.eventId}`"><i class="glyphicon glyphicon-mouseFace"></i></router-link>
     </div>
 </template>
 
@@ -45,9 +45,6 @@ export default {
         onDrag(e) {
             this.$emit('item-dragstart', e, this.item, this.date, this.type);
         },
-        func(){
-            console.log(this.item.eventId);
-        },
         async deleteEvent(){
             try {
                 await this.executeAsyncRequest(() => EventApiService.deleteEventAsync(this.item.eventId));
@@ -55,7 +52,11 @@ export default {
             catch(error) {
                 alert("error")
             }
+        },
+        changeRouteEvent(eventId){
+            this.$router.replace(`view/${eventId}`);
         }
+        
     }
 }
 </script>

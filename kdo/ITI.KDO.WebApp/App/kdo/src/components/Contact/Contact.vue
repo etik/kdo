@@ -1,7 +1,7 @@
 <template>
     <div>
-        <b-card-group deck v-for="i in nbline" class="mb-2">
-            <b-card v-for="j in 6" v-if="contactList[j - 1] != null" cols="2"
+        <b-card-group deck v-for="i in nbline" :key="i" class="mb-2">
+            <b-card v-for="j in 6" :key="j" v-if="contactList[j - 1] != null" cols="2"
                     text-variant="black"
                     :header="contactList[j - 1].firstName"
                     class="text-center"

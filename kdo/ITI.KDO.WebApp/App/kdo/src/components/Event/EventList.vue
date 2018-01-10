@@ -1,16 +1,16 @@
 <template>
     <div class="container">
-      <div class="page-header">
-            <h1>Events</h1>
-      </div>
+    <div class="page-header">
+        <h1>Events</h1>
+    </div>
 
-      <div class="panel panel-default">
-            <div class="panel-body text-right">
-                <router-link class="btn btn-primary" :to="`events/create`">Add an event</router-link>
-            </div>
-      </div>
+    <div class="panel panel-default">
+        <div class="panel-body text-right">
+            <router-link class="btn btn-primary" :to="`events/create`">Add an event</router-link>
+        </div>
+    </div>
 
-      <table class="table table-striped table-hover table-bordered">
+        <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
                     <th>Event Name</th>

@@ -11,10 +11,8 @@
             class="mb-2">
         <p class="card-text">
             {{auth.email}}
-            </br>
-            {{item.firstName}}
-            </br>
-            {{item.lastName}}
+            <br>{{item.firstName}}
+            <br>{{item.lastName}}
             
         </p>
     </b-card>

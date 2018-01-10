@@ -150,12 +150,8 @@
         
         this.user = await UserApiService.getUserAsync(userEmail);
 
-        console.log(this.user.userId);
-        console.log(this.eventId);
-        
         await this.refreshList();
         await this.refreshParticipantList();
-        console.log(this.participantList);
     },
 
     methods: {
