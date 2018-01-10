@@ -121,6 +121,17 @@
         async refreshQuantityList(){
             this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
             this.quantityPresentList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityPresentListAsync(this.selected, this.eventId));
+            if (this.selected == this.user.userId)
+            {
+                for (var i = 0; i < this.quantityPresentList.length; i++)
+                {
+                    if (this.quantityPresentList[i].nominatorId != this.user.userId)
+                    {
+                        this.quantityPresentList.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
         }
     }
   };
