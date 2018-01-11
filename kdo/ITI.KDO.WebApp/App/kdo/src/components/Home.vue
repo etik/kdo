@@ -40,7 +40,11 @@
             <b-nav-item href="/Home/contact">Mes contacts</b-nav-item>
             <b-nav-item href="#clients">Calendrier</b-nav-item>
             <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
+            <b-nav-item v-b-popover.hover="'I am popover content!'" title="Popover Title">
+             Notification
+            </b-nav-item>
             <b-nav-item  href="#"@click="logout()">Logout</b-nav-item>
+
             
           </b-navbar-nav>
 

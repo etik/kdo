@@ -7,10 +7,19 @@
 </section>
     <div class="row" style="margin-left:11%;">
         <div md="12" class="feature-box test" v-for="i of presentList">
-            <div class="test-event">
+                <div class="test-event">
                 <span>{{ i.presentName }}</span>
-            </div>
-        </div>    
+                </div>
+            <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deletePresent(i.presentId)" fluid alt="Responsive image" />
+                <div class="edit">
+            <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
+                </div>
+        </div>  
+        <div md="12" class="feature-box1 test">
+                    <router-link tag="img" style=" margin-top: -5%;" src="https://blazer-net.com/wp-content/uploads/blazer-nett.png" :to="`presents/create`">Add a present</router-link>
+                       <span style="font-family: cursive; font-size: larger;" >Add a present</span>
+
+        </div>
 	</div> <!-- End Col -->
 						
     <!--b-img v-for=" i of presentList" src="https://placekitten.com/380/200">
@@ -81,13 +90,32 @@
 .title {background: white; padding: 60px; margin:0 auto; text-align:center;}
 .title h1 {font-size:35px; letter-spacing:8px;}
 
+.delete {
+    width: 7%;
+    margin-left: 92%;
+    margin-top: -111%;
+}
+.edit {
+    width: 7%;
+    margin-left: 100%;
+    margin-top: -62%;
+}
 .feature-box{
-    background-image:url("http://www.neorizons-travel.com/wp-content/uploads/2012/02/pho_neorizons.jpg");
+   // background-image:url("http://www.neorizons-travel.com/wp-content/uploads/2012/02/pho_neorizons.jpg");
     width: 400px;
     height: 200px;
     margin-top: 2%;
     margin-right: 5%;
 }
+
+.feature-box1{
+    border-style: ridge;
+    width: 400px;
+    height: 200px;
+    margin-top: 2%;
+    margin-right: 5%;
+}
+
 .feature-box:hover{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transform: scale(1.3);
@@ -105,7 +133,7 @@
         opacity: 0.8;
         margin-top:32%;
         &:hover{
-            -webkit-animation: dude .75s;
+            -webkit-animation: dude .75s ;
             -moz-animation: dude .75s;
             -o-animation: dude .75s;
             animation: dude .75s;
