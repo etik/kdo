@@ -109,7 +109,7 @@
             }
             catch(error) {
                 // So if an exception occurred, we redirect the user to the students list.
-                this.$router.replace("events/view/" + this.eventId);
+                this.$router.go(-1);
             }   
         }
     },
@@ -150,7 +150,7 @@
                     await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present));
                     await this.executeAsyncRequest(() => QuantityApiService.updateQuantityAsync(this.quantity));
                 }
-                this.$router.replace("events/view/" + this.eventId);
+                this.$router.go(-1);
             }
             catch(error) {
                 // Custom error management here.
