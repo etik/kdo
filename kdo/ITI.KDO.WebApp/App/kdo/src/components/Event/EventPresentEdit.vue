@@ -39,6 +39,17 @@
                 <input type="text" v-model="this.categoryChosen" class="form-control" disabled>
             </div>
 
+            <div>
+                Recipiant
+                <b-form-select v-model="quantity.recipientId" :options="recipientList" class="mb-3">
+                </b-form-select>
+            </div>
+
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="text" v-model="quantity.quantity" class="form-control">
+            </div>
+
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
         </form>
     </div>
@@ -47,20 +58,26 @@
 <script>
     import { mapActions } from 'vuex';
     import PresentApiService from '../../services/PresentApiService';
+    import QuantityApiService from '../../services/QuantityApiService';
     import CategoryPresentApiService from '../../services/CategoryPresentApiService';
     import UserApiService from "../../services/UserApiService";
     import AuthService from "../../services/AuthService";
+    import ParticipantApiService from '../../services/ParticipantApiService';
 
   export default {
     data() {
       return {
         user:{},
         present:{},
+        quantity:{},
+        recipiant:{},
         mode: null,
         presentId: null,
         eventId: null,
         errors: [],
         categoryPresentList: [],
+        participantList: [],
+        recipientList: [],
         categoryChosen: "Choose a category."
       };
     },
@@ -74,6 +91,15 @@
         this.mode = this.$route.params.mode;
         this.presentId = this.$route.params.pid;
         this.eventId = this.$route.params.eid;
+        this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
+
+        for(var i = 0; i < this.participantList.length; i++)
+        {
+            var aux = await UserApiService.getUserByIdAsync(this.participantList[i].userId);
+
+            if (this.participantList[i].participantType == true)                    
+                this.recipientList.push({value: aux.userId, text: aux.firstName});
+        }
         
         if(this.mode == 'edit'){
             try {
@@ -83,7 +109,7 @@
             }
             catch(error) {
                 // So if an exception occurred, we redirect the user to the students list.
-                this.$router.replace('/presents');
+                this.$router.replace("events/view/" + this.eventId);
             }   
         }
     },
@@ -101,18 +127,30 @@
             if(!this.present.linkPresent) errors.push("Link Present");
             if(!this.present.categoryPresentId) errors.push("Category Present Id");
 
+            if(!this.quantity.quantity) errors.push("Quantity");
+            this.quantity.eventId = this.eventId;
+            this.quantity.nominatorId = this.user.userId;
+            if(!this.quantity.recipientId) errors.push("Recipiant");
+            this.quantity.presentId = this.presentId;
+
             this.errors = errors;
 
             if(errors.length == 0) {
             try {
                 if(this.mode == 'create') {
-                    this.present.userId = this.user.userId;
-                    await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
+                    this.present.userId = 0;
+                    console.log("nominatorId : " + this.quantity.nominatorId);
+                    console.log("recipiantId : " + this.quantity.recipientId);
+                    console.log("enventId :" + this.quantity.eventId);
+                    var aux = await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
+                    this.quantity.presentId = aux.presentId;
+                    await this.executeAsyncRequest(() => QuantityApiService.createQuantityAsync(this.quantity));
                 }
                 else {
-                    await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present)); 
+                    await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present));
+                    await this.executeAsyncRequest(() => QuantityApiService.updateQuantityAsync(this.quantity));
                 }
-                this.$router.replace('/presents');
+                this.$router.replace("events/view/" + this.eventId);
             }
             catch(error) {
                 // Custom error management here.
