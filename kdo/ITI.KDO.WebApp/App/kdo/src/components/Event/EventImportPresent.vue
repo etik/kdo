@@ -106,7 +106,6 @@
       
       async addPresent(presentId) {
           try {
-              console.log(presentId);
               this.itemQuantity.quantity = 1;
               this.itemQuantity.recipientId = this.user.userId;
               this.itemQuantity.nominatorId = this.user.userId;

@@ -49,5 +49,10 @@ namespace ITI.KDO.WebApp.Services
                 return Result.Failure<Participation>(Status.NotFound, "Participation not found.");
             return Result.Success(Status.Ok, participation);
         }
+
+        public bool ParticipationExist(int quantityId, int userId)
+        {
+            return ((_participationGateway.FindByIds(userId, quantityId)) != null);
+        }
     }
 }

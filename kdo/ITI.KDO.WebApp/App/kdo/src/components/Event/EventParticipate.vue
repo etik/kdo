@@ -26,7 +26,7 @@
                     type="text"
                     placeholder="Enter the ammount :"></b-form-input>
 
-                <button @click="createParticipation()" class="btn btn-primary">Participate</button>
+                <button @click="Particip()" class="btn btn-primary">Participate</button>
             </b-col>
         </b-row>
     </div>
@@ -52,6 +52,7 @@
         price: null,
         quantityId: null,
         eventId: null,
+        existing: false
       };
     },
 
@@ -66,24 +67,37 @@
         this.present = await this.executeAsyncRequest(() => PresentApiService.getPresentAsync(this.quantity.presentId));
         this.nominator = await this.executeAsyncRequest(() => UserApiService.getUserByIdAsync(this.quantity.nominatorId));
         this.recipient = await this.executeAsyncRequest(() => UserApiService.getUserByIdAsync(this.quantity.recipientId));
+
+        if (await this.executeAsyncRequest(() => ParticipationApiService.existingParticipationAsync(this.quantityId, this.user.userId)))
+        {
+            this.existing = true;
+            this.participation = await this.executeAsyncRequest(() => ParticipationApiService.getParticipationAsync(this.quantityId, this.user.userId));
+            this.price = this.participation.amountUserPrice;
+        }
     },
 
     methods: {
         ...mapActions(['executeAsyncRequest']),
 
-        async createParticipation()
+        async Particip()
         {
-            console.log("creation");
-            this.participation.quantityId = this.quantityId;
-            this.participation.userId = this.user.userId;
-            this.participation.eventId = this.eventId;
-            this.participation.amountUserPrice = this.price;
-
-            var aux = await this.executeAsyncRequest(() => ParticipationApiService.createParticipationAsync(this.participation));
-            console.log("prix : " + aux.amountUserPrice);
+            if (this.existing)
+            {
+                this.participation.amountUserPrice = this.price;
+                await this.executeAsyncRequest(() => ParticipationApiService.updateParticipationAsync(this.participation));
+            }
+            else
+            {
+                this.participation.quantityId = this.quantityId;
+                this.participation.userId = this.user.userId;
+                this.participation.eventId = this.eventId;
+                this.participation.amountUserPrice = this.price;
+                var aux = await this.executeAsyncRequest(() => ParticipationApiService.createParticipationAsync(this.participation));
+            }
+            this.$router.go(-1);
         }
     }
-  };
+};
 </script>
 
 <style lang="less">

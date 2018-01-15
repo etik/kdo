@@ -8,7 +8,11 @@ class ParticipantApiService{
     }
 
     async getParticipationAsync(quantityId, userId){
-        return await getAsync(`${endpoint}/${quantityId}/${userId}`);
+        return await getAsync(`${endpoint}/${quantityId}/${userId}/getParticipation`);
+    }
+
+    async existingParticipationAsync(quantityId, userId){
+        return await getAsync(`${endpoint}/${quantityId}/${userId}/existingParticipation`);
     }
 
     async createParticipationAsync(model){

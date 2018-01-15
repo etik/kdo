@@ -22,7 +22,7 @@ namespace ITI.KDO.WebApp.Controllers
             _participationService = participationService;
         }
 
-        [HttpGet("{quantityId}/{userId}", Name = "GetParticipation")]
+        [HttpGet("{quantityId}/{userId}/getParticipation")]
         public IActionResult GetParticipation(int quantityId, int userId)
         {
             Result<Participation> result = _participationService.GetParticipation(quantityId, userId);
@@ -30,6 +30,12 @@ namespace ITI.KDO.WebApp.Controllers
             {
                 o.ToViewModel = s => s.ToParticipationViewModel();
             });
+        }
+
+        [HttpGet("{quantityId}/{userId}/existingParticipation")]
+        public bool ExistingParticipation(int quantityId, int userId)
+        {
+            return _participationService.ParticipationExist(quantityId, userId);
         }
 
         [HttpPost]
