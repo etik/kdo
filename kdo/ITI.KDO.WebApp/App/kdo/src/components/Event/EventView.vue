@@ -39,8 +39,8 @@
                             class="mb-2">
                         <h2 class="card-text" href="#">
                             {{i.presentName}}<br>
-                            pour : {{i.recipientId}}
                             <b-button :to="`/events/presents/edit/${eventId}/${i.quantityId}`" v-if="i.nominatorId == user.userId">Edit</b-button>
+                            <b-button :to="`/events/participate/${eventId}/${i.quantityId}`">Participate</b-button>
                         </h2>
                     </b-card>
                 </b-row>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITI.KDO.WebApp.Models.ParticipantViewModels;
+using ITI.KDO.WebApp.Models.ParticipationViewModels;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -71,6 +72,17 @@ namespace ITI.KDO.WebApp.Controllers
                 ParticipantType = @this.ParticipantType,
                 Invitation = @this.Invitation,
                 EventId = @this.EventId,
+            };
+        }
+
+        public static ParticipationViewModel ToParticipationViewModel(this Participation @this)
+        {
+            return new ParticipationViewModel
+            {
+                QuantityId = @this.QuantityId,
+                UserId = @this.UserId,
+                EventId = @this.EventId,
+                AmountUserPrice = @this.AmountUserPrice
             };
         }
 

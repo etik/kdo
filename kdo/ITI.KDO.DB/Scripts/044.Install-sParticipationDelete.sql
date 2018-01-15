@@ -1,10 +1,10 @@
 create procedure dbo.sParticipationDelete
 (
 	@UserId int,
-	@EventId int
+	@QuantityId int
 )
 as
 begin
-	delete from dbo.tParticipation where UserId = @UserId and EventId = @EventId;
+	delete from dbo.tParticipation where UserId = @UserId and QuantityId = @QuantityId;
 	return 0;
 end;

@@ -49,6 +49,7 @@ namespace ITI.KDO.WebApp
             services.AddSingleton(_ => new EventGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new PresentGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new ParticipantGateway(Configuration["ConnectionStrings:KDODB"]));
+            services.AddSingleton(_ => new ParticipationGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new CategoryPresentGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new ContactGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new FacebookContactGateway(Configuration["ConnectionStrings:KDODB"]));
@@ -60,6 +61,7 @@ namespace ITI.KDO.WebApp
             services.AddSingleton<QuantityServices>();
             services.AddSingleton<ContactServices>();
             services.AddSingleton<ParticipantServices>();
+            services.AddSingleton<ParticipationServices>();
             services.AddSingleton<NotificationServices>();
             services.AddSingleton<EventServices>();
             services.AddSingleton<CategoryPresentServices>();

@@ -121,10 +121,8 @@
 
       async removePresent(quantityId) {
           try {
-              console.log("coucou");
               await QuantityApiService.deleteQuantityAsync(quantityId);
               await this.refreshQuantityList();
-              console.log(quantityId);
           }
           catch(error) {
           }

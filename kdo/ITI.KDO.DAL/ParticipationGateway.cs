@@ -47,7 +47,7 @@ namespace ITI.KDO.DAL
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
         /// <returns></returns>
-        public Participation FindByIds(int userId, int eventId)
+        public Participation FindByIds(int userId, int quantityId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -57,8 +57,8 @@ namespace ITI.KDO.DAL
                              p.EventId,
                              p.AmountUserPrice
                   from dbo.vParticipation p
-                    where p.UserId = @UserId and p.EventId = @EventId",
-                    new { UserId = userId, EventId = eventId })
+                    where p.UserId = @UserId and p.QuantityId = @QuantityId",
+                    new { UserId = userId, QuantityId = quantityId })
                     .FirstOrDefault();
             }
         }
@@ -86,13 +86,13 @@ namespace ITI.KDO.DAL
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
-        public void Delete(int userId, int eventId)
+        public void Delete(int userId, int quantityId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "dbo.sParticipationDelete",
-                    new { UserId = userId, EventId = eventId },
+                    new { UserId = userId, QuantityId = quantityId },
                     commandType: CommandType.StoredProcedure);
             }
         }
