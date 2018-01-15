@@ -15,6 +15,6 @@ begin
 		RecipientId = @RecipientId,
 		EventId = @EventId,
 		PresentId = @PresentId
-	where NominatorId = @NominatorId;
+	where NominatorId = @NominatorId and QuantityId = @QuantityId;
 	return 0;
 end;

@@ -54,7 +54,7 @@ namespace ITI.KDO.WebApp.Controllers
                 EventId = @this.EventId,
                 PresentId = @this.PresentId
             };
-        }
+         }
 
         public static ItemQuantityPresentViewModel ToQuantityPresentViewModel(this ItemPresentQuantity @this)
         {

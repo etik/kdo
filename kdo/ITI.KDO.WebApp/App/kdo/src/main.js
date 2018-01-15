@@ -99,7 +99,7 @@ const router = new VueRouter({
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
         { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
         { path: '/events/importPresent/:id?', component: EventImportPresent, beforeEnter: requireAuth },
-        { path: '/events/presents/:mode([create|edit]+)/:eid?/:pid?', component: EventPresentEdit, beforeEnter: requireAuth },
+        { path: '/events/presents/:mode([create|edit]+)/:eid?/:qid?', component: EventPresentEdit, beforeEnter: requireAuth },
         { path: '/events/dateSuggest/:id?', component: EventSuggestion, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },

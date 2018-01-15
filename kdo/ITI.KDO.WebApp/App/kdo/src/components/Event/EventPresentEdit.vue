@@ -72,7 +72,7 @@
         quantity:{},
         recipiant:{},
         mode: null,
-        presentId: null,
+        quantityId: null,
         eventId: null,
         errors: [],
         categoryPresentList: [],
@@ -89,7 +89,7 @@
         this.categoryPresentList = await CategoryPresentApiService.getCategoryPresentListAsync();
 
         this.mode = this.$route.params.mode;
-        this.presentId = this.$route.params.pid;
+        this.quantityId = this.$route.params.qid;
         this.eventId = this.$route.params.eid;
         this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
 
@@ -105,7 +105,8 @@
             try {
                 // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
                 // It is useful when we have to know if an error occurred, in order to adapt the user experience.
-                this.present = await this.executeAsyncRequest(() => PresentApiService.getPresentAsync(this.presentId));
+                this.quantity = await this.executeAsyncRequest(() => QuantityApiService.getQuantityAsync(this.quantityId));
+                this.present = await this.executeAsyncRequest(() => PresentApiService.getPresentAsync(this.quantity.presentId));
             }
             catch(error) {
                 // So if an exception occurred, we redirect the user to the students list.
@@ -131,7 +132,6 @@
             this.quantity.eventId = this.eventId;
             this.quantity.nominatorId = this.user.userId;
             if(!this.quantity.recipientId) errors.push("Recipiant");
-            this.quantity.presentId = this.presentId;
 
             this.errors = errors;
 
@@ -139,9 +139,6 @@
             try {
                 if(this.mode == 'create') {
                     this.present.userId = 0;
-                    console.log("nominatorId : " + this.quantity.nominatorId);
-                    console.log("recipiantId : " + this.quantity.recipientId);
-                    console.log("enventId :" + this.quantity.eventId);
                     var aux = await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
                     this.quantity.presentId = aux.presentId;
                     await this.executeAsyncRequest(() => QuantityApiService.createQuantityAsync(this.quantity));

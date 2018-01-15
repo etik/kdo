@@ -45,7 +45,7 @@ namespace ITI.KDO.WebApp.Services
             }
 
             _quantityGateway.Update(quantityId, quantity, recipientId, nominatorId, eventId, presentId);
-            itemQuantity = _quantityGateway.FindById(presentId);
+            itemQuantity = _quantityGateway.FindById(quantityId);
             return Result.Success(Status.Ok, itemQuantity);
         }
 
