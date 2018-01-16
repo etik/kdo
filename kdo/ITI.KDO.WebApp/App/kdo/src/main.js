@@ -105,8 +105,8 @@ const router = new VueRouter({
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
-        { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
-        { path: '/events/calendar', component: Calendar, beforeEnter: requireAuth },
+        { path: '/events/view/:id?', component: EventView, beforeEnter: requireAuth },
+        { path: '/events/:mode([suggest|display]+)/calendar', component: Calendar, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },

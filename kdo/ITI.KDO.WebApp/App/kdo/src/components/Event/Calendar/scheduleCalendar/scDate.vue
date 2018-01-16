@@ -10,7 +10,7 @@ Feature:
          @dragenter.prevent="dragenter"
          @drop="onDrop">
         <div class="schedule-calendar-date-hd" @click="func()">
-            <div class="schedule-calendar-date-label" >{{date.getDate()}}</div>
+            <div class="schedule-calendar-date-label" >{{ date.getDate() }}</div>
             <button type="button"
                     class="schedule-calendar-counter"
                     v-if="details.length > volume"
@@ -125,8 +125,8 @@ export default {
         }
     },
     mounted() {
-        this.calcVolume()
-        window.addEventListener('resize', this.calcVolume)
+        this.calcVolume();
+        window.addEventListener('resize', this.calcVolume);
     },
     destroyed() {
         window.removeEventListener('resize', this.calcVolume)

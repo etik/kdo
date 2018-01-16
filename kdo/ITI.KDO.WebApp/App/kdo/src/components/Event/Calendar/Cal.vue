@@ -29,14 +29,17 @@ export default {
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
-
+        this.mode = this.$route.params.mode;
         await this.refreshList();
+
+        if(this.mode == "suggest"){
+            alert("Please choose your date.");
+        }
     },
     
     methods: {
         async refreshList() {
             this.eventList = await EventApiService.getEventListAsync(this.user.userId);
-            console.log(this.eventList);
             for (var i = 0; i < this.eventList.length; i++){
                 this.eventList[i].dates = this.eventList[i].dates.slice(0, 10);
             }

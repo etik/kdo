@@ -1,14 +1,14 @@
 <template>
     <div class="container">
-    <div class="page-header">
-        <h1>Events</h1>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-body text-right">
-            <router-link class="btn btn-primary" :to="`events/create`">Add an event</router-link>
+        <div class="page-header">
+            <h1>Events</h1>
         </div>
-    </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body text-right">
+                <router-link class="btn btn-primary" :to="`events/create`">Add an event</router-link>
+            </div>
+        </div>
 
         <table class="table table-striped table-hover table-bordered">
             <thead>
@@ -36,25 +36,8 @@
                         <b-button @click="deleteEvent(i.eventId) ">Remove</b-button>
                     </b-button-group>
 
-                    <b-button v-b-toggle.collapse1 variant="primary" v-if = "isCreator(i.userId) == false">Suggest another date</b-button>
-                    <b-collapse id="collapse1" class="mt-2">
-                                <form @submit="onSubmit($event, i.eventId)">
-                                <div class="form-group">
-                                    <label asp-for="Birthdate">Date : </label>
-                                    <input asp-for="Birthdate" class="form-control" type="date" v-model="eventSuggest.dateSuggest"/>
-                                    <span asp-validation-for="Birthdate"></span>
-                                </div>
-                            <b-form-group label="Description:">
-                                <b-form-textarea asp-for="Description" class="form-control" v-model="eventSuggest.descriptions">
-                                <span asp-validation-for="Description"></span>
-                                </b-form-textarea>
-                            </b-form-group>
-                            <button type="submit" class="btn btn-primary" v-b-modal.modal2 v-b-toggle="'collapse1'">Sauvegarder</button>
-                                <b-modal id="modal2" title="Bootstrap-Vue">
-                                <p class="my-4">Suggest Date sent !</p>
-                                </b-modal>
-                            </form>
-                    </b-collapse>
+                    <b-button variant="primary" v-if = "isCreator(i.userId) == false" @click="changeRoute()">Suggest another date</b-button>
+
                     <b-button-group v-if = "isCreator(i.userId) == false">
                         <b-button @click = "quitEvent(i.eventId)">Quit event</b-button>
                     </b-button-group>
@@ -135,6 +118,10 @@
                 // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
                 // By the way, you can handle errors manually for each component if you need it...
             }
+        },
+
+        changeRoute(){
+            this.$router.replace("events/suggest/calendar");
         }
   }
   };

@@ -63,6 +63,7 @@ export default {
 <style lang="less">
 @import './variables.less';
 
+
 .schedule-calendar-detail-item {
     padding: 0 5px;
     margin: 3px 6px 0;

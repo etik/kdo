@@ -22,6 +22,10 @@ export default {
         scBody
     },
 
+    async mounted(){
+        console.log(this.mode);
+    },
+    
     props: {
         startMonth: '',
         startWeek: {
@@ -39,6 +43,7 @@ export default {
             month: new Date().getMonth(),
             direction: 'Left',
             keepData: [...this.originData],
+            calMode: this.mode,
             dragItem: null
         }
     },
