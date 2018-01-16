@@ -11,7 +11,7 @@
                 <span>{{ i.presentName }}</span>
                 </div>
             <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deletePresent(i.presentId)" fluid alt="Responsive image" />
-                <div class="edit">
+                <div class="edit">  
             <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
                 </div>
         </div>  

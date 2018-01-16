@@ -1,12 +1,19 @@
 <template>
     <div>
         <div class="text-center" style="padding: 50px">
+            <b-alert variant="success" dismissible :show="showDismissibleAlert"
+            @dismissed="showDismissibleAlert=false">Request sended 
+            </b-alert>
             <button type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
             <button type="button" @click="sendEmail('FriendInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Send Friends Invitation</button>
             <router-link :to="`notification/${this.user.userId}`">Notification</router-link>
             <form @submit="onSubmit($event)">
                 <input v-model="recipientsEmail" placeholder="Find friend's email">
-                <button type="submit" class="btn btn-primary">Send friend request</button>
+                <!--button type="submit" class="btn btn-primary">Send friend request</button-->
+
+                <b-btn type="submit" @click="showDismissibleAlert=true" variant="info" class="m-1">
+                Send friend request
+                </b-btn>
             </form>
             <router-link :to="`contacts`">Contact List</router-link>
             <router-link :to="`facebookContacts`">Facebook Contact List</router-link>
@@ -31,7 +38,8 @@ export default {
             receivePerson: {},
             recipientsEmail: null,
             model:{},
-            listFacebookFriends: {}
+            listFacebookFriends: {},
+            showDismissibleAlert: false
         };
     },
 
