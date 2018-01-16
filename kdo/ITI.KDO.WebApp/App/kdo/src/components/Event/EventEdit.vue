@@ -6,11 +6,9 @@
         </div>
 
 
-        <div class="row">
+        <div class="row" style="margin-top:10px;">
         <div class="com-sm-4">
         <b-card>
-        <h1 v-if="mode == 'create'">Create a event</h1>
-        <h1 v-else>Edit your event</h1>
         <b-form  @submit="onSubmit($event)">
                 <div class="alert alert-danger" v-if="errors.length > 0">
                 <b>Les champs suivants semblent invalides : </b>
@@ -204,7 +202,7 @@
 
 <style lang="less">
 .row {
-    margin-top: 5%;
+    margin-top: 10px;
 }
 
 </style>

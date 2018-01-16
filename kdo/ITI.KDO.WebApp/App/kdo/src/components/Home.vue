@@ -35,7 +35,42 @@
 
           <b-navbar-nav v-if="auth.isConnected">
 
-            <b-nav-item  href="#"@click="logout()">Logout</b-nav-item>
+            <b-nav-item  href="/Home/userProfile">Profile</b-nav-item>
+            <b-nav-item  href="/Home/events">Event</b-nav-item>
+            <b-nav-item href="/Home/contact">Mes contacts</b-nav-item>
+            <b-nav-item href="#clients">Calendrier</b-nav-item>
+            <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
+            <b-nav-item> 
+               <span class="badge badge-light" >
+                      <tr v-if="contactNotificationList.length == 0 & eventNotificationList.length==0">
+                            
+                        </tr>
+                      <tr v-else >
+                            <td colspan="7" id="popoverButton-sync" style="font-size: medium;" class="text-center" >{{this.contactNotificationList.length + this.eventNotificationList.length}} Notifications</td>
+                            <b-popover :show.sync="show" target="popoverButton-sync" title="Accept or Decline">
+                        <tr v-if="i.senderEmail != userEmail" v-for="i of contactNotificationList">
+                          <td>{{ i.senderEmail }} want to add you as friend. </td>
+                          <td>
+                              <button  @click="responseContactInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-success">A</button>
+                              <button @click="responseContactInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-danger">D</button>
+                          </td>
+                        </tr>
+                        <tr v-for="i of eventNotificationList">
+                          <td>{{ i.eventName }}</td>
+                          <td>
+                              <button @click="responseEventInvitation('yes', i.eventId)" class="btn btn-primary">A</button>
+                              <button @click="responseEventInvitation('no', i.eventId)" class="btn btn-primary">D</button>
+                          </td>
+                        </tr>
+                          </b-popover>
+                      </tr>
+
+
+               </span>
+            </b-nav-item>
+            <b-nav-item href="#"@click="logout()">Logout</b-nav-item>
+
+            
           </b-navbar-nav>
 
         </b-navbar-nav>
@@ -51,63 +86,9 @@
     </b-collapse>
     </b-navbar>
     
-    <header id="page-top" v-if="!auth.isConnected">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-12">
-                  <img class="img-responsive" src="http://ironsummitmedia.github.io/startbootstrap-freelancer/img/profile.png" alt="">
-              </div>
-          </div>
-      </div>
-    </header>
-
-    <div class="content-wrapper">
-      <section class="primary" id="portfolio"  v-if="!auth.isConnected">
-          <div class="container">
-              <div class="row">
-                  <div class="col-lg-12 text-center">
-                      <h2>All ABOUT US</h2>
-                      <hr class="star-primary">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-sm-4">
-                      <img src="http://lorempixel.com/360/260/nature/">    
-                  </div>
-                  <div class="col-sm-4">
-                      <img src="http://lorempixel.com/360/260/animals/">    
-                  </div>
-                  <div class="col-sm-4">
-                      <img src="http://lorempixel.com/360/260/abstract/">    
-                  </div>
-              </div>
-          </div>
-      </section>
-      <section class="success" id="about"  v-if="!auth.isConnected">
-          <div class="container">
-              <div class="row">
-                  <div class="col-lg-12 text-center">
-                      <h2>Do you want a gift as you prefer ?</h2>
-                      <hr class="star-light">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-lg-4 col-lg-offset-2">
-                      <p>Start to add your list of gift on your account.</p>
-                  </div>
-                  <div class="col-lg-4">
-                      <p>Create an event where you add your friends and your gift from your list.</p>
-                  </div>
-                  <div class="col-lg-4">
-                      <p>Your friends will dicuss and decide for buying your gift.</p>
-                  </div>
-              </div>
-          </div>
-      </section>
-    </div>
     <div>
-      <b-row class="bg-light" style="height: 100%; margin-top: 15px; margin-bottom: 0px;">
-          <b-col md="2" class="bg-light " style="height:100%;">
+      <b-row class="bg-light" style="height: 100%; margin-top: 10%; margin-bottom: 0px;">
+          <!--b-col md="2" class="bg-light " style="height:100%;">
             <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
               <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>
               <b-nav-item href="/Home/events"class="row">Event</b-nav-item>
@@ -115,15 +96,13 @@
               <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
               <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
             </b-nav>
-          </b-col>
+          </b-col-->
 
-          <b-col md="8" style="height:100%;">
-            <b-row>
-              <router-view class="child"></router-view>
-            </b-row>
+          <b-col md="12" style="height:100%;">
+            <router-view class="child"></router-view>
           </b-col>
-          <b-col md="2" class="bg-light" style="height:100%;">
-          </b-col>
+          <!--b-col md="2" class="bg-light" style="height:100%;">
+          </b-col-->
       </b-row>
     </div>
   </div>
@@ -131,8 +110,10 @@
 
 <script>
 import AuthService from "../services/AuthService";
-import $ from 'jquery'
-import UserApiService from "../services/AuthService";
+import $ from 'jquery';
+import ContactApiService from '../services/ContactApiService';
+import NotificationApiService from '../services/NotificationApiService';
+import UserApiService from "../services/UserApiService";
 import { mapGetters, mapActions } from "vuex";
 import "../directives/requiredProviders";
 import '../directives/bsDropdown';
@@ -142,12 +123,27 @@ import '../directives/bsDropdown';
 export default {
   data() {
     return {
-      userEmail: null
-    };
-  },
+      userEmail: null,
+      user: {},
+      contactNotificationList: [],
+      eventNotificationList: [],
+      contactModel: {},
+      eventModel: {},
+      show: false
 
-  mounted() {
+    
+    };
+
+  },
+  async mounted() {
+    var userEmail = AuthService.emailUser();
     AuthService.registerAuthenticatedCallback(() => this.onAuthenticated());
+    this.user = await UserApiService.getUserAsync(userEmail);
+    await this.refreshContactNotificationList();
+    await this.refreshEventNotificationList();
+
+    
+
   },
 
   beforeDestroy() {
@@ -160,6 +156,56 @@ export default {
   },
 
   methods: {
+    ...mapActions(['executeAsyncRequest']), 
+
+    async refreshContactNotificationList() {
+                this.contactNotificationList = await NotificationApiService.getContactNotificationAsync(this.user.userId);
+                console.log("tg : " + this.contactNotificationList.length);
+    },
+    async refreshEventNotificationList(){
+    this.eventNotificationList = await NotificationApiService.getEventNotificationAsync(this.user.userId);
+    },
+    async responseContactInvitation(response, firstEmail, secondEmail, notificationId){
+                if(response == 'yes'){
+                    try {
+                        this.contactModel.senderEmail = firstEmail;
+                        this.contactModel.recipientsEmail = secondEmail;
+
+                        await NotificationApiService.setContactInvitationAsync(this.contactModel);
+                    } catch (error) {
+                        
+                    }
+                }else{
+                    try {
+                        await ContactApiService.deleteContactAsync(notificationId);
+                    } catch (error) {
+                        
+                    }
+                }
+                await this.refreshContactNotificationList();
+            },
+
+    async responseEventInvitation(response, eventId){
+        
+        if(response == 'yes'){
+            try {
+                var modelEvent = {};
+                this.eventModel.userId = this.user.userId;
+                this.eventModel.eventId = eventId;
+                
+                await NotificationApiService.setEventInvitationAsync(this.eventModel);
+            } catch (error) {
+
+            }
+        }else{
+            try {
+                await ParticipantApiService.deleteParticipantAsync(this.user.userId, eventId);
+            } catch (error) {
+                
+            }
+        }
+        await this.refreshEventNotificationList();
+    },
     login(provider) {
       AuthService.login(provider);
     },
@@ -209,7 +255,6 @@ export default {
 }
 
 header {
-  background-image: url(../assets/noel.jpg);
   width: 100%;
   background-size: 100%;
   height:400px;
@@ -217,7 +262,9 @@ header {
   text-align: center;
   text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
 }
-
+.popover {
+max-width: 100% !important;
+}
 .header {
   width: 100%;
   height: 100%;
@@ -248,5 +295,4 @@ color: #bcbcbc;
    color: white;
    text-align: center;
 }
-</style>
 </style>
