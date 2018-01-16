@@ -21,7 +21,7 @@
 
                 <tr v-for="i of contactList">
                     <td>{{ i.contactId }}</td>
-                    <td>{{ i.userEmail }}</td>
+                    <td><router-link :to="`userProfile/display/${i.userEmail}`">{{ i.userEmail }}</router-link></td>
                     <td>{{ i.friendEmail}}</td>
                     <td>
                         <button @click="deleteContact(i.contactId)"  class="btn btn-primary">Unfriend</button>
