@@ -1,9 +1,9 @@
 <template>
     <div>
         <b-card-group deck v-for="i in nbline" class="mb-2">
-            <b-card v-for="j in 6" v-if="contactList[j - 1] != null" cols="2"
+            <b-card v-for="j in 6" v-if="friendsList[j - 1] != null" cols="2"
                     text-variant="black"
-                    :header="contactList[j - 1].firstName + ' ' + contactList[j - 1].lastName"
+                    :header="friendsList[j - 1].firstName + ' ' + friendsList[j - 1].lastName"
                     class="text-center"
                     style="max-width: 128px;">
                 <p class="card-text">image</p>
@@ -42,7 +42,7 @@ export default {
             recipientsEmail: null,
             model:{},
             listFacebookFriends: {},
-            contactList: [],
+            friendsList: [],
             nbline: 0
         };
     },
@@ -57,8 +57,8 @@ export default {
         ...mapActions(['executeAsyncRequest']),
 
         async refreshList() {
-            this.contactList = await ContactApiService.getContactListAsync(this.user.userId);
-            this.nbline = Math.trunc((this.contactList.length + 5) / 6);
+            this.friendsList = await ContactApiService.getFriendsAsync(this.user.userId);
+            this.nbline = Math.trunc((this.friendsList.length + 5) / 6);
         },
 
         sendEmail(mailType){
