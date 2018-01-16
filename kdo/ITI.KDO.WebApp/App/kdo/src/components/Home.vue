@@ -68,7 +68,11 @@
 
                </span>
             </b-nav-item>
-            <b-nav-item href="#"@click="logout()">Logout</b-nav-item>
+            <b-nav-item style="position:absolute; right:10px;" href="#"@click="logout()">
+            <div class="logoImg">
+                    <img class="logoImg" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/power-512.png">
+            </div>
+            </b-nav-item>
 
             
           </b-navbar-nav>
@@ -225,7 +229,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 .row{
   margin-left:1%;
   margin-Right:0!important;
@@ -240,6 +244,16 @@ export default {
     background-color: #343a40; /* Dark-grey background */
     position: fixed;
 
+}
+.logoImg{
+  
+  position: absolute;
+  right: 10px;
+  width: 205%;
+  :hover {
+    transform: scale(1.1);
+
+  }
 }
 
 .icon-bar a {

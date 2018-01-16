@@ -29,7 +29,8 @@
                        <span style="font-family: cursive; font-size: larger;" >Add an event</span>
 
         </div>
-	</div> <!-- End Col -->
+	</div>
+    </div> <!-- End Col -->
 
 
       <!--div class="panel panel-default">
@@ -81,7 +82,7 @@
             </tbody>
         </table>
     </div>
-    </div>
+    </div-->
 </template>
 
 <script>
