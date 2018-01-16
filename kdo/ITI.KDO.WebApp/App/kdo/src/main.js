@@ -4,6 +4,7 @@ import VueI18n from 'vue-i18n';
 
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
+import Vuetify from 'vuetify'
 import $ from 'jquery';
 import Vuex from 'vuex';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -26,8 +27,7 @@ import PresentEdit from './components/present/PresentEdit.vue';
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue';
-import EventSuggestion from './components/event/EventSuggestion.vue';
-
+import Calendar from './components/event/calendar/Cal.vue';
 
 import Contact from './components/Contact/Contact.vue';
 import ContactList from './components/Contact/ContactList.vue'
@@ -36,6 +36,8 @@ import FacebookContactList from './components/Contact/FacebookContact.vue';
 import NotificationUser from './components/Notification.vue';
 
 import AppDefault from './components/AppDefault.vue';
+
+import icons from 'glyphicons';
 
 //import Register from './components/Register.vue';
 
@@ -50,7 +52,7 @@ import AuthService from './services/AuthService';
 Vue.use(VueI18n);
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-
+Vue.use(Vuetify);
 
 import {messages} from 'vue-bootstrap4-calendar';
 
@@ -103,8 +105,8 @@ const router = new VueRouter({
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
-        { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
-        { path: '/events/dateSuggest/:id?', component: EventSuggestion, beforeEnter: requireAuth },
+        { path: '/events/view/:id?', component: EventView, beforeEnter: requireAuth },
+        { path: '/events/:mode([suggest|display]+)/calendar', component: Calendar, beforeEnter: requireAuth },
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
@@ -141,9 +143,6 @@ AuthService.modifyPasswordEndpoint = '/Account/ModifyPassword';
 AuthService.emailTypes = {
     'FriendInvitation': {
         endpoint: '/Email/FriendInvitation'
-    },
-    'OccasionInvitation': {
-        endpoint: ''
     }
 }
 

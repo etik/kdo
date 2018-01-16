@@ -112,7 +112,7 @@
               <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>
               <b-nav-item href="/Home/events"class="row">Event</b-nav-item>
               <b-nav-item href="/Home/contact" class="row" >Mes contacts</b-nav-item>
-              <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
+              <b-nav-item href="/Home/events/display/calendar" class="row">Calendrier</b-nav-item>
               <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
             </b-nav>
           </b-col>
@@ -147,6 +147,11 @@ export default {
   },
 
   mounted() {
+    if(AuthService.isConnected){
+      console.log("log in");
+    }else{
+      console.log("not log in");
+    }
     AuthService.registerAuthenticatedCallback(() => this.onAuthenticated());
   },
 

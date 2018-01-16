@@ -77,7 +77,7 @@ namespace ITI.KDO.DAL
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@EventName", eventName, DbType.String);
                 dynamicParameters.Add("@Descriptions", descriptions, DbType.String);
-                dynamicParameters.Add("@Dates", dates, DbType.DateTime2);
+                dynamicParameters.Add("@Dates", dates, DbType.DateTime);
                 dynamicParameters.Add("@UserId", userId, DbType.Int32);
                 dynamicParameters.Add("@Id", DbType.Int32, direction: ParameterDirection.ReturnValue);
 
@@ -173,8 +173,6 @@ namespace ITI.KDO.DAL
                     commandType: CommandType.StoredProcedure);
             }
         }
-
-        
         
         /// <summary>
         /// Find Event by this name
@@ -194,6 +192,66 @@ namespace ITI.KDO.DAL
                             where e.EventName = @EventName;",
                         new { EventName = eventName })
                     .FirstOrDefault();
+            }
+        }
+
+        public IEnumerable<EventSuggest> GetAllEventSuggest(int userId, int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<EventSuggest>(
+                    @"select e.EventId,
+                             e.UserId,
+                             e.DateSuggest,
+                             e.Descriptions
+                      from dbo.vEventSuggest e
+                      where e.UserId = @UserId and e.EventId = @EventId;",
+                    new { UserId = userId, EventId = eventId });
+            }
+        }
+
+        public IEnumerable<EventSuggest> GetAllEventSuggestByUserId(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<EventSuggest>(
+                    @"select e.EventId,
+                             e.UserId,
+                             e.DateSuggest,
+                             e.Descriptions
+                      from dbo.vEventSuggest e
+                      where e.UserId = @UserId;",
+                    new { UserId = userId });
+            }
+        }
+
+        public EventSuggest FindEventSuggestByIds(int userId, int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<EventSuggest>(
+                    @"select e.EventId,
+                             e.UserId,
+                             e.DateSuggest,
+                             e.Descriptions
+                      from dbo.vEventSuggest e
+                      where e.UserId = @UserId and e.EventId = @EventId;",
+                    new { UserId = userId, EventId = eventId }).FirstOrDefault();
+            }
+        }
+
+        public void CreateEventSuggest(int eventId, int userId, DateTime dateSuggest, string descriptions)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    "dbo.sEventSuggestCreate", new
+                    {
+                        UserId = userId,
+                        EventId = eventId,
+                        DateSuggest = dateSuggest,
+                        Descriptions = descriptions
+                    }, commandType: CommandType.StoredProcedure);
             }
         }
     }

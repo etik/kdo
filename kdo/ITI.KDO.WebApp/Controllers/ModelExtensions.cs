@@ -133,6 +133,17 @@ namespace ITI.KDO.WebApp.Controllers
             };
         }
 
+        public static EventSuggestViewModel ToEventSuggestViewModel(this EventSuggest @this)
+        {
+            return new EventSuggestViewModel
+            {
+                EventId = @this.EventId,
+                UserId = @this.UserId,
+                DateSuggest = @this.DateSuggest,
+                Descriptions = @this.Descriptions
+            };
+        }
+
         //public static CategoryPresentViewModel ToCategoryPresentViewModel(this CategoryPresent @this)
         //{
         //    return new CategoryPresentViewModel

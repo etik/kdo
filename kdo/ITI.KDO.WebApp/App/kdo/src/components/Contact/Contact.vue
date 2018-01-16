@@ -1,7 +1,7 @@
 <template>
     <div>
-        <b-card-group deck v-for="i in nbline" class="mb-2">
-            <b-card v-for="j in 6" v-if="contactList[j - 1] != null" cols="2"
+        <b-card-group deck v-for="i in nbline" :key="i" class="mb-2">
+            <b-card v-for="j in 6" :key="j" v-if="contactList[j - 1] != null" cols="2"
                     text-variant="black"
                     :header="contactList[j - 1].firstName"
                     class="text-center"
@@ -16,7 +16,10 @@
             <router-link :to="`notification/${this.user.userId}`">Notification</router-link>
             <form @submit="onSubmit($event)">
                 <input v-model="recipientsEmail" placeholder="Find friend's email">
-                <button type="submit" class="btn btn-primary">Send friend request</button>
+                <b-btn type="submit" class="btn btn-primary" v-b-modal.modal>Send friend request</b-btn>
+                <b-modal id="modal" title="Sending Email">
+                    <p class="my-4">Email sent !</p>
+                </b-modal>
             </form>
             <router-link :to="`contacts`">Contact List</router-link>
             <router-link :to="`facebookContacts`">Facebook Contact List</router-link>

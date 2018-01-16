@@ -19,6 +19,7 @@
     "vue-bootstrap4-calendar": "^1.1.1",
     "vue-router": "^2.3.0",
     "vuejs-paginator": "^2.0.1",
+    "vuetify": "^0.17.6",
     "vuex": "^2.2.1"
   },
   "devDependencies": {

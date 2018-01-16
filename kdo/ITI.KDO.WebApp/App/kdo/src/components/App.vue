@@ -11,7 +11,7 @@
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
 
-          <b-carousel-slide v-for="i in nbslide" img-blank variant="dark" img-alt="Blank image">
+          <b-carousel-slide v-for = "i in nbslide" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
               <b-col md="4">
                 <b-card v-if="eventList[(3 * (i - 1))] != null"
@@ -21,10 +21,8 @@
                       tag="article"
                       style="max-width: 16rem;"
                       class="mb-2">
-                <h2 class="card-text">
-                  {{eventList[(3 * (i - 1))].eventName}}
-                </h2>
-                <router-link :to="`events/view/${eventList[(3 * (i - 1))].eventId}`">Go</router-link>
+                  <h2 class="card-text">{{eventList[(3 * (i - 1))].eventName}}</h2>
+                  <router-link :to="`events/view/${eventList[(3 * (i - 1))].eventId}`">Go</router-link>
                 </b-card>
               </b-col>
 
@@ -36,9 +34,7 @@
                       tag="article"
                       style="max-width: 16rem;"
                       class="mb-2">
-                <h2 class="card-text">
-                  {{eventList[(3 * (i - 1)) + 1].eventName}}
-                </h2>
+                <h2 class="card-text">{{eventList[(3 * (i - 1)) + 1].eventName}}</h2>
                 <router-link :to="`events/view/${eventList[(3 * (i - 1)) + 1].eventId}`">Go</router-link>
                 </b-card>
               </b-col>
@@ -51,9 +47,7 @@
                       tag="article"
                       style="max-width: 16rem;"
                       class="mb-2">
-                  <h2 class="card-text">
-                    {{eventList[(3 * (i - 1)) + 2].eventName}}
-                  </h2>
+                  <h2 class="card-text">{{eventList[(3 * (i - 1)) + 2].eventName}}</h2>
                   <router-link :to="`events/view/${eventList[(3 * (i - 1)) + 2].eventId}`">Go</router-link>
                 </b-card>
               </b-col>

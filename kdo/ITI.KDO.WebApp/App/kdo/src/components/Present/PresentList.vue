@@ -26,7 +26,7 @@
                     <td colspan="7" class="text-center">We-want-a-present!!!</td>
                 </tr>
 
-                <tr v-for="i of presentList">
+                <tr v-for="i of presentList" :key="i.presentId">
                     <td>{{ i.presentName }}</td>
                     <td>{{ i.price }}</td>
                     <td>{{ i.linkPresent }}</td>
