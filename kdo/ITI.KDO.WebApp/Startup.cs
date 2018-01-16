@@ -51,7 +51,7 @@ namespace ITI.KDO.WebApp
             services.AddSingleton(_ => new ParticipantGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new CategoryPresentGateway(Configuration["ConnectionStrings:KDODB"]));
             services.AddSingleton(_ => new ContactGateway(Configuration["ConnectionStrings:KDODB"]));
-            services.AddSingleton(_ => new FacebookContactGateway(Configuration["ConnectionStrings:KDODB"]));
+            services.AddSingleton(_ => new FacebookContactGateway(Configuration["ConnectionStrings:KDODB"]));          
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<UserServices>();
             services.AddSingleton<TokenService>();
@@ -63,6 +63,8 @@ namespace ITI.KDO.WebApp
             services.AddSingleton<CategoryPresentServices>();
             services.AddSingleton<FacebookServices>();
             services.AddSingleton<FacebookClient>();
+            services.AddSingleton<FileServices>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

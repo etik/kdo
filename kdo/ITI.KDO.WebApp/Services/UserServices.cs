@@ -1,9 +1,11 @@
 ﻿using ITI.KDO.DAL;
 using ITI.KDO.WebApp.Models.AccountViewModels;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -102,7 +104,7 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, user);
         }
 
-        public Result<User> UpdateUser(int userId, string firstName, string lastName, string email, DateTime birthdate, string phone, string photo)
+        public Result<User> UpdateUser(int userId, string firstName, string lastName, string email, DateTime birthdate, string phone, byte[] photo)
         {
             if (!IsNameValid(firstName)) return Result.Failure<User>(Status.BadRequest, "The first name is invalid.");
             if (!IsNameValid(lastName)) return Result.Failure<User>(Status.BadRequest, "The last name is invalid.");
@@ -180,6 +182,5 @@ namespace ITI.KDO.WebApp.Services
             }
             return false;
         }
-
     }
 }

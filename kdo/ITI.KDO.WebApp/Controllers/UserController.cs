@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -21,6 +22,7 @@ namespace ITI.KDO.WebApp.Controllers
     public class UserController : Controller
     {
         readonly UserServices _userServices;
+        private object _userService;
 
         public UserController( UserServices userServices )
         {
@@ -53,7 +55,5 @@ namespace ITI.KDO.WebApp.Controllers
                 o.ToViewModel = s => s.ToUserViewModel();
             });
         }
-
-        
     }
 }

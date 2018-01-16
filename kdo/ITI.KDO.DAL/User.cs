@@ -18,7 +18,7 @@ namespace ITI.KDO.DAL
 
         public string Phone { get; set; }
 
-        public string Photo { get; set; }
+        public byte[] Photo { get; set; }
 
         public byte[] Password { get; set; }
 

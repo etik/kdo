@@ -1,4 +1,11 @@
 import AuthService from '../services/AuthService'
+import $ from 'jquery'
+
+function dataFilter(data, type) {
+    if(data === '') return null;
+    return data;
+}
+
 
 async function checkErrors(resp) {
     if(resp.ok) return resp;
@@ -62,4 +69,21 @@ export async function deleteAsync(url) {
     })
     .then(checkErrors)
     .then(toJSON);
+}
+
+export async function putFileAsync(url, data) {
+    console.log("votre data WIIN : " + data);
+    console.dir(data);  
+      return await $.ajax({
+        method: 'POST',
+        url: url,
+        contentType: false,
+        cache: false,
+        data: data,
+        dataFilter: dataFilter,
+        processData: false,
+        headers: {
+            Authorization: `Bearer ${AuthService.accessToken}`
+        }
+    });
 }

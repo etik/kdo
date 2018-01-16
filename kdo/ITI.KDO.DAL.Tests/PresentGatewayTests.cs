@@ -20,7 +20,7 @@ namespace ITI.KDO.DAL.Tests
             string email = TestHelpers.RandomEmail();
             string phone = TestHelpers.RandomPhone();
             string photo = TestHelpers.RandomPhoto();
-
+            byte[] picture = TestHelpers.GetBytesArray(12);
             string presentName = TestHelpers.RandomPresentName();
             float price = TestHelpers.RandomPrice();
             string linkPresent = TestHelpers.RandomLink();
@@ -28,7 +28,7 @@ namespace ITI.KDO.DAL.Tests
 
             var userId = UserGateway.Create(firstName, lastName, birthDate, email);
 
-            var presentId = PresentGateway.AddToUser(presentName, price, linkPresent, categoryPresentId, userId);
+            var presentId = PresentGateway.AddToUser(presentName, price, linkPresent, picture, categoryPresentId, userId);
             Present present = PresentGateway.FindByPresentId(presentId);
 
             {
@@ -44,7 +44,7 @@ namespace ITI.KDO.DAL.Tests
                 linkPresent = TestHelpers.RandomLink();
                 presentName = TestHelpers.RandomPresentName();
                 price = TestHelpers.RandomPrice();
-                PresentGateway.Update(presentId, presentName, price, linkPresent, categoryPresentId, userId);
+                PresentGateway.Update(presentId, presentName, price, linkPresent, picture, categoryPresentId, userId);
        
             }
 

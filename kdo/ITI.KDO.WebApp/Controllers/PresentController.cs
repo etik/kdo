@@ -3,6 +3,7 @@ using ITI.KDO.WebApp.Authentification;
 using ITI.KDO.WebApp.Models.PresentViewModels;
 using ITI.KDO.WebApp.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,12 @@ namespace ITI.KDO.WebApp.Controllers
     public class PresentController : Controller
     {
         readonly PresentServices _presentService;
+        readonly FileServices _fileService;
 
-        public PresentController(PresentServices presentService)
+        public PresentController(PresentServices presentService, FileServices fileService)
         {
             _presentService = presentService;
+            _fileService = fileService;
         }
 
         [HttpGet("{userId}/getPresentByUserId")]
@@ -43,9 +46,11 @@ namespace ITI.KDO.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePresent([FromBody] PresentViewModel model)
+        public IActionResult CreatePresent([FromBody] PresentViewModel model, List<IFormFile> picture = null )
         {
-            Result<Present> result = _presentService.CreatePresent(model.UserId, model.PresentName, model.LinkPresent, model.Price, model.CategoryPresentId);
+            Result<Present> result = _presentService.CreatePresent(model.UserId, model.PresentName, model.LinkPresent, model.Picture, model.Price, model.CategoryPresentId);
+            _fileService.UpdatePicture(result.Content.PresentId, picture, EType.Present);
+
             return this.CreateResult<Present, PresentViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToPresentViewModel();
@@ -57,7 +62,7 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPut("{presentId}")]
         public IActionResult UpdatePresent(int presentId, [FromBody] PresentViewModel model)
         {
-            Result<Present> result = _presentService.UpdatePresent(model.PresentId, model.UserId, model.CategoryPresentId, model.Price, model.PresentName, model.LinkPresent);
+            Result<Present> result = _presentService.UpdatePresent(model.PresentId, model.UserId, model.CategoryPresentId, model.Price, model.PresentName, model.LinkPresent, model.Picture);
             return this.CreateResult<Present, PresentViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToPresentViewModel();

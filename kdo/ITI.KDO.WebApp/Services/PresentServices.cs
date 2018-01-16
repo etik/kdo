@@ -34,7 +34,7 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, presentId);
         }
 
-        public Result<Present> UpdatePresent(int presentId, int userId, int categoryPresent, float price, string presentName, string linkPresent)
+        public Result<Present> UpdatePresent(int presentId, int userId, int categoryPresent, float price, string presentName, string linkPresent, byte[] picture)
         {
             if (!IsNameValid(presentName)) return Result.Failure<Present>(Status.BadRequest, "The present's name is not valid.");
             if (!IsPriceValid(price)) return Result.Failure<Present>(Status.BadRequest, "The present's price is not valid.");
@@ -48,16 +48,16 @@ namespace ITI.KDO.WebApp.Services
                 Present p = _presentGateway.FindByName(presentName);
                 if(p != null && p.PresentId != presentId) return Result.Failure<Present>(Status.BadRequest, "A present with this name already exists.");
             }
-            _presentGateway.Update(presentId, presentName, price, linkPresent, categoryPresent, userId);
+            _presentGateway.Update(presentId, presentName, price, linkPresent, picture, categoryPresent, userId);
             present = _presentGateway.FindByPresentId(presentId);
             return Result.Success(Status.Ok, present);
         }
 
-        public Result<Present> CreatePresent(int userId, string presentName, string linkPresent, float price, int categoryPresent)
+        public Result<Present> CreatePresent(int userId, string presentName, string linkPresent, byte[] picture, float price, int categoryPresent)
         {
             if (!IsNameValid(presentName)) return Result.Failure<Present>(Status.BadRequest, "The present's name is not valid.");
             if (!IsPriceValid(price)) return Result.Failure<Present>(Status.BadRequest, "The present's price is not valid.");
-            _presentGateway.Create(presentName, price, linkPresent, categoryPresent, userId);
+            _presentGateway.Create(presentName, price, linkPresent, picture, categoryPresent, userId);
             Present present = _presentGateway.FindByName(presentName);
             return Result.Success(Status.Ok, present);
         }
@@ -66,8 +66,7 @@ namespace ITI.KDO.WebApp.Services
 
         bool IsPriceValid(float price)
         {
-            if (price <= 0) return false;
-            return true;
+            return price >= 0;
         }
     }
 }

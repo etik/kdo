@@ -13,7 +13,20 @@
                     <li v-for="e of errors">{{e}}</li>
                 </ul>
             </div>
+            <b-card title="Present">
 
+                <img :src="'data:image/jpeg;base64,'+ present.picture" style="width:100%" class="img-thumbnail myImage"
+                <h4>Chose a picture for your present</h4>
+                <div class="input-group" style="width : 25%;">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary btn-file">
+                            Browse
+                            <input type="file" @change="onFileChange" style="display: none;" multiple>
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" v-model="present.pictureId" readonly>
+                </div>
+            </b-card>
             <div class="form-group">
                 <label class="required">Present Name:</label>
                 <input type="text" v-model="present.presentName" class="form-control" required>
@@ -30,7 +43,7 @@
             </div>
 
             <div class="form-group">
-                <label>CategoryPresentId</label>
+                <label>Category Present</label>
                 <b-dropdown right text="Category Present">
                     <tr v-for="i of categoryPresentList">
                         <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
@@ -48,8 +61,11 @@
     import { mapActions } from 'vuex';
     import PresentApiService from '../../services/PresentApiService';
     import CategoryPresentApiService from '../../services/CategoryPresentApiService';
-    import UserApiService from "../../services/UserApiService";
-    import AuthService from "../../services/AuthService";
+    import UserApiService from '../../services/UserApiService';
+    import FileApiService from '../../services/FileApiService';
+    import AuthService from '../../services/AuthService';
+    import Vue from 'vue';
+    import Vuex from 'vuex';
 
   export default {
     data() {
@@ -59,8 +75,12 @@
         mode: null,
         id: null,
         errors: [],
+        image: '',
+        sendImage: '',
         categoryPresentList: [],
-        categoryChosen: "Choose a category."
+        categoryChosen: "Choose a category.",
+        TypeOfFile : 1,
+        data: new FormData()
       };
     },
 
@@ -105,10 +125,17 @@
             try {
                 if(this.mode == 'create') {
                     this.present.userId = this.user.userId;
-                    await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
+                    this.present.presentId = await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
+                    // if(this.present.presentId != null ) {
+                    //     console.log("i'm here");
+                    //     await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
+                    // }
+                    
+                    
                 }
                 else {
-                    await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present)); 
+                    await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present));
+                    if(this.present.presentId != null ) await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
                 }
                 this.$router.replace('/presents');
             }
@@ -120,6 +147,41 @@
                 }
             }
         },
+
+        onFileChange(e) {
+            console.log("in OnFileChange");             
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.createImage(files[0]);
+            this.$router.replace('/presents/create');      
+        },
+        createImage(file) {
+            console.log("in CreateImage");   
+            var image = new Image();
+            var reader = new FileReader();
+            var vm = this;
+
+            this.data.append('files', file);
+            this.sendImage = file;
+            console.log("sendImage : " + this.sendImage);
+            
+            reader.onload = (e) => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        async removeImage(e) {
+            console.log("in RemoveImage");   
+            e.preventDefault();
+            this.image = '';
+            this.item.photo = '';
+            this.data.append('files',  this.item.photo);
+            this.sendItemImage = await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.userId, 1));
+            this.mode = undefined;
+            this.$router.replace('/presents/create');           
+        },
+        
         choseCategory(categoryIdChosen, categoryNameChosen){
             this.categoryChosen = categoryNameChosen;
             this.present.categoryPresentId = categoryIdChosen;

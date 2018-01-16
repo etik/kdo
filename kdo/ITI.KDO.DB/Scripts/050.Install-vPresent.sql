@@ -8,7 +8,8 @@ as
 		PresentId = p.PresentId,
 		PresentName = p.PresentName,
 		Price = p.Price,
-		LinkPresent = p.LinkPresent		
+		LinkPresent = p.LinkPresent,
+		Picture = p.Picture
 
 	from dbo.tPresent p
 	inner join dbo.tCategoryPresent c on p.CategoryPresentId = c.CategoryPresentId

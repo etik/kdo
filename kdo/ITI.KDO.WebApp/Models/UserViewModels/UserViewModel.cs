@@ -16,6 +16,6 @@ namespace ITI.KDO.WebApp.Models.UserViewModels
 
         public string Phone { get; set; }
 
-        public string Photo { get; set; }
+        public byte[] Photo { get; set; }
     }
 }

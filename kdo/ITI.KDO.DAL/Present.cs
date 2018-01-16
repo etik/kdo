@@ -14,6 +14,8 @@ namespace ITI.KDO.DAL
 
         public string LinkPresent { get; set; }
 
+        public byte[] Picture { get; set; }
+
         public int CategoryPresentId { get; set; }
 
         public string CategoryName { get; set; }

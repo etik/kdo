@@ -279,13 +279,28 @@ namespace ITI.KDO.DAL
         /// <param name="email"></param>
         /// <param name="phone"></param>
         /// <param name="photo"></param>
-        public void Update(int userId, string firstName, string lastName, DateTime birthDate, string email, string phone, string photo)
+        public void Update(int userId, string firstName, string lastName, DateTime birthDate, string email, string phone, byte[] photo)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "dbo.sUserUpdate",
                     new { UserId = userId, FirstName = firstName, LastName = lastName, BirthDate = birthDate, Email = email, Phone = phone, Photo = photo },
+                    commandType: CommandType.StoredProcedure);
+            }
+        }
+        /// <summary>
+        /// User update photo
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="coverImageBytes"></param>
+        public void UserSetPhoto(int userId, byte[] coverImageBytes)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    "dbo.sUserUpdatePhoto",
+                    new { UserId = userId, Photo = coverImageBytes },
                     commandType: CommandType.StoredProcedure);
             }
         }
@@ -436,6 +451,5 @@ namespace ITI.KDO.DAL
                     new { UserId = userId });
             }
         }
-
     }
 }

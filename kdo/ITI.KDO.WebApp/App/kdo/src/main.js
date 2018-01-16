@@ -17,8 +17,9 @@ import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
 
 
-import UserProfile from './components/user/UserProfile.vue';
-import UserProfileEdit from './components/user/UserProfileEdit.vue';
+import UserProfil from './components/user/UserProfil.vue';
+//import UserProfile from './components/user/UserProfile.vue';
+//import UserProfileEdit from './components/user/UserProfileEdit.vue';
 
 import PresentList from './components/present/PresentList.vue';
 import PresentEdit from './components/present/PresentEdit.vue';
@@ -93,8 +94,10 @@ const router = new VueRouter({
         { path: '/login', component: Login },
         { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
-        { path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
-        { path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
+        //{ path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
+        //{ path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
+
+        { path: '/userProfil', component: UserProfil, beforeEnter: requireAuth },
 
         { path: '/appDefault', component: AppDefault },
 

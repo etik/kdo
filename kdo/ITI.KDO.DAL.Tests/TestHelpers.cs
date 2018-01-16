@@ -54,5 +54,17 @@ namespace ITI.KDO.DAL.Tests
         public static string RandomLink() => string.Format("www.-{0}", Guid.NewGuid().ToString().Substring(24));
 
         public static int RandomUserId() => _random.Next(100);
+
+        
+
+        public static Byte[] GetBytesArray(int size)
+        {
+            Byte[] b = new byte[size];
+            for (int i = 0; i < size; i++)
+            {
+                _random.NextBytes(b);
+            }
+            return b;
+        }
     }
 }
