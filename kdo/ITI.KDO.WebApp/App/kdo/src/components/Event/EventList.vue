@@ -2,7 +2,7 @@
 <div>
 <section>
   <div class="title">
-    <h1>EVENT LIST</h1>
+    <h1>EVENTS LIST</h1>
   </div>
 </section>
     <div class="row" style="margin-left:11%;">
@@ -126,7 +126,7 @@
         isCreator(creatorId){
             if(this.user.userId == creatorId){
                 return true;
-            }else {
+            } else {
                 return false;
             }
         },

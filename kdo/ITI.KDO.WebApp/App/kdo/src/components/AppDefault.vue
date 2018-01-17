@@ -3,13 +3,13 @@
   
 <section>
   <div class="title">
-    <h1>>WELCOME ON KDO</h1>
+    <h1>>WELCOME TO KDO</h1>
   </div>
 </section>
 
 <section>
     <div class="parallax-one">
-      <h2>RULES</h2>
+      <h2>KDO</h2>
     </div>
 </section>
   
@@ -18,15 +18,15 @@
 							<div class="col-md-12 feature-box">
 								<span class="glyphicon glyphicon-cog icon"></span>
 								<h4>Create your Event</h4>
-								<p>Birthday party > Christmas celebration > New year party > etc...</p>
+								<p>Birthday, Christmas, New Year's eve, etc...</p>
 
 							</div>
 						</div> <!-- End Col -->
 						<div class="col-sm-6 col-md-3">
 								<div class="col-md-12 feature-box">
 								<span class="glyphicon glyphicon-cog icon"></span>
-								<h4>Create your list of present</h4>
-								<p>Post your present > Put all detail of your present </p>
+								<h4>Create your presents list</h4>
+								<p>Specify your wished presents and details pertaining to them </p>
 							</div>
 						</div> <!-- End Col -->	
 						
@@ -34,14 +34,14 @@
 								<div class="feature-box">
 								<span class="glyphicon glyphicon-cog icon"></span>
 								<h4>Invite your friends</h4>
-								<p>Ask your friends availability > Fix the date </p>
+								<p>Ask your friends for their availability, decide the date </p>
 							</div>
 						</div> <!-- End Col -->
 						<div class="col-sm-6 col-md-3">
 								<div class="col-md-12 feature-box">
 								<span class="glyphicon glyphicon-cog icon"></span>
-								<h4>Open your presents</h4>
-								<p>Your friends will discuss and share to pay a present</p>
+								<h4>Receive your presents</h4>
+								<p>All your friends will contribute to buy you presents</p>
                 <p>JUST ENJOY </p>
 							</div>
 						</div> <!-- End Col -->
@@ -62,7 +62,7 @@
 
 <section>
   <div class="parallax-three">
-    <h2>BIRTHDATE</h2>
+    <h2>BIRTHDAY</h2>
   </div>
 </section>
 

@@ -49,7 +49,7 @@
                             <td colspan="7" id="popoverButton-sync" style="font-size: medium;" class="text-center" >{{this.contactNotificationList.length + this.eventNotificationList.length}} Notifications</td>
                             <b-popover :show.sync="show" target="popoverButton-sync" title="Accept or Decline">
                         <tr v-if="i.senderEmail != userEmail" v-for="i of contactNotificationList">
-                          <td>{{ i.senderEmail }} want to add you as friend. </td>
+                          <td>{{ i.senderEmail }} wants to add you as a friend. </td>
                           <td>
                               <button  @click="responseContactInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-success">A</button>
                               <button @click="responseContactInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-danger">D</button>

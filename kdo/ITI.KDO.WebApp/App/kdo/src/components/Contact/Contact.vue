@@ -12,11 +12,11 @@
 
         <div class="text-center" style="padding: 50px">
             <b-alert variant="success" dismissible :show="showDismissibleAlert"
-            @dismissed="showDismissibleAlert=false">Request sended 
+            @dismissed="showDismissibleAlert=false">Request sent 
             </b-alert>
-            <button type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
-            <button type="button" @click="sendEmail('FriendInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Send Friends Invitation</button>
-            <router-link :to="`notification/${this.user.userId}`">Notification</router-link>
+            <button type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-google" aria-hidden="true"></i> Send Event Invitation</button>
+            <button type="button" @click="sendEmail('FriendInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Send Friend Request</button>
+            <router-link :to="`notification/${this.user.userId}`">Notifications</router-link>
             <form @submit="onSubmit($event)">
                 <input v-model="recipientsEmail" placeholder="Find friend's email">
                 <!--button type="submit" class="btn btn-primary">Send friend request</button-->
