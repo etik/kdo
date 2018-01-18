@@ -46,10 +46,9 @@ namespace ITI.KDO.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePresent([FromBody] PresentViewModel model, List<IFormFile> picture = null )
+        public IActionResult CreatePresent([FromBody] PresentViewModel model)
         {
             Result<Present> result = _presentService.CreatePresent(model.UserId, model.PresentName, model.LinkPresent, model.Picture, model.Price, model.CategoryPresentId);
-            _fileService.UpdatePicture(result.Content.PresentId, picture, EType.Present);
 
             return this.CreateResult<Present, PresentViewModel>(result, o =>
             {

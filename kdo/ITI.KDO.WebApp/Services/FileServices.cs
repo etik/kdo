@@ -32,7 +32,7 @@ namespace ITI.KDO.WebApp.Services
         {
             byte[] coverImageBytes = null;
 
-            if (files.Count != 0)
+            if( files != null && files.Count != 0 )
             {
                 foreach (var file in files)
                 {
@@ -49,6 +49,7 @@ namespace ITI.KDO.WebApp.Services
 
         public Result UpdatePicture(int id, List<IFormFile> files, EType typeOfPicture)
         {
+            
             var picture = BuildByteArray(files);
             return picture == null ? UpdatePicture(id, null, typeOfPicture) : UpdatePicture(id, picture, typeOfPicture);
         }
