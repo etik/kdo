@@ -32,6 +32,16 @@ namespace ITI.KDO.WebApp.Controllers
             });
         }
 
+        [HttpGet("{quantityId}")]
+        public IActionResult GetParticipationByQuantity(int quantityId)
+        {
+            Result<IEnumerable<Participation>> result = _participationService.GetParticipationByQuantity(quantityId);
+            return this.CreateResult<IEnumerable<Participation>, IEnumerable<ParticipationViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToParticipationViewModel());
+            });
+        }
+
         [HttpGet("{quantityId}/{userId}/existingParticipation")]
         public bool ExistingParticipation(int quantityId, int userId)
         {
@@ -41,7 +51,7 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPost]
         public IActionResult CreateParticipation([FromBody] ParticipationViewModel model)
         {
-            Result<Participation> result = _participationService.CreateParticipation(model.QuantityId, model.EventId, model.UserId, model.AmountUserPrice);
+            Result<Participation> result = _participationService.CreateParticipation(model.QuantityId, model.UserId, model.EventId, model.AmountUserPrice);
             return this.CreateResult<Participation, ParticipationViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToParticipationViewModel();
@@ -51,7 +61,7 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPut("{quantityId}/{userId}")]
         public IActionResult UpdateParticipation(int quantityId, int userId, [FromBody] ParticipationViewModel model)
         {
-            Result<Participation> result = _participationService.UpdateParticipation(model.QuantityId, model.EventId, model.UserId, model.AmountUserPrice);
+            Result<Participation> result = _participationService.UpdateParticipation(model.QuantityId, model.UserId, model.EventId, model.AmountUserPrice);
             return this.CreateResult<Participation, ParticipationViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToParticipationViewModel();

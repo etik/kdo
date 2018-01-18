@@ -7,6 +7,10 @@ class ParticipantApiService{
 
     }
 
+    async getParticipationByQuantityAsync(quantityId){
+        return await getAsync(`${endpoint}/${quantityId}`);
+    }
+
     async getParticipationAsync(quantityId, userId){
         return await getAsync(`${endpoint}/${quantityId}/${userId}/getParticipation`);
     }
@@ -24,7 +28,7 @@ class ParticipantApiService{
     }
 
     async deleteParticipationAsync(quantityId, userId){
-        return await deleteAsync(`${endpoint}/${quantityId}/${userId}/delete`);
+        return await deleteAsync(`${endpoint}/${quantityId}/${userId}`);
     }
 }
 

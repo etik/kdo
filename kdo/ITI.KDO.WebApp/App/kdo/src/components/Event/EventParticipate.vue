@@ -26,7 +26,8 @@
                     type="text"
                     placeholder="Enter the ammount :"></b-form-input>
 
-                <button @click="Particip()" class="btn btn-primary">Participate</button>
+                <b-button @click="Particip()" class="btn btn-primary">Participate</b-button>
+                <b-button v-if="existing" @click="DeleteParticipation()" class="btn btn-primary">Remove your participation</b-button>                
             </b-col>
         </b-row>
     </div>
@@ -95,6 +96,12 @@
                 var aux = await this.executeAsyncRequest(() => ParticipationApiService.createParticipationAsync(this.participation));
             }
             this.$router.go(-1);
+        },
+
+        async DeleteParticipation()
+        {
+            this.$router.go(-1);
+            await this.executeAsyncRequest(() => ParticipationApiService.deleteParticipationAsync(this.quantityId, this.user.userId));
         }
     }
 };
