@@ -24,7 +24,7 @@
                             <input type="file" @change="onFileChange" style="display: none;" multiple>
                         </span>
                     </label>
-                    <input type="text" class="form-control" v-model="present.pictureId" readonly>
+                    <input type="text" class="form-control" v-model="sendImage.name" readonly>
                 </div>
             </b-card>
             <div class="form-group">
@@ -125,17 +125,19 @@
             try {
                 if(this.mode == 'create') {
                     this.present.userId = this.user.userId;
-                    this.present.presentId = await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
-                    // if(this.present.presentId != null ) {
-                    //     console.log("i'm here");
-                    //     await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
-                    // }
-                    
-                    
+                    this.present = await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
+                    if(this.data != null) {
+                        console.log("this data : " + this.data);
+                        console.log("this sendItem : " + this.sendImage.name);
+                        console.log("this present.presentId : " + this.present.presentId);
+                        await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
+                     }
+                        
+                        
                 }
                 else {
                     await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present));
-                    if(this.present.presentId != null ) await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
+                    if(this.data != null) await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
                 }
                 this.$router.replace('/presents');
             }

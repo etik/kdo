@@ -106,7 +106,7 @@
                 sendImage: '',
                 errors: [],
                 data: new FormData(),
-                TypeOfFile: 0
+                TypeOfFile: 1
             };
         },
 
