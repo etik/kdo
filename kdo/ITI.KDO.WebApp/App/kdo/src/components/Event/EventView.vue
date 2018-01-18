@@ -40,12 +40,12 @@
                         <h2 class="card-text" href="#">
                             {{i.presentName}}<br>
                             <b-button :to="`/events/presents/edit/${eventId}/${i.quantityId}`" v-if="i.nominatorId == user.userId">Edit</b-button>
-                            <b-button :to="`/events/participate/${eventId}/${i.quantityId}`">Participate</b-button>
-                            Participant :
-                            <!--{{getParticipation(i.quantityId)}}-->
-                            <!--p v-for="x in test(i.quantityId)">
+                            <b-button :to="`/events/participate/${eventId}/${i.quantityId}`">Participate</b-button></br>                            
+                            {{i.ammount}} / {{i.price}}</br>                            
+                            Participant :</br>
+                            <p v-for="x in i.participants">
                                 {{x.userId}}
-                            </p-->
+                            </p>
                         </h2>
                     </b-card>
                 </b-row>
@@ -145,41 +145,23 @@
             }
         },
         async refreshParticipation(){
+            var ammount;
             for (var i = 0; i < this.quantityPresentList.length; i++)
             {
+                ammount = 0;
                 await this.executeAsyncRequest(
                     () => ParticipationApiService
                         .getParticipationByQuantityAsync(this.quantityPresentList[i].quantityId)
                 ).then(p => {
-                    this.participantQuantity[i] = p;
+                    this.quantityPresentList[i].participants = p;
+                    this.quantityPresentList[i].ammount = 0;
+                    for (var j = 0; j < p.length; j++)
+                    {
+                        this.quantityPresentList[i].ammount += p[j].amountUserPrice;
+                    }
                 });
             }
             this.bugfix = 2;
-        },
-        /*
-        getParticipation(qid)
-        {
-            for (var i = 0; i < this.participantQuantity.length; i++)
-            {
-                for (var j = 0; j < this.participantQuantity[i].length; j++)
-                {
-                    console.log(this.participantQuantity[i][j].userId);
-                }
-                if (this.participantQuantity[i].quantityId == qid)
-                    return this.participantQuantity[i];
-            }
-            return null;
-        },*/
-        async test(qid)
-        {
-            var aux;
-            await this.executeAsyncRequest(
-                    () => ParticipationApiService
-                        .getParticipationByQuantityAsync(qid)
-                ).then(p => {
-                    aux = p;
-            });
-            return aux;
         }
     }
 };

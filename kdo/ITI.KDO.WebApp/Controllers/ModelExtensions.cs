@@ -63,6 +63,7 @@ namespace ITI.KDO.WebApp.Controllers
             {
                 QuantityId = @this.QuantityId,
                 Quantity = @this.Quantity,
+                Price = @this.Price,
                 RecipientId = @this.RecipientId,
                 NominatorId = @this.NominatorId,
                 PresentId = @this.PresentId,

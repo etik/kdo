@@ -23,6 +23,8 @@ namespace ITI.KDO.WebApp.Models.QuantityViewModels
 
         public int Quantity { get; set; }
 
+        public int Price { get; set; }
+
         public int RecipientId { get; set; }
 
         public int NominatorId { get; set; }
