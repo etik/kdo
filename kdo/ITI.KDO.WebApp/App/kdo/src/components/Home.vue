@@ -38,7 +38,7 @@
             <b-nav-item  href="/Home/userProfile">Profile</b-nav-item>
             <b-nav-item  href="/Home/events">Event</b-nav-item>
             <b-nav-item href="/Home/contact">Mes contacts</b-nav-item>
-            <b-nav-item href="#clients">Calendrier</b-nav-item>
+            <b-nav-item href="/Home/events/display/calendar">Calendrier</b-nav-item>
             <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
             <b-nav-item> 
                <span class="badge badge-light" >
@@ -97,7 +97,7 @@
               <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>
               <b-nav-item href="/Home/events"class="row">Event</b-nav-item>
               <b-nav-item href="/Home/contact" class="row" >Mes contacts</b-nav-item>
-              <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
+              <b-nav-item href="/Home/events/display/calendar" class="row">Calendrier</b-nav-item>
               <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
             </b-nav>
           </b-col-->

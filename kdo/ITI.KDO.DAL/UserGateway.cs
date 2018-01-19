@@ -243,7 +243,7 @@ namespace ITI.KDO.DAL
                 dynamicParameters.Add("@FirstName", firstName, DbType.String);
                 dynamicParameters.Add("@LastName", lastName, DbType.String);
                 dynamicParameters.Add("@Email", email, DbType.String);
-                dynamicParameters.Add("@BirthDate", birthDate, DbType.DateTime2);
+                dynamicParameters.Add("@BirthDate", birthDate, DbType.DateTime);
                 dynamicParameters.Add("@Id", DbType.Int32, direction: ParameterDirection.ReturnValue);
 
                 con.Execute(

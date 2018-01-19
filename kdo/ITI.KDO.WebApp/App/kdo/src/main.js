@@ -30,8 +30,8 @@ import EventView from './components/event/EventView.vue';
 import EventPresentEdit from './components/event/EventPresentEdit.vue';
 import EventParticipate from './components/event/EventParticipate.vue';
 import EventImportPresent from './components/event/EventImportPresent.vue';
-import EventSuggestion from './components/event/EventSuggestion.vue';
 
+import Calendar from './components/event/calendar/Cal.vue';
 
 import Contact from './components/Contact/Contact.vue';
 import ContactList from './components/Contact/ContactList.vue'
@@ -41,12 +41,21 @@ import NotificationUser from './components/Notification.vue';
 
 import AppDefault from './components/AppDefault.vue';
 
+import icons from 'glyphicons';
+
+//import Register from './components/Register.vue';
+
+//import User from './components/User/User.vue';
+//import UserModificationMP from './components/User/UserEditPassword.vue';
+//import QuiSommesNous from './components/QuiSommesNous.vue';
+
+//import Simi from './components/Simulateur.vue';
+
 import AuthService from './services/AuthService';
 
 Vue.use(VueI18n);
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-
 
 import {messages} from 'vue-bootstrap4-calendar';
 
@@ -100,11 +109,13 @@ const router = new VueRouter({
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
+
         { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
         { path: '/events/importPresent/:id?', component: EventImportPresent, beforeEnter: requireAuth },
         { path: '/events/presents/:mode([create|edit]+)/:eid?/:qid?', component: EventPresentEdit, beforeEnter: requireAuth },
         { path: '/events/participate/:eid?/:qid?', component: EventParticipate, beforeEnter: requireAuth },
-        { path: '/events/dateSuggest/:id?', component: EventSuggestion, beforeEnter: requireAuth },
+        { path: '/events/:mode([suggest|display]+)/calendar', component: Calendar, beforeEnter: requireAuth },
+
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
@@ -141,9 +152,6 @@ AuthService.modifyPasswordEndpoint = '/Account/ModifyPassword';
 AuthService.emailTypes = {
     'FriendInvitation': {
         endpoint: '/Email/FriendInvitation'
-    },
-    'OccasionInvitation': {
-        endpoint: ''
     }
 }
 

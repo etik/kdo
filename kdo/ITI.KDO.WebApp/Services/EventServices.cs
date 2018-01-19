@@ -10,19 +10,33 @@ namespace ITI.KDO.WebApp.Services
     {
         readonly EventGateway _eventGateway;
         readonly ParticipantGateway _participantGateway;
+        readonly UserGateway _userGateway;
 
-        public EventServices(EventGateway eventGateway, ParticipantGateway participantGateway)
+        public EventServices(EventGateway eventGateway, ParticipantGateway participantGateway, UserGateway userGateway)
         {
             _eventGateway = eventGateway;
             _participantGateway = participantGateway;
+            _userGateway = userGateway;
         }
 
-        public Result<IEnumerable<Event>> GetAllByUserId(int userId)
+        public Result<IEnumerable<Event>> GetAllEvents(int userId)
         {
             IEnumerable<Event> listEventCreator = _eventGateway.GetAllByUserId(userId);
             IEnumerable<Event> listEventInvited = GetAllEvents( _participantGateway.FindParticipantsOfUser(userId) );
             
             return Result.Success(Status.Ok, listEventCreator.Concat(listEventInvited));
+        }
+
+        public Result<IEnumerable<EventSuggest>> GetAllEventsSuggest(int userId, int eventId)
+        {
+            IEnumerable<EventSuggest> listEventSuggest = _eventGateway.GetAllEventSuggest(userId, eventId);
+            return Result.Success(Status.Ok, listEventSuggest);
+        }
+
+        public Result<IEnumerable<EventSuggest>> GetAllEventsSuggestByUserId(int userId)
+        {
+            IEnumerable<EventSuggest> listEventSuggest = _eventGateway.GetAllEventSuggestByUserId(userId);
+            return Result.Success(Status.Ok, listEventSuggest);
         }
 
         public Result<Event> GetByIds(int userId, int eventId)
@@ -64,6 +78,7 @@ namespace ITI.KDO.WebApp.Services
 
             return Result.Success(Status.Ok, events);
         }
+
         public Result<Event> CreateEvent(int userId, string eventName, string descriptions, DateTime dates)
         {
             if (!IsNameValid(eventName)) return Result.Failure<Event>(Status.BadRequest, "The event's name is not valid.");
@@ -71,6 +86,25 @@ namespace ITI.KDO.WebApp.Services
             _eventGateway.Create(eventName, descriptions, dates, userId);
             Event events = _eventGateway.FindByName(eventName);
             return Result.Success(Status.Ok, events);
+        }
+
+        public Result<EventSuggest> CreateEventSuggest(int eventId, int userId, DateTime dateSuggest, string descriptions)
+        {
+            if (_eventGateway.FindById(eventId) == null) return Result.Failure<EventSuggest>(Status.NotFound, "Event not found.");
+            if (_userGateway.FindById(userId) == null) return Result.Failure<EventSuggest>(Status.NotFound, "User not found.");
+
+            _eventGateway.CreateEventSuggest(eventId, userId, dateSuggest, descriptions);
+            EventSuggest eventSuggest = _eventGateway.FindEventSuggestByIds(eventId, userId);
+            return Result.Success(Status.Ok, eventSuggest);
+        }
+
+        public Result<EventSuggest> GetEventSuggestByIds(int eventId, int userId)
+        {
+            if (_eventGateway.FindById(eventId) == null) return Result.Failure<EventSuggest>(Status.NotFound, "Event not found.");
+            if (_userGateway.FindById(userId) == null) return Result.Failure<EventSuggest>(Status.NotFound, "User not found.");
+            
+            EventSuggest eventSuggest = _eventGateway.FindEventSuggestByIds(eventId, userId);
+            return Result.Success(Status.Ok, eventSuggest);
         }
 
         bool IsNameValid(string name) => !string.IsNullOrWhiteSpace(name);

@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label>CategoryPresentId</label>
                 <b-dropdown right text="Category Present">
-                    <tr v-for="i of categoryPresentList">
+                    <tr v-for="i of categoryPresentList" :key="i.categoryPresentId">
                         <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
                     </tr>
                 </b-dropdown>

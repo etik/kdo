@@ -21,7 +21,7 @@
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
 
-          <b-carousel-slide v-for="i in nbslide" img-blank variant="dark" img-alt="Blank image" >
+          <b-carousel-slide v-for = "i in nbslide" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
               <b-col md="4">
                 <b-card v-if="eventList[(3 * (i - 1))] != null"

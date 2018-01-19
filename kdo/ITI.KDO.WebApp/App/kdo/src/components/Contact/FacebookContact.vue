@@ -22,7 +22,7 @@
                     <td colspan="7" class="text-center">You have no facebook friend.</td>
                 </tr>
 
-                <tr v-for="i of contacts">
+                <tr v-for="i of contacts" :key="i.contactId">
                     <td>{{ i.contactId }}</td>
                     <td>{{ i.facebookId }}</td>
                     <td>{{ i.email }}</td>

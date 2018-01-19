@@ -97,14 +97,14 @@
   export default {
     data() {
       return {
-        user:{},
-        event:{},
+        user: {},
+        event: {},
         mode: null,
-        eventId: null,
-        participant:{},
+        eventId: 0,
+        participant: {},
         participantList: [],
-        friendList:[],
-        selected:[],
+        friendList: [],
+        selected: [],
         errors: [],
         options: [
         {text: 'Xavier F', value: 'Xavier F'},
@@ -126,16 +126,17 @@
         await this.refreshfriendList();
 
         if(this.mode == 'edit'){
-                try {
-                    // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
-                    // It is useful when we have to know if an error occurred, in order to adapt the user experience.
-                    this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
-                }
-                catch(error) {
-                    // So if an exception occurred, we redirect the user to the students list.
-                    this.$router.replace('/events');
-                }
+            try {
+                // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
+                // It is useful when we have to know if an error occurred, in order to adapt the user experience.
+                this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
+                this.event.dates = this.event.dates.slice(0, 10);
             }
+            catch(error) {
+                // So if an exception occurred, we redirect the user to the students list.
+                this.$router.replace('/events');
+            }
+        }
     },
 
     methods: {
