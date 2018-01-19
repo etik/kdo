@@ -1,11 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+require("babel-polyfill");
 var wwwroot = "../../wwwroot";
 
 module.exports = {
-    entry: './src/main.js',
+    entry: [ 'babel-polyfill' ,'./src/main.js'],
 
     output: {
         path: path.resolve(wwwroot, './dist'),

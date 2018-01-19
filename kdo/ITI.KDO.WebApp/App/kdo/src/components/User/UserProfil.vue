@@ -165,7 +165,9 @@
                     console.log("this.image is not null");
                     console.log("this.data : " + this.data);
                     console.log("this.item.userId : " + this.item.userId);
-                    this.sendItemImage = await FileApiService.updateFileAsync(this.data, this.item.userId, this.TypeOfFile);
+                    this.sendItemImage = await FileApiService
+                        .updateFileAsync(this.data, this.item.userId)
+                        .then( () => { FileApiService.typeOfPicture(this.typeOfFile, this.item.userId)});
                 }  
                 
                 
@@ -191,7 +193,7 @@
                 this.data.append('files', file);
                 this.sendImage = file;
                 console.log("sendImage : " + this.sendImage);
-                
+                console.log("file : " + file);
                 reader.onload = (e) => {
                     vm.image = e.target.result;
                 };
@@ -203,6 +205,8 @@
                 this.image = '';
                 this.item.photo = '';
                 this.data.append('files',  this.item.photo);
+                this.data.image.append('files',  this.item.photo);
+                
                 this.sendItemImage = await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.item.userId, this.TypeOfFile));
                 this.mode = undefined;
                  this.refresh();

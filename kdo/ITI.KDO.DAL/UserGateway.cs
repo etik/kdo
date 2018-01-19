@@ -279,13 +279,13 @@ namespace ITI.KDO.DAL
         /// <param name="email"></param>
         /// <param name="phone"></param>
         /// <param name="photo"></param>
-        public void Update(int userId, string firstName, string lastName, DateTime birthDate, string email, string phone, byte[] photo)
+        public void Update(int userId, string firstName, string lastName, string email, string phone, byte[] photo)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "dbo.sUserUpdate",
-                    new { UserId = userId, FirstName = firstName, LastName = lastName, BirthDate = birthDate, Email = email, Phone = phone, Photo = photo },
+                    new { UserId = userId, FirstName = firstName, LastName = lastName, Email = email, Phone = phone, Photo = photo },
                     commandType: CommandType.StoredProcedure);
             }
         }

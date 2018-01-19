@@ -30,11 +30,53 @@ namespace ITI.KDO.WebApp.Controllers
         /// <param name="files"></param>
         /// <returns></returns>
         [HttpPost("img/{id}")]
-        public IActionResult UpdateImageUser(int id, List<IFormFile> files, int typeOfPicture)
+        public object UpdateImageUser(int id, List<IFormFile> files)
         {
-            Result result = _fileServices.UpdatePicture(id, files, (EType)typeOfPicture);
-            return this.CreateResult(result);
+            //Result result = _fileServices.UpdatePicture(id, file);
+            //return this.CreateResult(result);
+            
+            try
+            {
+                _fileServices.SavePictureSnapshot(id, files);
+                return Ok();
+            }
+            catch ( Exception )
+            {
+                return false;
+            }
+
+
+        }
+
+        [HttpPost("{type}/{id}")]
+        public object TypeOfFile(int id, EType typeOfFile)
+        {
+            try
+            {
+               if( !_fileServices.TryUpdatePicture( id, typeOfFile ) )
+                   return BadRequest();
+                return Ok();
+            }
+            catch( Exception )
+            {
+                return BadRequest();
+            }
         }
 
     }
+
+    public class Image : IImage
+    {
+        public List<IFormFile> Images { get; set; }
+        public EType TypeOfPicture { get; set; }
+    }
+
+    public interface IImage
+    {
+        List<IFormFile> Images { get; set; }
+        EType TypeOfPicture { get; set; }
+
+    }
 }
+
+

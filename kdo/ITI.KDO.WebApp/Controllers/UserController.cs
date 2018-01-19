@@ -49,7 +49,7 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPut("{userId}")]
         public IActionResult UpdateUser(int userId, [FromBody] UserViewModel model)
         {
-            Result<User> result = _userServices.UpdateUser(model.UserId, model.FirstName, model.LastName, model.Email, model.Birthdate, model.Phone, model.Photo);
+            Result<User> result = _userServices.UpdateUser(model.UserId, model.FirstName, model.LastName, model.Email, model.Phone, model.Photo);
             return this.CreateResult<User, UserViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToUserViewModel();

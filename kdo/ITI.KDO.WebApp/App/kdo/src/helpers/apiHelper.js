@@ -71,7 +71,18 @@ export async function deleteAsync(url) {
     .then(toJSON);
 }
 
-export async function putFileAsync(url, data) {
+export async function postTypeAsync(url) {
+    return await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization' : `Bearer ${AuthService.accessToken}`
+        }
+    })
+    .then(checkErrors)
+    .then(toJSON);
+}
+
+export async function postFileAsync(url, data) {
     console.log("votre data WIIN : " + data);
     console.dir(data);  
       return await $.ajax({

@@ -104,15 +104,15 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, user);
         }
 
-        public Result<User> UpdateUser(int userId, string firstName, string lastName, string email, DateTime birthdate, string phone, byte[] photo)
+        public Result<User> UpdateUser(int userId, string firstName, string lastName, string email, string phone, byte[] photo)
         {
             if (!IsNameValid(firstName)) return Result.Failure<User>(Status.BadRequest, "The first name is invalid.");
             if (!IsNameValid(lastName)) return Result.Failure<User>(Status.BadRequest, "The last name is invalid.");
             if (!IsNameValid(email)) return Result.Failure<User>(Status.BadRequest, "The email is invalid.");
-            if (!IsDateTimeValid(birthdate)) return Result.Failure<User>(Status.BadRequest, "The birthdate is invalid.");
+           
             if (phone != null && !IsPhoneTelValid(phone)) return Result.Failure<User>(Status.BadRequest, "The phone number is invalid.");
 
-            _userGateway.Update(userId, firstName, lastName, birthdate, email, phone, photo);
+            _userGateway.Update(userId, firstName, lastName, email, phone, photo);
             User user = _userGateway.FindById(userId);
             return Result.Success(Status.Ok, user);
         }
