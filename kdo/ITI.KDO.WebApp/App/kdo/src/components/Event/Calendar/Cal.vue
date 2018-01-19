@@ -55,7 +55,7 @@ html {
 body,
 html {
     height: 100%;
-    overflow: hidden;
+    //overflow: hidden;
 }
 
 body {

@@ -4,7 +4,6 @@ import VueI18n from 'vue-i18n';
 
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
-import Vuetify from 'vuetify'
 import $ from 'jquery';
 import Vuex from 'vuex';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -52,7 +51,6 @@ import AuthService from './services/AuthService';
 Vue.use(VueI18n);
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-Vue.use(Vuetify);
 
 import {messages} from 'vue-bootstrap4-calendar';
 
