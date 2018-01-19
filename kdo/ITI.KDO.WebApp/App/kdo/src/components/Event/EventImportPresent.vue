@@ -80,7 +80,7 @@
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
         this.eventId = this.$route.params.id;
-        this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
+        this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
 
         await this.refreshPresentList();
         await this.refreshQuantityList();

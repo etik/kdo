@@ -33,7 +33,7 @@
                             </b-dropdown>
                         </h2>
                     </b-card>
-                    <b-card v-for="i in quantityPresentList" :key="i"
+                    <b-card v-for="i in quantityPresentList"
                             tag="article"
                             style="max-width: 16rem; Sheight: 256px;"
                             class="mb-2">
@@ -43,7 +43,7 @@
                             <b-button :to="`/events/participate/${eventId}/${i.quantityId}`">Participate</b-button></br>                            
                             {{i.ammount}} / {{i.price}}</br>                            
                             Participant :</br>
-                            <p v-for="x in i.participants" :key="i">
+                            <p v-for="x in i.participants">
                                 {{x.userId}}
                             </p>
                         </h2>
@@ -53,7 +53,7 @@
         </b-row>
 
         <b-row class="bordered">
-            <b-card v-for="i in participantUserList" :key="i"
+            <b-card v-for="i in participantUserList"
                     tag="article"
                     style="max-width: 16rem;"
                     class="mb-2">
@@ -97,11 +97,8 @@
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.eventId = this.$route.params.id;
-        this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
-        
+        this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
         this.user = await UserApiService.getUserAsync(userEmail);
-        
-        await this.refreshList();
         await this.refreshParticipantList();
         this.selected = this.beneficiary[0].value;
         await this.refreshQuantityList();
@@ -111,19 +108,15 @@
     methods: {
         ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
-        async refreshList() {
-            this.event = await EventApiService.getEventAsync(this.eventId);
-        },
         async refreshParticipantList(){
             this.participantUserList = [];
             this.beneficiary = [];
             var aux;
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
-            
+
             for(var i = 0; i < this.participantList.length; i++)
             {
                 aux = await UserApiService.getUserByIdAsync(this.participantList[i].userId);
-
                 this.participantUserList.push(aux);
                 if (this.participantList[i].participantType == true)                    
                     this.beneficiary.push({value: aux.userId, text: aux.firstName});
