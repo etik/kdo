@@ -92,7 +92,7 @@
                 @sliding-start="onSlideStart1"
                 @sliding-end="onSlideEnd1">
 
-          <b-carousel-slide v-for="i in nbslide1" img-blank variant="dark" img-alt="Blank image">
+          <b-carousel-slide v-for="i in nbslide1" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
               <b-col md="4">
                 <b-card v-if="presentList[(3 * (i - 1))] != null"

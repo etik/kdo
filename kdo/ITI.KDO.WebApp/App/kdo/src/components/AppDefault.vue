@@ -13,41 +13,41 @@
     </div>
 </section>
   
-  	<div class="row">
-						<div class="col-sm-6 col-md-3">
-							<div class="col-md-12 feature-box">
-								<span class="glyphicon glyphicon-cog icon"></span>
-								<h4>Create your Event</h4>
-								<p>Birthday, Christmas, New Year's eve, etc...</p>
+<div class="row">
+  <div class="col-sm-6 col-md-3">
+    <div class="col-md-12 feature-box">
+      <span class="glyphicon glyphicon-cog icon"></span>
+      <h4>Create your Event</h4>
+      <p>Birthday, Christmas, New Year's eve, etc...</p>
+    </div>
+  </div> <!-- End Col -->
 
-							</div>
-						</div> <!-- End Col -->
-						<div class="col-sm-6 col-md-3">
-								<div class="col-md-12 feature-box">
-								<span class="glyphicon glyphicon-cog icon"></span>
-								<h4>Create your presents list</h4>
-								<p>Specify your wished presents and details pertaining to them </p>
-							</div>
-						</div> <!-- End Col -->	
-						
-						<div class="col-sm-6 col-md-3">
-								<div class="feature-box">
-								<span class="glyphicon glyphicon-cog icon"></span>
-								<h4>Invite your friends</h4>
-								<p>Ask your friends for their availability, decide the date </p>
-							</div>
-						</div> <!-- End Col -->
-						<div class="col-sm-6 col-md-3">
-								<div class="col-md-12 feature-box">
-								<span class="glyphicon glyphicon-cog icon"></span>
-								<h4>Receive your presents</h4>
-								<p>All your friends will contribute to buy you presents</p>
-                <p>JUST ENJOY </p>
-							</div>
-						</div> <!-- End Col -->
-						
-	
-					</div>
+  <div class="col-sm-6 col-md-3">
+    <div class="col-md-12 feature-box">
+      <span class="glyphicon glyphicon-cog icon"></span>
+      <h4>Create your presents list</h4>
+      <p>Specify your wished presents and details pertaining to them </p>
+    </div>
+  </div> <!-- End Col -->
+  
+  <div class="col-sm-6 col-md-3">
+    <div class="feature-box">
+      <span class="glyphicon glyphicon-cog icon"></span>
+      <h4>Invite your friends</h4>
+      <p>Ask your friends for their availability, decide the date </p>
+    </div>
+  </div> <!-- End Col -->
+  
+  <div class="col-sm-6 col-md-3">
+    <div class="col-md-12 feature-box">
+      <span class="glyphicon glyphicon-cog icon"></span>
+      <h4>Receive your presents</h4>
+      <p>All your friends will contribute to buy you presents</p>
+      <p>JUST ENJOY </p>
+    </div>
+  </div> <!-- End Col -->
+</div>
+
 <section>
   <div class="parallax-two">
     <h2>CHRISTMAS</h2>

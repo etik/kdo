@@ -33,7 +33,7 @@
                             </b-dropdown>
                         </h2>
                     </b-card>
-                    <b-card v-for="i in quantityPresentList"
+                    <b-card v-for="i in quantityPresentList" :key="i"
                             tag="article"
                             style="max-width: 16rem; Sheight: 256px;"
                             class="mb-2">
@@ -43,7 +43,7 @@
                             <b-button :to="`/events/participate/${eventId}/${i.quantityId}`">Participate</b-button></br>                            
                             {{i.ammount}} / {{i.price}}</br>                            
                             Participant :</br>
-                            <p v-for="x in i.participants">
+                            <p v-for="x in i.participants" :key="i">
                                 {{x.userId}}
                             </p>
                         </h2>
@@ -53,7 +53,7 @@
         </b-row>
 
         <b-row class="bordered">
-            <b-card v-for="i in participantUserList"
+            <b-card v-for="i in participantUserList" :key="i"
                     tag="article"
                     style="max-width: 16rem;"
                     class="mb-2">
