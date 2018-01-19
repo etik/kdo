@@ -1,10 +1,13 @@
 <template>
 <div>
+            <button style="width: 21%; margin-left: 38%;    background-color: #d44e4e;"type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
+
 <section>
   <div class="title">
     <h1>EVENT LIST</h1>
   </div>
 </section>
+
     <div class="row" style="margin-left:11%;">
         <div md="12" class="feature-box event" v-for="i of eventList">
                 <div class="test-event">
@@ -14,6 +17,8 @@
             <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deleteEvent(i.eventId)" fluid alt="Responsive image" />
             <div class="edit">
             <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`events/edit/${i.eventId}`"></router-link>
+            <router-link tag="img" class="voirT" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
+
             </div>
          </div>
          <div v-if = "isCreator(i.userId) == false">
@@ -112,6 +117,7 @@
 
         async refreshList() {
             this.eventList = await EventApiService.getEventListAsync(this.user.userId);
+            console.log(this.eventList);
         },
         async deleteEvent(eventId) {
             try {
@@ -122,7 +128,9 @@
 
             }
         },
-
+        sendEmail(mailType){
+            AuthService.sendEmail(mailType);
+        },
         isCreator(creatorId){
             if(this.user.userId == creatorId){
                 return true;
@@ -157,7 +165,6 @@
     margin-left: 99%;
     margin-top: -137%;
 }
-
 .calendar {
     width: 7%;
     margin-left: 73%;
@@ -168,6 +175,12 @@
     margin-left: 89%;
     margin-top: -123%;
 }
+
+.voirT{
+    width: 124%;
+    margin-left: 97%;
+    margin-top: -206%;
+}
 .test-{
     &event {
         position: relative;
@@ -176,12 +189,6 @@
         background-color: #d44e4e;
         opacity: 0.8;
         margin-top:32%;
-        &:hover{
-            -webkit-animation: dude .75s ;
-            -moz-animation: dude .75s;
-            -o-animation: dude .75s;
-            animation: dude .75s;
-        }
     }
 }
 

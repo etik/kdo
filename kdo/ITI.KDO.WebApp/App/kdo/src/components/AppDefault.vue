@@ -62,7 +62,7 @@
 
 <section>
   <div class="parallax-three">
-    <h2>BIRTHDATE</h2>
+    <h2>BIRTHDAY</h2>
   </div>
 </section>
 

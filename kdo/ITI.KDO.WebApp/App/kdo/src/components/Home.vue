@@ -90,8 +90,8 @@
     </b-collapse>
     </b-navbar>
     
-    <div>
-      <b-row class="bg-light" style="height: 100%; margin-top: 10%; margin-bottom: 0px;">
+    <div style="margin-top: 10%; margin-bottom: 10%; position: relative;
+    height:100%;">
           <!--b-col md="2" class="bg-light " style="height:100%;">
             <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
               <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>
@@ -101,14 +101,10 @@
               <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
             </b-nav>
           </b-col-->
-
-          <b-col md="12" style="height:100%;">
-            <router-view class="child"></router-view>
-          </b-col>
+          <router-view class="child"></router-view>
           <!--b-col md="2" class="bg-light" style="height:100%;">
           </b-col-->
-      </b-row>
-    </div>
+      </div>
   </div>
 </template>
 

@@ -1,64 +1,54 @@
 <template>
-    <b-col style="height:100%; margin-top:-64px;" class="bv-example-row">
-        <b-row>
-            <b-col sm="3" class="bordered">
-                <b-img rounded blank width="120" height="150" blank-color="#777" alt="img" class="m-1" />
-
-                <b-list-group>
-                    <b-list-group-item>{{event.eventName}}</b-list-group-item>
-                    <b-list-group-item>Date</b-list-group-item>
-                </b-list-group>
-                <b-button :to="`/events/edit/${eventId}`" variant="primary"> Edit </b-button>
+<div>
+<section>
+  <div class="title">
+    <h1>YOUR EVENT</h1>
+  </div>
+</section>
+<b-row>
+    <b-col md="4">
+        <b-card style="margin-left: 10%;"   class="text-center"header-bg-variant="danger" bg-variant="light" header="Informations">
+            <h6 slot="header"class="mb-0" text-variant="white">INFORMATIONS</h6>
+            <b-col sm="3" >
+                <b-img rounded blank width="90" height="90" blank-color="#777" alt="img" class="m-1" />
             </b-col>
-
-            <b-col sm="9" class="bordered">
-                <b-row>
-                    <b-col sm="2">
-                        Present for :
-                    </b-col>
-                    <b-col sm="10">
-                        <b-form-select v-model="selected" :options="beneficiary" v-on:change="refreshQuantityList()" class="mb-3">
-                        </b-form-select>
-                    </b-col>
-                </b-row>
-                <b-row class="bordered">
-                    <b-card
-                            tag="article"
-                            style="max-width: 16rem; height: 256px;"
-                            class="mb-2">
-                        <h2 class="card-text" href="#">
-                            <b-dropdown id="ddown1" text="Add a present" class="m-md-2">
-                                <b-dropdown-item :to="`/events/presents/create/${eventId}`">Create a new present</b-dropdown-item>
-                                <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
-                            </b-dropdown>
-                        </h2>
-                    </b-card>
-                    <b-card v-for="i in quantityPresentList"
-                            tag="article"
-                            style="max-width: 16rem; Sheight: 256px;"
-                            class="mb-2">
-                        <h2 class="card-text" href="#">
-                            {{i.presentName}}<br>
-                            <b-button :to="`/events/presents/edit/${eventId}/${i.quantityId}`" v-if="i.nominatorId == user.userId">Edit</b-button>
-                            <b-button :to="`/events/participate/${eventId}/${i.quantityId}`">Participate</b-button>
-                        </h2>
-                    </b-card>
-                </b-row>
+            <b-col sm="12">
+            <router-link tag="img" class="edite" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`/events/edit/${eventId}`"></router-link>
+            <div class="Info">{{event.eventName}}
+            <br>Date
+            </div>
             </b-col>
-        </b-row>
-
-        <b-row class="bordered">
-            <b-card v-for="i in participantUserList"
+        </b-card>
+    <br>
+        <b-card style="margin-left:10%;" class="text-center" bg-variant="light" header="PARTICIPANTS">
+            <h6 slot="header"class="mb-0">PARTICIPANTS</h6>
+                <b-card v-for="i in participantUserList"
                     tag="article"
-                    style="max-width: 16rem;"
+                    style="max-width: 16rem;margin-left:23%;"
                     class="mb-2">
-                <h2 class="card-text" href="#">
                     {{i.firstName}}
                     {{i.lastName}}
-                </h2>
-            </b-card>
-        </b-row>
+                 </b-card>
+        </b-card>
+        </b-col>
+    <b-col md="8">
+        <b-card class="text-center" bg-variant="light" header="PRESENT">
+        <h6 slot="header"class="mb-0" color="white">PRESENTS</h6>
+        <div class="row" style="margin-left:11%;">
+                <div md="12" class="feature-box event"  v-for="i in quantityPresentList">
+                <div class="test-event">
+                <span>{{ i.presentName }}</span>
+                </div>
+                <div class="btni">
+                <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg"  class="editP" :to="`/events/presents/edit/${eventId}/${i.quantityId}`" v-if="i.nominatorId == user.userId"></router-link>
+                <router-link tag="img" src="https://cdn2.iconfinder.com/data/icons/sales-and-delivery/128/easy-2-512.png"  class="participant" :to="`/events/participate/${eventId}/${i.quantityId}`"></router-link>
+                </div>
+                </div>
+            </div>
+        </b-card>
     </b-col>
+     </b-row>
+  </div>
 </template>
 
 <script>
@@ -142,10 +132,31 @@
 .row {
     margin-top:10%;
 }
+.Info {
+    font-size: xx-large;
+    font-variant: all-petite-caps;
+    margin-top: -28%;
 
+}
+.btni {
+    margin-top:-36%;
+}
+.edite {
+    width: 7%;
+    margin-left: 98%;
+    margin-top: -70%;
+}
 .bordered {
     border-style: solid;
     border-width: 1px;
 }
-
+.editP{
+    width:15%;
+}
+.participant{
+    width:16%;
+}
+.card-header.bg-danger {
+    background-color:#db7070 !important;
+}
 </style>

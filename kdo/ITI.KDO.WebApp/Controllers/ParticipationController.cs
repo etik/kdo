@@ -41,7 +41,7 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPost]
         public IActionResult CreateParticipation([FromBody] ParticipationViewModel model)
         {
-            Result<Participation> result = _participationService.CreateParticipation(model.QuantityId, model.EventId, model.UserId, model.AmountUserPrice);
+            Result<Participation> result = _participationService.CreateParticipation(model.QuantityId, model.UserId, model.EventId, model.AmountUserPrice);
             return this.CreateResult<Participation, ParticipationViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToParticipationViewModel();
@@ -51,7 +51,7 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPut("{quantityId}/{userId}")]
         public IActionResult UpdateParticipation(int quantityId, int userId, [FromBody] ParticipationViewModel model)
         {
-            Result<Participation> result = _participationService.UpdateParticipation(model.QuantityId, model.EventId, model.UserId, model.AmountUserPrice);
+            Result<Participation> result = _participationService.UpdateParticipation(model.QuantityId, model.UserId, model.EventId, model.AmountUserPrice);
             return this.CreateResult<Participation, ParticipationViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToParticipationViewModel();

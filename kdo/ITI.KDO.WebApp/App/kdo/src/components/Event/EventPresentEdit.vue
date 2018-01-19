@@ -1,11 +1,18 @@
 <template>
-    <div class="container">    
-      <div class="page-header">
-            <h1 v-if="mode == 'create'">Create a present</h1>
-            <h1 v-else>Edit your present</h1>
-        </div>
+<div>
+    <section>
+    <div class="title">
+        <h1 v-if="mode == 'create'">CREATE A PRESENT</h1>
+        <h1 v-else>EDIT A PRESENT</h1>
+    </div>
+    </section>
 
-        <form @submit="onSubmit($event)">
+    <b-row>
+        <b-col md="2">
+        </b-col>
+        <b-col md="8">
+            <b-card>
+                <form @submit="onSubmit($event)">
             <div class="alert alert-danger" v-if="errors.length > 0">
                 <b>Les champs suivants semblent invalides : </b>
 
@@ -13,7 +20,7 @@
                     <li v-for="e of errors">{{e}}</li>
                 </ul>
             </div>
-
+            
             <div class="form-group">
                 <label class="required">Present Name:</label>
                 <input type="text" v-model="present.presentName" class="form-control" required>
@@ -30,8 +37,9 @@
             </div>
 
             <div class="form-group">
-                <label>CategoryPresentId</label>
-                <b-dropdown right text="Category Present">
+                <label>Category Present</label>
+                <br>
+                <b-dropdown right style="margin-bottom: 1%;"text="Category Present">
                     <tr v-for="i of categoryPresentList">
                         <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
                     </tr>
@@ -52,11 +60,13 @@
 
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
         </form>
-    </div>
+            </b-card>
+        </b-col>
+    </b-row>
+</div>
 </template>
-
 <script>
-    import { mapActions } from 'vuex';
+   import { mapActions } from 'vuex';
     import PresentApiService from '../../services/PresentApiService';
     import QuantityApiService from '../../services/QuantityApiService';
     import CategoryPresentApiService from '../../services/CategoryPresentApiService';
@@ -164,7 +174,5 @@
     }
   };
 </script>
-
 <style lang="less">
-
 </style>
