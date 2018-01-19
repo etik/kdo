@@ -102,7 +102,7 @@
             </b-nav>
           </b-col-->
 
-          <b-col md="12" style="height:100%;">
+          <b-col md="12" style="height:100%; padding:0px;">
             <router-view class="child"></router-view>
           </b-col>
           <!--b-col md="2" class="bg-light" style="height:100%;">
