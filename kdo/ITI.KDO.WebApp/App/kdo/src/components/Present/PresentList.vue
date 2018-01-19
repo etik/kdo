@@ -91,12 +91,12 @@
 
 .delete {
     width: 7%;
-    margin-left: 92%;
+    margin-left: 77%;
     margin-top: -111%;
 }
 .edit {
     width: 7%;
-    margin-left: 100%;
+    margin-left: 91%;
     margin-top: -62%;
 }
 .feature-box{
@@ -119,6 +119,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transform: scale(1.3);
 }
+
 .test div span{
     color: white;
 }
@@ -131,12 +132,6 @@
         background-color: #1a5d59;
         opacity: 0.8;
         margin-top:32%;
-        &:hover{
-            -webkit-animation: dude .75s ;
-            -moz-animation: dude .75s;
-            -o-animation: dude .75s;
-            animation: dude .75s;
-        }
     }
 }
 

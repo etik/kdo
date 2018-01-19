@@ -1,40 +1,42 @@
 <template>
-    <div class="container">    
-        <div class="page-header">
-            <h1>Participate to a present</h1>
-        </div>
+<div>
+    <div class="title">
+        <h1 >PARTICIPATE</h1>
+    </div>
+    </section>
 
-        <b-row>
-            <b-col sm="4">
-                <b-card
-                    tag="article"
-                    style="max-width: 16rem; height: 256px;"
-                    class="mb-2">
-                    <div class="card-text">
-                        {{present.presentName}} </br>
-                        price : {{present.price}} </br>
-                        {{present.linkPresent}} </br>
-                        quantity : {{quantity.quantity}} </br>
-                        pour : {{recipient.firstName}} {{recipient.lastName}} </br>
-                        de : {{nominator.firstName}} {{nominator.lastName}}
-                    </div>
-                </b-card>
-            </b-col>
-
-            <b-col>
+    <b-row>
+        <b-col md="1">
+        </b-col>
+        <b-col md="5">
+            <b-card header="INFORMATIONS" style="margin-left:1%;">
+                <h6 class="text-center" slot="header" text-variant="white">INFORMATIONS</h6>
+            <b-list-group class="text-center">
+            <b-list-group-item>{{present.presentName}} </b-list-group-item>
+            <b-list-group-item>{{present.price}}€</b-list-group-item>
+            <b-list-group-item>{{present.linkPresent}}</b-list-group-item>
+            <b-list-group-item>{{quantity.quantity}}</b-list-group-item>
+            <b-list-group-item>{{recipient.firstName}} {{recipient.lastName}}</b-list-group-item>
+            <b-list-group-item>{{nominator.firstName}} {{nominator.lastName}}</b-list-group-item>
+            </b-list-group>
+            </b-card>
+        </b-col>
+        <b-col md="4">
+            <b-card>
                 <b-form-input v-model="price"
                     type="text"
-                    placeholder="Enter the ammount :"></b-form-input>
+                    placeholder="Enter the ammount :">
+                </b-form-input>
 
                 <b-button @click="Particip()" class="btn btn-primary">Participate</b-button>
                 <b-button v-if="existing" @click="DeleteParticipation()" class="btn btn-primary">Remove your participation</b-button>                
-            </b-col>
-        </b-row>
+            </b-card>
+        </b-col>
+    </b-row>
     </div>
 </template>
-
 <script>
-    import { mapActions } from 'vuex';
+   import { mapActions } from 'vuex';
     import PresentApiService from '../../services/PresentApiService';
     import QuantityApiService from '../../services/QuantityApiService';
     import UserApiService from "../../services/UserApiService";    
@@ -106,7 +108,5 @@
     }
 };
 </script>
-
 <style lang="less">
-
 </style>

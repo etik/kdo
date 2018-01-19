@@ -1,38 +1,63 @@
 <template>
-    <div>
-        <b-card-group deck v-for="i in nbline" :key="i" class="mb-2">
-            <b-card v-for="j in 6" :key="j" v-if="contactList[j - 1] != null" cols="2"
+<div>
+    <section>
+    <div class="title">
+        <h1>CONTACTS</h1>
+    </div>
+    </section>
+
+    <b-row>
+    <b-col md="3">
+    </b-col>
+    <b-col md="7">
+        <b-card-group deck class="mb-2">
+        <b-card
+       img-src="https://www.walldevil.com/wallpapers/a18/thumb/background-lemons-web-nvstormygetaway-images-profile-naver.jpg"
+            img-alt="Image"
+            header-text-variant="white"
+            header-bg-variant="dark"
+            img-top
+            tag="article"
+            v-for="j in 6" v-if="friendsList[j - 1] != null" cols="2"
+                    text-variant="black"
+                    :header="friendsList[j - 1].firstName + ' ' + friendsList[j - 1].lastName"
+                    class="text-center"
+                    style="max-width: 128px;">
+            </b-card>
+            </b-card-group>
+            <!--b-card-group deck v-for="i in nbline" class="mb-2">
+            <b-card v-for="j in 6" v-if="friendsList[j - 1] != null" cols="2"
                     text-variant="black"
                     :header="friendsList[j - 1].firstName + ' ' + friendsList[j - 1].lastName"
                     class="text-center"
                     style="max-width: 128px;">
                 <p class="card-text">image</p>
             </b-card>
-        </b-card-group>
-
-        <div class="text-center" style="padding: 50px">
-            <b-alert variant="success" dismissible :show="showDismissibleAlert"
-            @dismissed="showDismissibleAlert=false">Request sent 
-            </b-alert>
-            <button type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-google" aria-hidden="true"></i> Send Event Invitation</button>
-            <button type="button" @click="sendEmail('FriendInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Send Friend Request</button>
-            <router-link :to="`notification/${this.user.userId}`">Notifications</router-link>
+             </b-card-group-->
+    </b-col>
+    <b-col md="2">
+    </b-col>
+    </b-row>
+        <b-row style="margin-top: 2%;">
+    <b-col md="3">
+    </b-col>
+    <b-col md="7">
             <form @submit="onSubmit($event)">
-                <input v-model="recipientsEmail" placeholder="Find friend's email">
-                <!--button type="submit" class="btn btn-primary">Send friend request</button-->
+            <input v-model="recipientsEmail" placeholder="Find friend's email">
+            <!--button type="submit" class="btn btn-primary">Send friend request</button-->
 
-                <b-btn type="submit" @click="showDismissibleAlert=true" variant="info" class="m-1">
-                Send friend request
-                </b-btn>
+            <b-btn type="submit" @click="showDismissibleAlert=true" variant="info" class="m-1">
+            Send friend request
+            </b-btn>
             </form>
-            <router-link :to="`contacts`">Contact List</router-link>
-            <router-link :to="`facebookContacts`">Facebook Contact List</router-link>
-        </div>
-    </div>
+    </b-col>
+    <b-col md="2">
+    </b-col>
+    </b-row>
+</div>
 </template>
-
 <script>
-    import Vue from "vue";
+   import Vue from "vue";
     import { mapActions } from 'vuex';
     import AuthService from "../../services/AuthService";
     import UserApiService from "../../services/UserApiService";
@@ -115,3 +140,5 @@ export default {
     }
 };
 </script>
+<style lang="less">
+</style>
