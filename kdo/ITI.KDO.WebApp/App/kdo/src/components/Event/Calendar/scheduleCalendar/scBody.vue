@@ -1,5 +1,5 @@
 <template>
-    <div class="schedule-calendar-body">
+    <div class="schedule-calendar-body" >
         <scWeek :startWeek="startWeek"></scWeek>
         <scMonth  :year="year"
                   :month="month"

@@ -1,5 +1,5 @@
 <template>
-    <div class="schedule-calendar">
+    <div class="schedule-calendar"style="margin-left: 21%;">
         <scHeader   :year="year"
                     :month="month"
                     @updateValue="updateView"></scHeader>

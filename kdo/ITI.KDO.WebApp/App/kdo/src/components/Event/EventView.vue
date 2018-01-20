@@ -41,23 +41,21 @@
                 </b-form-select>
             </b-col>
         </b-row>
-
-        <b-card class="text-center" bg-variant="light" header="PRESENT">
-        <h6 slot="header"class="mb-0" color="white">PRESENTS</h6>
-        
-        <b-dropdown id="ddown1" text="Add a present" class="m-md-2">
+        <b-dropdown id="ddown1" text="Add a present" class="m-md-2" >
             <b-dropdown-item :to="`/events/presents/create/${eventId}`">Create a new present</b-dropdown-item>
             <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
         </b-dropdown>
 
+        <b-card class="text-center" bg-variant="light" header="PRESENT">
+
+        <h6 slot="header"class="mb-0" color="white">PRESENTS</h6>
         <div class="row" style="margin-left:11%;">
                 <div md="12" class="feature-box event"  v-for="i in quantityPresentList">
                 <div class="test-event">
                 <span>{{ i.presentName }}
                     {{i.ammount}} / {{i.price}}</br>                            
                     Participant :</br>
-                <p v-for="x in i.participants">
-                    {{x.userId}}
+                <p v-for="x in i.participants"> {{x.userId}}
                 </p></span>
                 </div>
                 <div class="btni">
@@ -177,7 +175,7 @@
 
 }
 .btni {
-    margin-top:-36%;
+    margin-top:-53%;
 }
 .edite {
     width: 7%;
