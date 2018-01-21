@@ -22,13 +22,13 @@
     <br>
         <b-card style="margin-left:10%;" class="text-center" bg-variant="light" header="PARTICIPANTS">
             <h6 slot="header"class="mb-0">PARTICIPANTS</h6>
-                <b-card v-for="i in participantUserList"
-                    tag="article"
-                    style="max-width: 16rem;margin-left:23%;"
-                    class="mb-2">
-                    {{i.firstName}}
-                    {{i.lastName}}
-                 </b-card>
+            <b-card v-for="i in participantUserList"
+                tag="article"
+                style="max-width: 16rem;margin-left:23%;"
+                class="mb-2">
+                {{i.firstName}}
+                {{i.lastName}}
+            </b-card>
         </b-card>
     </b-col>
     <b-col md="8">
@@ -41,27 +41,34 @@
                 </b-form-select>
             </b-col>
         </b-row>
-        <b-dropdown id="ddown1" text="Add a present" class="m-md-2" >
-            <b-dropdown-item :to="`/events/presents/create/${eventId}`">Create a new present</b-dropdown-item>
-            <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
-        </b-dropdown>
 
-        <b-card class="text-center" bg-variant="light" header="PRESENT">
+        <b-card bg-variant="light" header="PRESENT">
+            <h6 slot="header" class="mb-0 text-center" color="white">
+                PRESENTS
+            </h6>
 
-        <h6 slot="header"class="mb-0" color="white">PRESENTS</h6>
-        <div class="row" style="margin-left:11%;">
+            <b-dropdown id="ddown1" text="Add a present" class="m-md-2" >
+                <b-dropdown-item :to="`/events/presents/create/${eventId}`">Create a new present</b-dropdown-item>
+                <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
+            </b-dropdown>
+
+            <div class="row" style="margin-left:11%;">
                 <div md="12" class="feature-box event"  v-for="i in quantityPresentList">
-                <div class="test-event">
-                <span>{{ i.presentName }}
-                    {{i.ammount}} / {{i.price}}</br>                            
-                    Participant :</br>
-                <p v-for="x in i.participants"> {{x.userId}}
-                </p></span>
-                </div>
-                <div class="btni">
-                <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg"  class="editP" :to="`/events/presents/edit/${eventId}/${i.quantityId}`" v-if="i.nominatorId == user.userId"></router-link>
-                <router-link tag="img" src="https://cdn2.iconfinder.com/data/icons/sales-and-delivery/128/easy-2-512.png"  class="participant" :to="`/events/participate/${eventId}/${i.quantityId}`"></router-link>
-                </div>
+                    <div :id="'Popover-'+i.quantityId" class="test-event event-text">
+                        {{ i.presentName }}
+                        <b-progress :value="i.ammount" :max="i.price" show-progress animated></b-progress>
+                        <b-popover :target="'Popover-'+i.quantityId" triggers="hover focus" placement="top">
+                            <template slot="title">Participant</template>
+                            <div v-for="x in i.participants">
+                                {{x.firstName}} {{x.lastName}} 
+                            </div>
+                        </b-popover>
+                    </div>
+
+                    <div class="btni">
+                        <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg"  class="editP" :to="`/events/presents/edit/${eventId}/${i.quantityId}`" v-if="i.nominatorId == user.userId"></router-link>
+                        <router-link tag="img" src="https://cdn2.iconfinder.com/data/icons/sales-and-delivery/128/easy-2-512.png"  class="participant" :to="`/events/participate/${eventId}/${i.quantityId}`"></router-link>
+                    </div>
                 </div>
             </div>
         </b-card>
@@ -107,6 +114,9 @@
         this.selected = this.beneficiary[0].value;
         await this.refreshQuantityList();
         await this.refreshParticipation();
+        await this.refreshParticipantToQuantityList();
+                    
+        this.bugfix = 2;
     },
 
     methods: {
@@ -158,7 +168,17 @@
                     }
                 });
             }
-            this.bugfix = 2;
+        },
+        async refreshParticipantToQuantityList(){
+            for (var i = 0; i < this.quantityPresentList.length; i++)
+            {
+                for (var j = 0; j < this.quantityPresentList[i].participants.length; j++)
+                {
+                    var auxUser = await UserApiService.getUserByIdAsync(this.quantityPresentList[i].participants[j].userId);
+                    this.quantityPresentList[i].participants[j].firstName = auxUser.firstName;
+                    this.quantityPresentList[i].participants[j].lastName = auxUser.lastName;
+                }
+            }
         }
     }
 };
@@ -167,6 +187,10 @@
 <style lang="less">
 .row {
     margin-top:10%;
+}
+.event-text {
+    height:52px;    
+    //font-size: 110%;
 }
 .Info {
     font-size: xx-large;
