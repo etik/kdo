@@ -64,8 +64,6 @@
                         </tr>
                           </b-popover>
                       </tr>
-
-
                </span>
             </b-nav-item>
             <b-nav-item style="position:absolute; right:10px;" href="#"@click="logout()">
@@ -85,26 +83,12 @@
     <div class="progress" v-show="isLoading">
       <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
     </div>
-    
-
     </b-collapse>
     </b-navbar>
     
-    <div style="margin-top: 10%; margin-bottom: 10%; position: relative;
-    height:100%;">
-          <!--b-col md="2" class="bg-light " style="height:100%;">
-            <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
-              <b-nav-item href="/Home/userProfil" class="row">Profil</b-nav-item>
-              <b-nav-item href="/Home/events"class="row">Event</b-nav-item>
-              <b-nav-item href="/Home/contact" class="row" >Mes contacts</b-nav-item>
-              <b-nav-item href="/Home/events/display/calendar" class="row">Calendrier</b-nav-item>
-              <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
-            </b-nav>
-          </b-col-->
-          <router-view class="child"></router-view>
-          <!--b-col md="2" class="bg-light" style="height:100%;">
-          </b-col-->
-      </div>
+    <transition name="blink" appear style="margin-top:10%; margin-bottom:10%; position:relative; height:100%;">
+      <router-view class="child"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -228,7 +212,7 @@ export default {
 <style lang="less">
 .row{
   margin-left:1%;
-  margin-Right:0!important;
+  margin-right:0!important;
 }
 
 .active {
@@ -272,9 +256,11 @@ header {
   text-align: center;
   text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
 }
+
 .popover {
 max-width: 100% !important;
 }
+
 .header {
   width: 100%;
   height: 100%;
@@ -304,5 +290,13 @@ color: #bcbcbc;
    background-color: #343a40;
    color: white;
    text-align: center;
+}
+
+.blink-enter-active {
+  transition: opacity 1s ease;
+}
+
+.blink-enter, .blink-leave-active {
+  opacity: 0
 }
 </style>

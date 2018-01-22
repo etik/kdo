@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button style="width: 21%; margin-left: 38%;    background-color: #d44e4e;"type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
+    <button style="width:21%;margin-left: 38%;background-color:#d44e4e;" type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
 
     <section>
         <div class="title">
@@ -8,31 +8,35 @@
         </div>
     </section>
 
-    <div class="row" style="margin-left:11%;">
-        <div md="12" class="feature-box event" v-for="i of eventList">
+    <div class="row" style="margin-left:50px; margin-right:50px;">
+        <div md="12" class="eventDiv" v-for="i of eventList" :key="i.eventId">
             <div class="test-event">
                 <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage">
                 <span>{{ i.eventName }}</span>
             </div>
-
             <div v-if = "isCreator(i.userId) == true">
                 <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deleteEvent(i.eventId)" fluid alt="Responsive image" />
-                <div class="edit">
-                    <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`events/edit/${i.eventId}`"></router-link>
-                    <router-link tag="img" class="voirT" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
-                </div>
             </div>
-
+            <div class="edit">
+                <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`events/edit/${i.eventId}`"></router-link>
+                <router-link tag="img" class="voirT" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
+            </div>
             <div v-if = "isCreator(i.userId) == false">
                 <router-link tag="img" class="calendar" src="https://png.icons8.com/metro/540/calendar.png" :to="`events/dateSuggest/${i.eventId}`"></router-link>
                 <router-link tag="img" class="voir" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
                 <b-img src="http://cdn.onlinewebfonts.com/svg/img_447829.png"  class="quit" @click="quitEvent(i.eventId) " fluid alt="Responsive image" />
-            </div>                
+            </div>
         </div>
 
         <div md="12" class="feature-box1 test">
             <router-link tag="img" style=" margin-top: -5%;" src="https://blazer-net.com/wp-content/uploads/blazer-nett.png" :to="`events/create`">Add a present</router-link>
             <span style="font-family: cursive; font-size: larger;" >Add an event</span>
+
+            <!--div v-if = "isCreator(i.userId) == false">
+                <router-link tag="img" class="calendar" src="https://png.icons8.com/metro/540/calendar.png" :to="`events/dateSuggest/${i.eventId}`"></router-link>
+                <router-link tag="img" class="voir" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
+                <b-img src="http://cdn.onlinewebfonts.com/svg/img_447829.png"  class="quit" @click="quitEvent(i.eventId) " fluid alt="Responsive image" />
+            </div-->                
         </div>
 	</div>
 </div>
@@ -174,6 +178,19 @@ export default {
         opacity: 0.8;
         margin-top:32%;
     }
+}
+
+.eventDiv{
+    width: 400px;
+    height: 200px;
+    margin-top: 2%;
+    margin-right: 5%;
+    transition: .5s ease;
+}
+
+.eventDiv:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.3);
 }
 
 .feature-box{

@@ -173,9 +173,7 @@ export default {
     font-weight: 600;
     margin: 25px 0 15px;
 }
-.row {
-  margin-top: -2%;
-}
+
 /* Site Heading */
 .site-heading h3{
     font-size : 40px;
