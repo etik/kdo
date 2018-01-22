@@ -137,9 +137,6 @@
                     this.present.userId = this.user.userId;
                     this.present = await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
                     if(this.data != null) {
-                        console.log("this data : " + this.data);
-                        console.log("this sendItem : " + this.sendImage.name);
-                        console.log("this present.presentId : " + this.present.presentId);
                         this.sendItemImage = await FileApiService
                         .updateFileAsync(this.data, this.present.presentId)
                         .then( () => { FileApiService.typeOfPicture(1, this.present.presentId)});
@@ -150,9 +147,6 @@
                 else {
                     await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present));
                     if(this.data != null) {
-                        console.log("this data : " + this.data);
-                        console.log("this sendItem : " + this.sendImage.name);
-                        console.log("this present.presentId : " + this.present.presentId);
                         this.sendItemImage = await FileApiService
                         .updateFileAsync(this.data, this.present.presentId)
                         .then( () => { FileApiService.typeOfPicture(1, this.present.presentId)});
@@ -169,8 +163,7 @@
             }
         },
 
-        onFileChange(e) {
-            console.log("in OnFileChange");             
+        onFileChange(e) {      
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
                 return;
@@ -178,14 +171,12 @@
             this.$router.replace('/presents/create');      
         },
         createImage(file) {
-            console.log("in CreateImage");   
             var image = new Image();
             var reader = new FileReader();
             var vm = this;
 
             this.data.append('files', file);
             this.sendImage = file;
-            console.log("sendImage : " + this.sendImage);
             
             reader.onload = (e) => {
                 vm.image = e.target.result;
@@ -193,7 +184,6 @@
             reader.readAsDataURL(file);
         },
         async removeImage(e) {
-            console.log("in RemoveImage");   
             e.preventDefault();
             this.image = '';
             this.item.photo = '';

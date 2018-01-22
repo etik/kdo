@@ -158,13 +158,9 @@
             },
 
             async setPhoto() {
-                console.log("setPhoto is active");
               
                 if(this.data != null)
                 {
-                    console.log("this.image is not null");
-                    console.log("this.data : " + this.data);
-                    console.log("this.item.userId : " + this.item.userId);
                     this.sendItemImage = await FileApiService
                         .updateFileAsync(this.data, this.item.userId)
                         .then( () => { FileApiService.typeOfPicture(this.typeOfFile, this.item.userId)});
@@ -172,8 +168,7 @@
      
             },
 
-            onFileChange(e) {
-                console.log("in OnFileChange");             
+            onFileChange(e) {        
                 var files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
                     return;
@@ -182,34 +177,24 @@
                 this.$router.replace('userProfile');      
             },
             createImage(file) {
-                console.log("in CreateImage");   
                 var image = new Image();
                 var reader = new FileReader();
                 var vm = this;
 
                 this.data.append('files', file);
                 this.sendImage = file;
-                console.log("sendImage : " + this.sendImage);
-                console.log("file : " + file);
                 reader.onload = (e) => {
                     vm.image = e.target.result;
                 };
                 reader.readAsDataURL(file);
             },
             async removeImage(e) {
-                console.log("in RemoveImage");   
                 e.preventDefault();
                 this.image = '';
                 this.file = '';
                 this.data.append('files',  this.file);
                 if(this.data != null)
-                {
-                    console.log("this.image is not null");
-                    console.log("this.data : " + this.data);
-                    console.log("this.item.userId : " + this.item.userId);
-                    await FileApiService.deletePicture( 0,this.item.userId );
-                        
-                }
+                    await FileApiService.deletePicture( 0,this.item.userId );                        
                 this.refresh();
                 this.$router.replace('userProfil');           
             }
