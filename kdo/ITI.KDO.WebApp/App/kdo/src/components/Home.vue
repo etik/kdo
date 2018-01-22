@@ -41,32 +41,30 @@
             <b-nav-item href="/Home/events/display/calendar">Calendrier</b-nav-item>
             <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
             <b-nav-item> 
-               <span class="badge badge-light" >
-                      <tr v-if="contactNotificationList.length == 0 & eventNotificationList.length==0">
-                            
-                        </tr>
-                      <tr v-else >
-                            <td colspan="7" id="popoverButton-sync" style="font-size: medium;" class="text-center" >{{this.contactNotificationList.length + this.eventNotificationList.length}} Notifications</td>
-                            <b-popover :show.sync="show" target="popoverButton-sync" title="Accept or Decline">
-                        <tr v-if="i.senderEmail != userEmail" v-for="i of contactNotificationList">
-                          <td>{{ i.senderEmail }} wants to add you as a friend. </td>
-                          <td>
-                              <button  @click="responseContactInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-success">A</button>
-                              <button @click="responseContactInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-danger">D</button>
-                          </td>
-                        </tr>
-                        <tr v-for="i of eventNotificationList">
-                          <td>{{ i.eventName }}</td>
-                          <td>
-                              <button @click="responseEventInvitation('yes', i.eventId)" class="btn btn-primary">A</button>
-                              <button @click="responseEventInvitation('no', i.eventId)" class="btn btn-primary">D</button>
-                          </td>
-                        </tr>
-                          </b-popover>
-                      </tr>
-
-
-               </span>
+              
+                <tr v-if="contactNotificationList.length == 0 & eventNotificationList.length == 0">
+                  </tr>
+                <tr v-else >
+                    <span class="badge badge-light" >
+                      <td colspan="7" id="popoverButton-sync" style="font-size: medium;" class="text-center" >{{this.contactNotificationList.length + this.eventNotificationList.length}} Notifications</td>
+                      <b-popover :show.sync="show" target="popoverButton-sync" title="Accept or Decline">
+                  <tr v-if="i.senderEmail != userEmail" v-for="i of contactNotificationList">
+                    <td>{{ i.senderEmail }} wants to add you as a friend. </td>
+                    <td>
+                        <button  @click="responseContactInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-success">A</button>
+                        <button @click="responseContactInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-danger">D</button>
+                    </td>
+                  </tr>
+                  <tr v-for="i of eventNotificationList">
+                    <td>{{ i.eventName }}</td>
+                    <td>
+                        <button @click="responseEventInvitation('yes', i.eventId)" class="btn btn-primary">A</button>
+                        <button @click="responseEventInvitation('no', i.eventId)" class="btn btn-primary">D</button>
+                    </td>
+                  </tr>
+                    </b-popover>
+                  </span>
+                </tr>
             </b-nav-item>
             <b-nav-item style="position:absolute; right:10px;" href="#"@click="logout()">
             <div class="logoImg">
