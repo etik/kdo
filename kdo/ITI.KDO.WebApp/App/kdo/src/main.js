@@ -31,9 +31,9 @@ import EventParticipate from './components/event/EventParticipate.vue';
 import EventImportPresent from './components/event/EventImportPresent.vue';
 
 import Calendar from './components/event/calendar/Cal.vue';
-
+import ContactEmail from './components/Contact/ContactEmail.vue';
 import Contact from './components/Contact/Contact.vue';
-import ContactList from './components/Contact/ContactList.vue'
+import ContactList from './components/Contact/ContactList.vue';
 import FacebookContactList from './components/Contact/FacebookContact.vue';
 
 import NotificationUser from './components/Notification.vue';
@@ -114,8 +114,9 @@ const router = new VueRouter({
         { path: '/events/participate/:eid?/:qid?', component: EventParticipate, beforeEnter: requireAuth },
         { path: '/events/:mode([suggest|display]+)/calendar', component: Calendar, beforeEnter: requireAuth },
 
+
+        { path: '/contactEmail', component: ContactEmail, beforeEnter: requireAuth },
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
-        { path: '/contacts', component: ContactList, beforeEnter: requireAuth },
         { path: '/facebookContacts', component: FacebookContactList, beforeEnter: requireAuth },
 
         { path: '/notification/:id?', component: NotificationUser, beforeEnter: requireAuth },

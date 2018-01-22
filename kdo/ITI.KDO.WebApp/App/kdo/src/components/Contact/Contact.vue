@@ -20,25 +20,22 @@
             
         </div>
     </div>
-    <b-row>
-    <b-col md="2">
-    </b-col>
-    </b-row>
-        <b-row style="margin-top: 2%;">
-    <b-col md="3">
-    </b-col>
-    <b-col md="7">
-            <form @submit="onSubmit($event)">
-            <input v-model="recipientsEmail" placeholder="Find friend's email">
-            <!--button type="submit" class="btn btn-primary">Send friend request</button-->
 
-            <b-btn type="submit" @click="showDismissibleAlert=true" variant="info" class="m-1">
-            Send friend request
-            </b-btn>
-            </form>
-    </b-col>
-    <b-col md="2">
-    </b-col>
+    <b-row style="margin-top: 2%;">
+        <b-col md="3">
+        </b-col>
+        <b-col md="7">
+                <form @submit="onSubmit($event)">
+                <input v-model="recipientsEmail" placeholder="Find friend's email">
+                <!--button type="submit" class="btn btn-primary">Send friend request</button-->
+
+                <b-btn type="submit" @click="showDismissibleAlert=true" variant="info" class="m-1">
+                Send friend request
+                </b-btn>
+                </form>
+        </b-col>
+        <b-col md="2">
+        </b-col>
     </b-row>
 </div>
 </template>

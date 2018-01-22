@@ -37,9 +37,9 @@
 
             <b-nav-item  href="/Home/userProfile">Profile</b-nav-item>
             <b-nav-item  href="/Home/events">Event</b-nav-item>
-            <b-nav-item href="/Home/contact">Mes contacts</b-nav-item>
-            <b-nav-item href="/Home/events/display/calendar">Calendrier</b-nav-item>
-            <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
+            <b-nav-item href="/Home/contact">My contacts</b-nav-item>
+            <b-nav-item href="/Home/events/display/calendar">Calendar</b-nav-item>
+            <b-nav-item href="/Home/presents">My presents</b-nav-item>
             <b-nav-item> 
                <span class="badge badge-light" >
                       <tr v-if="contactNotificationList.length == 0 & eventNotificationList.length==0">
@@ -66,6 +66,9 @@
                       </tr>
                </span>
             </b-nav-item>
+            <b-nav-item  href="/Home/contactEmail">Contact Email</b-nav-item>
+
+
             <b-nav-item style="position:absolute; right:10px;" href="#"@click="logout()">
             <div class="logoImg">
                     <img class="logoImg" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/power-512.png">
@@ -114,8 +117,6 @@ export default {
       contactModel: {},
       eventModel: {},
       show: false
-
-    
     };
 
   },
