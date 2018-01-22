@@ -110,11 +110,7 @@
         this.user = await UserApiService.getUserAsync(userEmail);
         await this.refreshParticipantList();
         this.selected = this.beneficiary[0].value;
-        await this.refreshQuantityList();
-        await this.refreshParticipation();
-        await this.refreshParticipantToQuantityList();
-                    
-        this.bugfix = 2;
+        await this.refreshQuantityList();                    
     },
 
     methods: {
@@ -148,6 +144,8 @@
                     }
                 }
             }
+            await this.refreshParticipation();
+            await this.refreshParticipantToQuantityList();
         },
         async refreshParticipation(){
             var ammount;
@@ -177,6 +175,7 @@
                     this.quantityPresentList[i].participants[j].lastName = auxUser.lastName;
                 }
             }
+            this.bugfix++;
         }
     }
 };
