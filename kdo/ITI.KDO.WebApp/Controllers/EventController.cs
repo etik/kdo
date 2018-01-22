@@ -78,13 +78,8 @@ namespace ITI.KDO.WebApp.Controllers
         [HttpPost("{createEvent}")]
         public IActionResult CreateEvent([FromBody] EventViewModel model)
         {
-            Result<Event> result = _eventService.CreateEvent(model.UserId, model.EventName, model.Descriptions, model.Dates);
-            return this.CreateResult<Event, EventViewModel>(result, o =>
-            {
-                o.ToViewModel = s => s.ToEventViewModel();
-                o.RouteName = "GetEvent";
-                o.RouteValues = s => new { id = s.EventId };
-            });
+            Result<int> result = _eventService.CreateEvent(model.UserId, model.EventName, model.Descriptions, model.Dates);
+            return this.CreateResult(result);
         }
 
         [HttpPut("{eventId}")]

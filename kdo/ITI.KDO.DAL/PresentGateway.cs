@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Data.Common;
 
 namespace ITI.KDO.DAL
 {
@@ -25,7 +26,7 @@ namespace ITI.KDO.DAL
         /// <param name="linkPresent"></param>
         /// <param name="categoryPresentId"></param>
         /// <param name="userId"></param>
-        public int AddToUser(string presentName, float price, string linkPresent, int categoryPresentId, int userId)
+        public int AddToUser(string presentName, float price, string linkPresent, byte[] picture, int categoryPresentId, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -33,6 +34,7 @@ namespace ITI.KDO.DAL
                 dynamicParameters.Add("@PresentName", presentName, DbType.String);
                 dynamicParameters.Add("@Price", price, DbType.Decimal);
                 dynamicParameters.Add("@LinkPresent", linkPresent, DbType.String);
+                dynamicParameters.Add("@Picture", picture, DbType.Binary);
                 dynamicParameters.Add("@CategoryPresentId", categoryPresentId, DbType.Int32);
                 dynamicParameters.Add("@UserId", userId, DbType.Int32);
                 dynamicParameters.Add("@PresentId", DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -54,16 +56,18 @@ namespace ITI.KDO.DAL
         /// <param name="linkPresent"></param>
         /// <param name="categoryPresentId"></param>
         /// <param name="userId"></param>
-        public void Update(string presentName, float price, string linkPresent, int categoryPresentId, int userId)
+        public void Update(int presentId, string presentName, float price, string linkPresent, byte[] picture, int categoryPresentId, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                "dbo.sPresentUpdate",
                new {
+                   PresentId = presentId,
                    PresentName = presentName,
                    Price = price,
                    LinkPresent = linkPresent,
+                   Picture = picture,
                    CategoryPresentId = categoryPresentId,
                    UserId = userId },
                commandType: CommandType.StoredProcedure);
@@ -103,7 +107,8 @@ namespace ITI.KDO.DAL
                              p.PresentId,
                              p.PresentName,
                              p.Price,
-                             p.LinkPresent
+                             p.LinkPresent,
+                             p.Picture
                       from dbo.vPresent p
                       where p.UserId = @UserId;",
                     new { UserId = userId });
@@ -117,7 +122,7 @@ namespace ITI.KDO.DAL
         /// <param name="linkPresent"></param>
         /// <param name="categoryPresentId"></param>
         /// <param name="userId"></param>
-        public void Create(string presentName, float price, string linkPresent, int categoryPresentId, int userId)
+        public void Create(string presentName, float price, string linkPresent, byte[] picture, int categoryPresentId, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -128,33 +133,7 @@ namespace ITI.KDO.DAL
                         PresentName = presentName,
                         Price = price,
                         LinkPresent = linkPresent,
-                        CategoryPresentId = categoryPresentId,
-                        UserId = userId
-                    },
-                    commandType: CommandType.StoredProcedure);
-            }
-        }
-        /// <summary>
-        /// Update present
-        /// </summary>
-        /// <param name="presentId"></param>
-        /// <param name="presentName"></param>
-        /// <param name="price"></param>
-        /// <param name="linkPresent"></param>
-        /// <param name="categoryPresentId"></param>
-        /// <param name="userId"></param>
-        public void Update(int presentId, string presentName, float price, string linkPresent, int categoryPresentId, int userId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-            {
-                con.Execute(
-                    "dbo.sPresentUpdate",
-                    new
-                    {
-                        PresentId = presentId,
-                        PresentName = presentName,
-                        Price = price,
-                        LinkPresent = linkPresent,
+                        Picture = picture,
                         CategoryPresentId = categoryPresentId,
                         UserId = userId
                     },
@@ -178,7 +157,8 @@ namespace ITI.KDO.DAL
                                  p.PresentId,
                                  p.PresentName,
                                  p.Price,
-                                 p.LinkPresent
+                                 p.LinkPresent,
+                                 p.Picture
                           from dbo.vPresent p
                           where p.PresentId = @PresentId;",
                         new { PresentId = presentId })
@@ -203,11 +183,27 @@ namespace ITI.KDO.DAL
                                  p.PresentId,
                                  p.PresentName,
                                  p.Price,
-                                 p.LinkPresent
+                                 p.LinkPresent,
+                                 p.Picture
                           from dbo.vPresent p
                           where p.PresentName = @PresentName;",
                         new { PresentName = presentName })
                     .FirstOrDefault();
+            }
+        }
+        /// <summary>
+        /// Update Picture of Present with the PresentId
+        /// </summary>
+        /// <param name="presentId"></param>
+        /// <param name="coverImageBytes"></param>
+        public void PresentSetPicture(int presentId, byte[] coverImageBytes)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    "dbo.sPresentUpdatePhoto",
+                    new { PresentId = presentId, Picture = coverImageBytes },
+                    commandType: CommandType.StoredProcedure);
             }
         }
 

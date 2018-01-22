@@ -1,4 +1,4 @@
-import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper';
+import { getAsync, postAsync, putAsync, deleteAsync, putFileAsync } from '../helpers/apiHelper';
 
 const endpoint = "/api/user";
 
@@ -22,6 +22,11 @@ class UserApiServices {
     async getUserId(emailUser){
         return await getAsync(`${endpoint}/${emailUser}`);
     }
+
+    //async updateFileAnsync(data, userId) {
+    //    console.log("updateFileAnsync");
+    //    return await putFileAsync(`${endpoint}/img/${userId}`, data);
+    //}
 }
 
 export default new UserApiServices();

@@ -29,6 +29,8 @@ namespace ITI.KDO.DAL.Tests
             string phone = TestHelpers.RandomPhone();
             string photo = TestHelpers.RandomPhoto();
 
+            byte[] picture = TestHelpers.GetBytesArray(12);
+
             string eventName = TestHelpers.RandomTestName();
             string descriptions = TestHelpers.RandomTestName();
             DateTime date = TestHelpers.RandomBirthDate(10);
@@ -43,7 +45,7 @@ namespace ITI.KDO.DAL.Tests
             var user2 = UserGateway.Create(firstName, lastName, birthDate, email);
             var user3 = UserGateway.Create(firstName, lastName, birthDate, email);
 
-            var presentId = PresentGateway.AddToUser(presentName, price, linkPresent, categoryPresentId, user2);
+            var presentId = PresentGateway.AddToUser(presentName, price, linkPresent, picture, categoryPresentId, user2);
 
             var eventId = EventGateway.Create(eventName, descriptions, date, user1);
 

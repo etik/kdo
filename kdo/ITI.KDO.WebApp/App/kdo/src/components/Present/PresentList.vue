@@ -1,55 +1,66 @@
 <template>
 <div>
-<section>
-  <div class="title">
-    <h1>PRESENTS LIST</h1>
-  </div>
-</section>
+    <section>
+        <div class="title">
+            <h1>PRESENTS LIST</h1>
+        </div>
+    </section>
     <div class="row" style="margin-left:11%;">
         <div md="12" class="feature-box test" v-for="i of presentList">
-                <div class="test-event">
+            <div class="test-event">
                 <span>{{ i.presentName }}</span>
-                </div>
+            </div>
             <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deletePresent(i.presentId)" fluid alt="Responsive image" />
-                <div class="edit">  
-            <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
-                </div>
+            <div class="edit">  
+                <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
+            </div>
         </div>  
         <div md="12" class="feature-box1 test">
-                    <router-link tag="img" style=" margin-top: -5%;" src="https://blazer-net.com/wp-content/uploads/blazer-nett.png" :to="`presents/create`">Add a present</router-link>
-                       <span style="font-family: cursive; font-size: larger;" >Add a present</span>
-
+            <router-link tag="img" style=" margin-top: -5%;" src="https://blazer-net.com/wp-content/uploads/blazer-nett.png" :to="`presents/create`">Add a present</router-link>
+            <span style="font-family: cursive; font-size: larger;" >Add a present</span>
         </div>
-	</div> <!-- End Col -->
-						
-    <!--b-img v-for=" i of presentList" src="https://placekitten.com/380/200">
-        <h1>{{i.presentName}}</h1>
-    </b-img>
+	</div>
 
-     <b-card md="12" v-for=" i of presentList"
-            style="max-width: 20rem; margin-top: 100px; margin-left:10px;"
-            img-src="https://placekitten.com/380/200"
-            img-alt="Image"
-            img-top>
-        <h4 slot="header">{{i.presentName}}</h4>
-        <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg" @click="deletePresent(i.presentId)" style="width: 14%;" fluid alt="Responsive image" />
-          <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" style="width: 14%;" :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
-    </b-card>
-    <router-link tag="img" src="http://icons.iconarchive.com/icons/icons8/ios7/512/User-Interface-Plus-icon.png"  style="width: 5%; height:5%;" :to="`presents/create`"></router-link>
-                 <div class="panel panel-default">
-            <div class="panel-body text-right">
-                <router-link class="btn btn-primary" :to="`presents/create`"><i class="glyphicon glyphicon-plus"></i>Add a present</router-link>
-            </div>
-      </div-->
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Present Name</th>
+                <th>Price</th>
+                <th>Link Present</th>
+                <th>Category Present</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr v-if="presentList.length == 0">
+                <td colspan="7" class="text-center">We-want-a-present!!!</td>
+            </tr>
+
+            <tr v-for="i of presentList">
+                <td> <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage"></td>
+                <td>{{ i.presentName }}</td>
+                <td>{{ i.price }}</td>
+                <td>{{ i.linkPresent }}</td>
+                <td>{{ i.categoryName }}</td>
+                <td>
+                    <button @click="deletePresent(i.presentId)"  class="btn btn-primary">Remove</button>
+                    <router-link :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </template>
+
 <script>
-  import { mapActions } from 'vuex';
-   import AuthService from "../../services/AuthService";
+    import { mapActions } from 'vuex';
+    import AuthService from "../../services/AuthService";
     import PresentApiService from '../../services/PresentApiService';
     import UserApiService from '../../services/UserApiService';
 
-  export default {
+    export default {
     data() {
         return {
             user: {},
@@ -79,9 +90,10 @@
           }
       }
   }
-  };
+};
 
 </script>
+
 <style lang="less">
 
 /* Section - Title */
@@ -166,5 +178,8 @@
     100% {
         width: 100%;
     }
+}
+.myImage {
+    width: 25%;
 }
 </style>

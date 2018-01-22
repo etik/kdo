@@ -17,8 +17,7 @@ import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
 
 
-import UserProfile from './components/user/UserProfile.vue';
-import UserProfileEdit from './components/user/UserProfileEdit.vue';
+import UserProfile from './components/user/UserProfil.vue';
 import UserProfileDisplay from './components/user/UserProfileDisplay.vue';
 
 import PresentList from './components/present/PresentList.vue';
@@ -99,7 +98,6 @@ const router = new VueRouter({
         { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
         { path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
-        { path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
         { path: '/userProfile/display/:email?', component: UserProfileDisplay, beforeEnter: requireAuth },
 
         { path: '/appDefault', component: AppDefault },
@@ -115,7 +113,6 @@ const router = new VueRouter({
         { path: '/events/presents/:mode([create|edit]+)/:eid?/:qid?', component: EventPresentEdit, beforeEnter: requireAuth },
         { path: '/events/participate/:eid?/:qid?', component: EventParticipate, beforeEnter: requireAuth },
         { path: '/events/:mode([suggest|display]+)/calendar', component: Calendar, beforeEnter: requireAuth },
-
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },

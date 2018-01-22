@@ -4,6 +4,7 @@ create table dbo.tPresent
 	PresentName nvarchar(32) not null,
 	Price float not null,
 	LinkPresent nvarchar(32) not null,
+	Picture varbinary(max),
 	CategoryPresentId int not null,
 	UserId int not null
 

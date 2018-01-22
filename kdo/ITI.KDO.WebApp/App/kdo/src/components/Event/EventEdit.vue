@@ -72,6 +72,18 @@
                 </b-card>
             </b-col>
         </b-row>
+        <b-card title="Event">
+            <h4>Chose a picture for your Event</h4>
+            <div class="input-group" style="width : 25%;">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Browse
+                        <input type="file" @change="onFileChange" style="display: none;" multiple>
+                    </span>
+                </label>
+                <input type="text" class="form-control" v-model="sendImage.name" readonly>
+            </div>
+        </b-card>
 </div>
 </template>
 <script>
@@ -81,6 +93,7 @@
     import UserApiService from "../../services/UserApiService";
     import AuthService from "../../services/AuthService";
     import ContactApiService from '../../services/ContactApiService';
+    import FileApiService from '../../services/FileApiService';
 
 
   export default {
@@ -94,9 +107,11 @@
         participantList: [],
         friendList: [],
         selected: [],
+        image: '',
+        sendImage: '',
+        data : new FormData(),
         errors: [],
         showDismissibleAlert: false
-
       }
     },
     
@@ -105,17 +120,26 @@
         var userEmail = AuthService.emailUser();
         this.user = await UserApiService.getUserAsync(userEmail);
         this.mode = this.$route.params.mode;
+        console.log(this.mode);
         this.eventId = this.$route.params.id;
         
         await this.refreshParticipantList();
         await this.refreshfriendList();
 
-        if(this.mode == 'edit'){
+        if(this.mode == 'edit')
+        {
             try {
                 // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
                 // It is useful when we have to know if an error occurred, in order to adapt the user experience.
                 this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
                 this.event.dates = this.event.dates.slice(0, 10);
+                if(this.data != null)
+                {
+                    this.sendItemImage = await FileApiService
+                        .updateFileAsync(this.data, this.event.eventId)
+                        .then( () => { FileApiService.typeOfPicture(2, this.event.eventId)});
+                }
+                
             }
             catch(error) {
                 // So if an exception occurred, we redirect the user to the students list.
@@ -128,9 +152,50 @@
 
         ...mapActions(['executeAsyncRequest']),
 
+        onFileChange(e) {
+            console.log("in OnFileChange");             
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.createImage(files[0]);
+            this.$router.replace('/events/create');      
+        },
+        createImage(file) {
+            console.log("in CreateImage");   
+            var image = new Image();
+            var reader = new FileReader();
+            var vm = this;
+
+            this.data.append('files', file);
+            this.sendImage = file;
+            console.log("sendImage : " + this.sendImage);
+            console.log("file : " + file);
+            reader.onload = (e) => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        async removeImage(e) {
+            console.log("in RemoveImage");   
+            e.preventDefault();
+            this.image = '';
+            this.file = '';
+            this.data.append('files',  this.file);
+            if(this.data != null)
+            {
+                console.log("this.image is not null");
+                console.log("this.data : " + this.data);
+                console.log("this.item.userId : " + this.item.userId);
+                await FileApiService.deletePicture( 2, this.event.eventId );
+                    
+            }
+            this.refresh();
+            this.$router.replace('userProfil');           
+        },
+
         async refreshParticipantList(){
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
-        },
+        }, 
 
         async addParticipant(userId, element){
             var participant = {};
@@ -162,7 +227,17 @@
                 try {
                     if(this.mode == 'create') {
                         this.event.userId = this.user.userId;
-                        await this.executeAsyncRequest(() => EventApiService.createEventAsync(this.event));
+                        console.log("hello");
+                        this.event.eventId = await this.executeAsyncRequest(() => EventApiService.createEventAsync(this.event));      
+                        if(this.data != null)
+                        {
+                            console.log("this.image is not null");
+                            console.log("this.data : " + this.data);
+                            console.log("this.event.eventId: " + this.event.eventId);
+                            this.sendItemImage = await FileApiService
+                                .updateFileAsync(this.data, this.event.eventId)
+                                .then( () => { FileApiService.typeOfPicture(2, this.event.eventId)});
+                        }
                     }
                     else {
                         await this.executeAsyncRequest(() => EventApiService.updateEventAsync(this.event)); 

@@ -5,6 +5,7 @@ create procedure dbo.sPresentUpdate
 	@CategoryPresentId int,
 	@Price             float,
 	@LinkPresent 	   nvarchar(32),
+	@Picture		   varbinary(max),
 	@PresentName 	   nvarchar(32)
 )
 as
@@ -14,6 +15,7 @@ begin
 		CategoryPresentId = @CategoryPresentId,
 		Price = @Price,
 		LinkPresent = @LinkPresent,
+		Picture = @Picture,
 		PresentName = @PresentName
 	where PresentId = @PresentId;
 	return 0;

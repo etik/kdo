@@ -67,6 +67,8 @@ namespace ITI.KDO.WebApp
             services.AddSingleton<CategoryPresentServices>();
             services.AddSingleton<FacebookServices>();
             services.AddSingleton<FacebookClient>();
+            services.AddSingleton<FileServices>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

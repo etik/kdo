@@ -35,14 +35,12 @@ namespace ITI.KDO.DAL.Tests
 
             {
                 DateTime birthDate = TestHelpers.RandomBirthDate(_random.Next(5, 10));
+                byte[] photo = TestHelpers.GetBytesArray(12);
                 email = TestHelpers.RandomEmail();
-                sut.Update(user.UserId, firstName, lastName, birthDate, email, user.Phone, user.Photo);
-            }
-
-            {
+                sut.Update(user.UserId, firstName, lastName, email, user.Phone, photo);
                 User u = sut.FindById(user.UserId);
-                Assert.That(u.Email, Is.EqualTo(email));
-                Assert.That(u.Password, Is.EqualTo(password));
+                Assert.That(u.Birthdate, Is.EqualTo(birthDate));
+                Assert.That(u.Photo, Is.EqualTo(photo));
             }
 
             {

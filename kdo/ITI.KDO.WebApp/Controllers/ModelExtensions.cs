@@ -37,6 +37,7 @@ namespace ITI.KDO.WebApp.Controllers
             {
                 PresentId = @this.PresentId,
                 PresentName = @this.PresentName,
+                Picture = @this.Picture,
                 Price = @this.Price,
                 LinkPresent = @this.LinkPresent,
                 CategoryPresentId = @this.CategoryPresentId,
@@ -161,6 +162,7 @@ namespace ITI.KDO.WebApp.Controllers
                 EventId = @this.EventId,
                 EventName = @this.EventName,
                 Descriptions = @this.Descriptions,
+                Picture = @this.Picture,
                 Dates = @this.Dates,
                 UserId = @this.UserId
             };
