@@ -1,6 +1,6 @@
 <template>
 <div>
-            <button style="width: 21%; margin-left: 38%;    background-color: #d44e4e;"type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
+            <!--button style="width: 21%; margin-left: 38%;background-color: #81cc67;"type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-success"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button-->
 
 <section>
   <div class="title">
@@ -8,9 +8,9 @@
   </div>
 </section>
 
-    <div class="row" style="margin-left:11%;">
+    <div class="row" style="margin-left:50px;margin-right:50px;">
         <div md="12" class="feature-box event" v-for="i of eventList">
-                <div class="test-event">
+                <div class="eventDiv">
                 <span>{{ i.eventName }}</span>
                 </div>
          <div v-if = "isCreator(i.userId) == true">
@@ -35,58 +35,7 @@
 
         </div>
 	</div>
-    </div> <!-- End Col -->
-
-
-      <!--div class="panel panel-default">
-            <div class="panel-body text-right">
-                <router-link class="btn btn-primary" :to="`events/create`">Add an event</router-link>
-            </div>
-        </div>
-
-        <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Event Name</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Options</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr v-if="eventList.length == 0">
-                    <td colspan="7" class="text-center">Event</td>
-                </tr>
-
-                <tr v-for="i of eventList" :key="i.eventId">
-                    <td>{{ i.eventName }}</td>
-                    <td>{{ i.descriptions }}</td>
-                    <td>{{ i.dates }}</td>
-                    <td>
-                    <b-button-group v-if = "isCreator(i.userId) == true">
-                        <b-button :to="`events/edit/${i.eventId}`">Edit</b-button>
-                        <b-button :to="`events/view/${i.eventId}`">View</b-button>
-                        <b-button @click="deleteEvent(i.eventId) ">Remove</b-button>
-                    </b-button-group>
-
-                    <b-button variant="primary" v-if = "isCreator(i.userId) == false" @click="changeRoute()">Suggest another date</b-button>
-
-                    <b-button-group v-if = "isCreator(i.userId) == false">
-                        <b-button @click = "quitEvent(i.eventId)">Quit event</b-button>
-                    </b-button-group>
-
-                    <td-->
-                        <!--button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
-                        <router-link :to="`events/edit/${i.eventId}`">Edit event</router-link>
-                        <router-link :to="`events/view/${i.eventId}`">View</router-link-->
-
-                    <!--/td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    </div-->
+    </div> 
 </template>
 
 <script>
@@ -204,15 +153,13 @@
     margin-left: 97%;
     margin-top: -206%;
 }
-.test-{
-    &event {
-        position: relative;
-        right:0;
-        font-size: 24px;
-        background-color: #d44e4e;
-        opacity: 0.8;
-        margin-top:32%;
-    }
+.eventDiv{
+    position: relative;
+    right:0;
+    font-size: 24px;
+    background-color: #81cc67;
+    opacity: 0.8;
+    margin-top:32%;
 }
 
 .feature-box{

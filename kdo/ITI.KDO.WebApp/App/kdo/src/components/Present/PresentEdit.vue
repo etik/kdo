@@ -38,7 +38,7 @@
 
                 <div class="form-group">
                 <label>CategoryPresentId</label>
-                <b-dropdown right text="Category Present">
+                <b-dropdown right variant="success"text="Category Present">
                     <tr v-for="i of categoryPresentList" :key="i.categoryPresentId">
                         <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
                     </tr>
@@ -46,7 +46,7 @@
                 <input type="text" v-model="this.categoryChosen" class="form-control" disabled-->
                 </div>
 
-                <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                <button type="submit" class="btn btn-success">Sauvegarder</button>
                 </form>
         </b-card>
         </b-col>
@@ -139,4 +139,5 @@
   };
 </script>
 <style lang="less">
+
 </style>

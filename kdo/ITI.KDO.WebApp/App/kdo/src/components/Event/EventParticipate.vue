@@ -28,8 +28,8 @@
                     placeholder="Enter the ammount :">
                 </b-form-input>
 
-                <b-button @click="Particip()" class="btn btn-primary">Participate</b-button>
-                <b-button v-if="existing" @click="DeleteParticipation()" class="btn btn-primary">Remove your participation</b-button>                
+                <b-button @click="Particip()" class="btn btn-success">Participate</b-button>
+                <b-button v-if="existing" @click="DeleteParticipation()" class="btn btn-danger">Remove your participation</b-button>                
             </b-card>
         </b-col>
     </b-row>
@@ -109,4 +109,9 @@
 };
 </script>
 <style lang="less">
+button.btn.btn-danger.btn.btn-secondary {
+    background-color: #c75c5c;
+
+}
+
 </style>

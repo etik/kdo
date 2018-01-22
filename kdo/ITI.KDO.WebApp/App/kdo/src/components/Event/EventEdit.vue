@@ -8,8 +8,9 @@
     </section>
 
         <b-row>
+            <b-col md="3">
+            </b-col>
             <b-col md="5" style="margin-left: 1%;">
-
                 <b-card header="EVENT" >
                  <h6 slot="header" class="text-center mb-0" text-variant="white">EVENT</h6>
                     <b-form  @submit="onSubmit($event)">
@@ -50,7 +51,7 @@
                     </b-form>
                 </b-card>
                 </b-col>
-            <b-col md="6">
+            <b-col md="2">
                 <b-card header="FRIENDS">
                 <b-alert variant="success" dismissible :show="showDismissibleAlert"
                                         @dismissed="showDismissibleAlert=false">
@@ -59,13 +60,9 @@
                     <h6 slot="header" class="text-center mb-0" text-variant="white">FRIENDS</h6>
                     <div v-if="mode == 'edit'" class="com-sm-4" >
                         <b-row style="margin-left: 3%;">
-                            <div v-for="i of friendList" :key="i.id">
-                                <b-col md="3">
-                                <b-card  style="width: 75%;margin-top: 7%;">
-                                <td>{{ i.firstName }} {{ i.lastName }}</td>
-                                <td><b-button @click="addParticipant(i.userId, i),showDismissibleAlert=true" style="margin-left: 92%;"variant="success">+</b-button></td>
-                                </b-card>
-                                </b-col>
+                            <div class="friendCard" v-for="i of friendList" :key="i.id">
+                                <td style="width:200px;">{{ i.firstName }} {{ i.lastName }}</td>
+                                <td><b-button @click="addParticipant(i.userId, i),showDismissibleAlert=true" style="margin-right: 5px;"variant="success">+</b-button></td>
                             </div>
                         </b-row>
                     </div>
@@ -96,7 +93,6 @@
         selected: [],
         errors: [],
         showDismissibleAlert: false
-
       }
     },
     
@@ -189,6 +185,12 @@
 <style lang="less">
 .row {
     margin-top: 10px;
+}
+
+.friendCard {
+    height: 58px;
+    width: 200px;
+    margin-top: 7%;
 }
 
 </style>

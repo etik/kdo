@@ -39,7 +39,7 @@
             <div class="form-group">
                 <label>Category Present</label>
                 <br>
-                <b-dropdown right style="margin-bottom: 1%;"text="Category Present">
+                <b-dropdown right variant="success" style="margin-bottom: 1%;"text="Category Present">
                     <tr v-for="i of categoryPresentList">
                         <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
                     </tr>
@@ -58,8 +58,8 @@
                 <input type="text" v-model="quantity.quantity" class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-primary">Sauvegarder</button>
-            <b-button v-if="mode == 'edit'" @click="DeletePresent()" class="btn btn-primary">Delete the present</b-button>
+            <button type="submit" class="btn btn-success">Sauvegarder</button>
+            <b-button v-if="mode == 'edit'" @click="DeletePresent()" class="btn btn-danger">Delete the present</b-button>
         </form>
             </b-card>
         </b-col>
