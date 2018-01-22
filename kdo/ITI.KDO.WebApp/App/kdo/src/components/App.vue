@@ -4,7 +4,7 @@
 <header>
   <div class="content">
     <h1>Welcome to KDO</h1>
-    <h3 style="color: rgb(38, 38, 38);">Your are connected {{item.firstName}}</h3>
+    <h3 style="color: rgb(38, 38, 38);">Your are connected, {{item.firstName}}</h3>
   </div>
 </header>
 <b-col md="12">
@@ -21,7 +21,7 @@
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
 
-          <b-carousel-slide v-for="i in nbslide" img-blank variant="dark" img-alt="Blank image" >
+          <b-carousel-slide v-for = "i in nbslide" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
               <b-col md="4">
                 <b-card v-if="eventList[(3 * (i - 1))] != null"
@@ -80,7 +80,7 @@
   </b-col>
 <b-col md="12">
   <b-jumbotron class="bg-light">
-    <h1>Your gifts</h1>
+    <h1>Your presents</h1>
         <b-carousel id="friend_carousel"
                 style="text-shadow: 1px 1px 2px #333; margin-top: 20px; margin-bottom: 20px;"
                 controls
@@ -92,7 +92,7 @@
                 @sliding-start="onSlideStart1"
                 @sliding-end="onSlideEnd1">
 
-          <b-carousel-slide v-for="i in nbslide1" img-blank variant="dark" img-alt="Blank image">
+          <b-carousel-slide v-for="i in nbslide1" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
               <b-col md="4">
                 <b-card v-if="presentList[(3 * (i - 1))] != null"

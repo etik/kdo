@@ -32,6 +32,16 @@ namespace ITI.KDO.WebApp.Controllers
             });
         }
 
+        [HttpGet("{quantityId}")]
+        public IActionResult GetParticipationByQuantity(int quantityId)
+        {
+            Result<IEnumerable<Participation>> result = _participationService.GetParticipationByQuantity(quantityId);
+            return this.CreateResult<IEnumerable<Participation>, IEnumerable<ParticipationViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToParticipationViewModel());
+            });
+        }
+
         [HttpGet("{quantityId}/{userId}/existingParticipation")]
         public bool ExistingParticipation(int quantityId, int userId)
         {

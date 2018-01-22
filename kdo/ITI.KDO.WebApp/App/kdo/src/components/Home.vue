@@ -38,7 +38,7 @@
             <b-nav-item  href="/Home/userProfile">Profile</b-nav-item>
             <b-nav-item  href="/Home/events">Event</b-nav-item>
             <b-nav-item href="/Home/contact">Mes contacts</b-nav-item>
-            <b-nav-item href="#clients">Calendrier</b-nav-item>
+            <b-nav-item href="/Home/events/display/calendar">Calendrier</b-nav-item>
             <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
             <b-nav-item> 
                <span class="badge badge-light" >
@@ -49,7 +49,7 @@
                             <td colspan="7" id="popoverButton-sync" style="font-size: medium;" class="text-center" >{{this.contactNotificationList.length + this.eventNotificationList.length}} Notifications</td>
                             <b-popover :show.sync="show" target="popoverButton-sync" title="Accept or Decline">
                         <tr v-if="i.senderEmail != userEmail" v-for="i of contactNotificationList">
-                          <td>{{ i.senderEmail }} want to add you as friend. </td>
+                          <td>{{ i.senderEmail }} wants to add you as a friend. </td>
                           <td>
                               <button  @click="responseContactInvitation('yes', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-success">A</button>
                               <button @click="responseContactInvitation('no', i.senderEmail, i.recipientsEmail, i.contactId)" class="btn btn-danger">D</button>
@@ -97,7 +97,7 @@
               <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>
               <b-nav-item href="/Home/events"class="row">Event</b-nav-item>
               <b-nav-item href="/Home/contact" class="row" >Mes contacts</b-nav-item>
-              <b-nav-item href="#clients" class="row">Calendrier</b-nav-item>
+              <b-nav-item href="/Home/events/display/calendar" class="row">Calendrier</b-nav-item>
               <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
             </b-nav>
           </b-col-->

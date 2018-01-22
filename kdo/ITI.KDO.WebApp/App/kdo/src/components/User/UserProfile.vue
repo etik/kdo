@@ -16,10 +16,8 @@
             class="mb-2">
         <p class="card-text">
             {{auth.email}}
-            </br>
-            {{item.firstName}}
-            </br>
-            {{item.lastName}}
+            <br>{{item.firstName}}
+            <br>{{item.lastName}}
             
         </p>
     </b-card>
@@ -71,7 +69,6 @@
             </div>
             </div-->
             <!--input type="submit" class="btn btn-primary btn-block" value="Edit"/>
-
         </form--> 
   <b-form  asp-controller="Account" asp-action="Register" method="post" @submit="onSubmit($event)" >
             <b-col md="12">

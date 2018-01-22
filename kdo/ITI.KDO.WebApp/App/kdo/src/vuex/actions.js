@@ -62,3 +62,4 @@ export async function executeAsyncRequest({ commit }, asyncCallback) {
         commit(types.SET_IS_LOADING, false);
     }
 }
+

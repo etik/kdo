@@ -12,8 +12,6 @@
 </template>
  
 <script>
-    import {Calendar} from 'vue-bootstrap4-calendar';
-    import {messages} from 'vue-bootstrap4-calendar';
     export default {
         name: 'app',
         data() {

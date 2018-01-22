@@ -38,11 +38,10 @@
 
                 <div class="form-group">
                 <label>CategoryPresentId</label>
-                <br>
-                <b-dropdown style="margin-bottom: 1%;"right text="Category Present">
-                <tr v-for="i of categoryPresentList">
-                <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
-                </tr>
+                <b-dropdown right text="Category Present">
+                    <tr v-for="i of categoryPresentList" :key="i.categoryPresentId">
+                        <b-dropdown-item-button @click="choseCategory(i.categoryPresentId, i.categoryName)">{{ i.categoryName }}</b-dropdown-item-button>
+                    </tr>
                 </b-dropdown>
                 <input type="text" v-model="this.categoryChosen" class="form-control" disabled-->
                 </div>

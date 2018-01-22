@@ -56,12 +56,29 @@ namespace ITI.KDO.DAL
                              p.UserId,
                              p.EventId,
                              p.AmountUserPrice
-                  from dbo.vParticipation p
+                    from dbo.vParticipation p
                     where p.UserId = @UserId and p.QuantityId = @QuantityId",
                     new { UserId = userId, QuantityId = quantityId })
                     .FirstOrDefault();
             }
         }
+
+
+        public IEnumerable<Participation> FindParticipationById(int quantityId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Participation>(
+                    @"select p.QuantityId,
+                             p.UserId,
+                             p.EventId,
+                             p.AmountUserPrice
+                    from dbo.vParticipation p
+                    where p.QuantityId = @QuantityId",
+                    new { QuantityId = quantityId });
+            }
+        }
+
 
         /// <summary>
         /// Update ONLY the AmountUserPrice where UserId = @UserId and EventId = @EventId

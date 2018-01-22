@@ -59,6 +59,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            <b-button v-if="mode == 'edit'" @click="DeletePresent()" class="btn btn-primary">Delete the present</b-button>
         </form>
             </b-card>
         </b-col>
@@ -167,9 +168,15 @@
                 }
             }
         },
+
         choseCategory(categoryIdChosen, categoryNameChosen){
             this.categoryChosen = categoryNameChosen;
             this.present.categoryPresentId = categoryIdChosen;
+        },
+
+        async DeletePresent(){
+            await this.executeAsyncRequest(() => QuantityApiService.deleteQuantityAsync(this.quantityId));
+            this.$router.go(-1);
         }
     }
   };

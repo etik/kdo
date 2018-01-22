@@ -50,6 +50,14 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, participation);
         }
 
+        public Result<IEnumerable<Participation>> GetParticipationByQuantity(int quantityId)
+        {
+            IEnumerable<Participation> participation;
+            if ((participation = _participationGateway.FindParticipationById(quantityId)) == null)
+                return Result.Failure<IEnumerable<Participation>>(Status.NotFound, "Participation not found.");
+            return Result.Success(Status.Ok, participation);
+        }
+
         public bool ParticipationExist(int quantityId, int userId)
         {
             return ((_participationGateway.FindByIds(userId, quantityId)) != null);

@@ -8,19 +8,35 @@ class EventApiService{
     }
 
     async getEventListAsync(userId){
-        return await getAsync(`${endpoint}/${userId}/getEventByUserId`);
+        return await getAsync(`${endpoint}/${userId}/getEventList`);
     }
 
-    async getEventAsync(eventId){
+    async getEventSuggestListAsync(userId, eventId){
+        return await getAsync(`${endpoint}/${eventId}/${userId}/getEventSuggestList`);
+    }
+
+    async getEventSuggestListByUserIdAsync(userId){
+        return await getAsync(`${endpoint}/${userId}/getEventSuggestListByUserId`)
+    }
+
+    async getEventByIdAsync(eventId){
         return await getAsync(`${endpoint}/${eventId}`);
     }
 
-    async GetEventAsync(userId, eventId){
+    async getEventByIdsAsync(userId, eventId){
         return await getAsync(`${endpoint}/${eventId}/${userId}/getEvent`)
     }
 
+    async getEventSuggestAsync(userId, eventId){
+        return await getAsync(`${endpoint}/${eventId}/${userId}/getEventSuggest`)
+    }
+
     async createEventAsync(model){
-        return await postAsync(endpoint, model);
+        return await postAsync(`${endpoint}/createEvent`, model);
+    }
+
+    async createEventSuggestAsync(model){
+        return await postAsync(`${endpoint}/createEventSuggest`, model);
     }
 
     async updateEventAsync(model){

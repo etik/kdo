@@ -58,16 +58,16 @@
                 </b-alert>
                     <h6 slot="header" class="text-center mb-0" text-variant="white">FRIENDS</h6>
                     <div v-if="mode == 'edit'" class="com-sm-4" >
-                            <b-row style="margin-left: 3%;">
-                                <div v-for="i of friendList" :key="i.id">
-                                    <div>
-                                    <b-card  style="width: 75%;margin-top: 7%;">
-                                    <td>{{ i.firstName }} {{ i.lastName }}</td>
-                                    <td><b-button @click="addParticipant(i.userId, i),showDismissibleAlert=true" style="margin-left: 92%;"variant="success">+</b-button></td>
-                                    </b-card>
-                                    </div>
-                                </div>
-                            </b-row>
+                        <b-row style="margin-left: 3%;">
+                            <div v-for="i of friendList" :key="i.id">
+                                <b-col md="3">
+                                <b-card  style="width: 75%;margin-top: 7%;">
+                                <td>{{ i.firstName }} {{ i.lastName }}</td>
+                                <td><b-button @click="addParticipant(i.userId, i),showDismissibleAlert=true" style="margin-left: 92%;"variant="success">+</b-button></td>
+                                </b-card>
+                                </b-col>
+                            </div>
+                        </b-row>
                     </div>
                 </b-card>
             </b-col>
@@ -86,14 +86,14 @@
   export default {
     data() {
       return {
-        user:{},
-        event:{},
+        user: {},
+        event: {},
         mode: null,
-        eventId: null,
-        participant:{},
+        eventId: 0,
+        participant: {},
         participantList: [],
-        friendList:[],
-        selected:[],
+        friendList: [],
+        selected: [],
         errors: [],
         showDismissibleAlert: false
 
@@ -111,16 +111,17 @@
         await this.refreshfriendList();
 
         if(this.mode == 'edit'){
-                try {
-                    // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
-                    // It is useful when we have to know if an error occurred, in order to adapt the user experience.
-                    this.event = await this.executeAsyncRequest(() => EventApiService.getEventAsync(this.eventId));
-                }
-                catch(error) {
-                    // So if an exception occurred, we redirect the user to the students list.
-                    this.$router.replace('/events');
-                }
+            try {
+                // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
+                // It is useful when we have to know if an error occurred, in order to adapt the user experience.
+                this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
+                this.event.dates = this.event.dates.slice(0, 10);
             }
+            catch(error) {
+                // So if an exception occurred, we redirect the user to the students list.
+                this.$router.replace('/events');
+            }
+        }
     },
 
     methods: {

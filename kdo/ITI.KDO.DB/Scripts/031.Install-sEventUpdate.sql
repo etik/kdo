@@ -1,7 +1,7 @@
 create procedure dbo.sEventUpdate
 (
     @EventId         int,
-	@Dates			 datetime2,
+	@Dates			 date,
 	@Descriptions 	 nvarchar(200),
 	@EventName 	     nvarchar(32)
 )
