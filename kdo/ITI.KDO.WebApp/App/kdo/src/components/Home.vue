@@ -64,10 +64,12 @@
                         </tr>
                           </b-popover>
                       </tr>
-
-
                </span>
             </b-nav-item>
+                  <b-nav-form>
+        <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
+        <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+      </b-nav-form>
             <b-nav-item style="position:absolute; right:10px;" href="#"@click="logout()">
             <div class="logoImg">
                     <img class="logoImg" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/power-512.png">

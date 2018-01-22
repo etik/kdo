@@ -46,14 +46,14 @@
                 PRESENTS
             </h6>
 
-            <b-dropdown id="ddown1" text="Add a present" class="m-md-2" >
+            <b-dropdown id="ddown1" variant="primary" text="Add a present" class="m-md-2" >
                 <b-dropdown-item :to="`/events/presents/create/${eventId}`">Create a new present</b-dropdown-item>
                 <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
             </b-dropdown>
 
             <div class="row" style="margin-left:11%;">
-                <div md="12" class="feature-box event"  v-for="i in quantityPresentList">
-                    <div :id="'Popover-'+i.quantityId" class="test-event event-text">
+                <div md="12" class="event"  v-for="i in quantityPresentList">
+                    <div :id="'Popover-'+i.quantityId" class="event-text">
                         {{ i.presentName }}
                         <b-progress :value="i.ammount" :max="i.price" show-progress animated></b-progress>
                         <b-popover :target="'Popover-'+i.quantityId" triggers="hover focus" placement="top">
@@ -186,8 +186,15 @@
     margin-top:10%;
 }
 .event-text {
-    height:52px;    
-    //font-size: 110%;
+    height:52px;
+    position: relative;
+    text-align: center;
+    margin-right: 10%;
+    margin-left: 10%;
+    font-size: 24px;
+    background-color: #81cc67;
+    opacity: 0.8;
+    margin-top:32%;
 }
 .Info {
     font-size: xx-large;
@@ -195,8 +202,20 @@
     margin-top: -28%;
 
 }
+
+.event{
+    width: 400px;
+    height: 200px;
+    margin-top: 2%;
+    margin-right: 5%;
+    transition: .5s ease;
+}
+.event:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.1);
+}
 .btni {
-    margin-top:-53%;
+    margin-top:-33%;
 }
 .edite {
     width: 7%;
@@ -208,12 +227,13 @@
     border-width: 1px;
 }
 .editP{
+    margin-left: 29%;
     width:15%;
 }
 .participant{
     width:16%;
 }
 .card-header.bg-danger {
-    background-color:#db7070 !important;
+    background-color:#98d484 !important;
 }
 </style>
