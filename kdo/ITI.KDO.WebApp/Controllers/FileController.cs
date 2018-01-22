@@ -17,7 +17,7 @@ namespace ITI.KDO.WebApp.Controllers
     public class FileController : Controller
     {
         readonly FileServices _fileServices;
-  
+
         public FileController(FileServices fileServices)
         {
             _fileServices = fileServices;
@@ -34,13 +34,13 @@ namespace ITI.KDO.WebApp.Controllers
         {
             //Result result = _fileServices.UpdatePicture(id, file);
             //return this.CreateResult(result);
-            
+
             try
             {
                 _fileServices.SavePictureSnapshot(id, files);
                 return Ok();
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 return false;
             }
@@ -48,13 +48,26 @@ namespace ITI.KDO.WebApp.Controllers
 
         }
 
-        [HttpPost("{type}/{id}")]
+        [HttpPost("{typeOfFile}/{id}")]
         public object TypeOfFile(int id, EType typeOfFile)
         {
             try
             {
-               if( !_fileServices.TryUpdatePicture( id, typeOfFile ) )
-                   return BadRequest();
+                _fileServices.TryUpdatePicture(id, typeOfFile);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{typeOfFile}/{id}")]
+        public object DeleteImage(int id, EType typeOfFile)
+        {
+            try
+            {
+                _fileServices.UpdatePicture(id, null, typeOfFile);
                 return Ok();
             }
             catch( Exception )
@@ -62,21 +75,8 @@ namespace ITI.KDO.WebApp.Controllers
                 return BadRequest();
             }
         }
-
     }
 
-    public class Image : IImage
-    {
-        public List<IFormFile> Images { get; set; }
-        public EType TypeOfPicture { get; set; }
-    }
-
-    public interface IImage
-    {
-        List<IFormFile> Images { get; set; }
-        EType TypeOfPicture { get; set; }
-
-    }
 }
 
 

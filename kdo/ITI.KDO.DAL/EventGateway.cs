@@ -31,6 +31,7 @@ namespace ITI.KDO.DAL
                              e.EventId,
                              e.EventName,
                              e.Descriptions,
+                             e.Picture,
                              e.Dates
                           from dbo.vEvent e
                           where e.EventId = @EventId",
@@ -54,6 +55,7 @@ namespace ITI.KDO.DAL
                              e.EventId,
                              e.EventName,
                              e.Descriptions,
+                             e.Picture,
                              e.Dates
                           from dbo.vEvent e
                           where e.EventId = @EventId and e.UserId = @UserId",
@@ -143,6 +145,7 @@ namespace ITI.KDO.DAL
                              e.UserId,
                              e.EventName,
                              e.Descriptions,
+                             e.Picture,
                              e.Dates
                       from dbo.vEvent e
                       where e.UserId = @UserId;",
@@ -186,7 +189,9 @@ namespace ITI.KDO.DAL
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 return con.Query<Event>(
-                          @"select e.UserId,
+                          @"select e.eventId,
+                                   e.picture,
+                                   e.UserId,
                                    e.EventName,
                                    e.Descriptions,
                                    e.Dates
@@ -194,6 +199,22 @@ namespace ITI.KDO.DAL
                             where e.EventName = @EventName;",
                         new { EventName = eventName })
                     .FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Update Picture of Event with the EventId
+        /// </summary>
+        /// <param name="presentId"></param>
+        /// <param name="coverImageBytes"></param>
+        public void EventSetPicture(int eventId, byte[] coverImageBytes)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    "dbo.sEventUpdatePhoto",
+                    new { EventId = eventId, Picture = coverImageBytes },
+                    commandType: CommandType.StoredProcedure);
             }
         }
     }

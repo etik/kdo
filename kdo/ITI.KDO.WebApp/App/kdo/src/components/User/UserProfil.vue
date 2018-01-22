@@ -106,7 +106,7 @@
                 sendImage: '',
                 errors: [],
                 data: new FormData(),
-                TypeOfFile: 1
+                TypeOfFile: 0
             };
         },
 
@@ -169,10 +169,7 @@
                         .updateFileAsync(this.data, this.item.userId)
                         .then( () => { FileApiService.typeOfPicture(this.typeOfFile, this.item.userId)});
                 }  
-                
-                
-                // this.refresh();
-                // this.$router.replace('userProfil');
+     
             },
 
             onFileChange(e) {
@@ -203,13 +200,17 @@
                 console.log("in RemoveImage");   
                 e.preventDefault();
                 this.image = '';
-                this.item.photo = '';
-                this.data.append('files',  this.item.photo);
-                this.data.image.append('files',  this.item.photo);
-                
-                this.sendItemImage = await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.item.userId, this.TypeOfFile));
-                this.mode = undefined;
-                 this.refresh();
+                this.file = '';
+                this.data.append('files',  this.file);
+                if(this.data != null)
+                {
+                    console.log("this.image is not null");
+                    console.log("this.data : " + this.data);
+                    console.log("this.item.userId : " + this.item.userId);
+                    await FileApiService.deletePicture( 0,this.item.userId );
+                        
+                }
+                this.refresh();
                 this.$router.replace('userProfil');           
             }
         }

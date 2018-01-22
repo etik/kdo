@@ -71,6 +71,7 @@ export async function deleteAsync(url) {
     .then(toJSON);
 }
 
+
 export async function postTypeAsync(url) {
     return await fetch(url, {
         method: 'POST',

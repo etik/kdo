@@ -13,6 +13,7 @@
       <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
+                    <th>Event Picture</th>
                     <th>Event Name</th>
                     <th>Description</th>
                     <th>Date</th>
@@ -26,6 +27,7 @@
                 </tr>
 
                 <tr v-for="i of eventList">
+                    <td><img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage"></td>
                     <td>{{ i.eventName }}</td>
                     <td>{{ i.descriptions }}</td>
                     <td>{{ i.dates }}</td>

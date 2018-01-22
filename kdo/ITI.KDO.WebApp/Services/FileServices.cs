@@ -19,13 +19,14 @@ namespace ITI.KDO.WebApp.Services
     {
         readonly UserGateway _userGateway;
         readonly PresentGateway _presentGateway;
+        readonly EventGateway _eventGateway;
 
 
-
-        public FileServices(UserGateway userGateway, PresentGateway presentGateway)
+        public FileServices(UserGateway userGateway, PresentGateway presentGateway, EventGateway eventGateway)
         {
             _userGateway = userGateway;
             _presentGateway = presentGateway;
+            _eventGateway = eventGateway;
         }
 
         //private byte[] BuildByteArray( List<IFormFile> files )
@@ -66,15 +67,17 @@ namespace ITI.KDO.WebApp.Services
 
         public bool TryUpdatePicture(int id, EType typeOfFile)
         {
-            if (!ListOfFiles.TryGetValue(id, out var file))
-                return false;
-
             try
-            {
-                UpdatePicture(id, file, typeOfFile);
+            {        
+                if (ListOfFiles.TryGetValue(id, out var file))
+                {
+                    UpdatePicture(id, file, typeOfFile);
+                
+                }
                 return true;
             }
-            catch( Exception e)
+
+            catch ( Exception e)
             {
                 return false;
             }
@@ -88,8 +91,11 @@ namespace ITI.KDO.WebApp.Services
             switch (typeOfPicture){
 
                 case EType.User:
-                    if (ListOfFiles[id] == null)
+                    if (files == null)
+                    {
                         ListOfFiles[id] = File.ReadAllBytes(@"..\ITI.KDO.WebApp\App\kdo\src\assets\unknow.jpg");
+                        _userGateway.UserSetPhoto(id, ListOfFiles[id]);
+                    }
                     else if (ListOfFiles[id] != null)
                         _userGateway.UserSetPhoto(id, ListOfFiles[id]);
                     return Result.Success(Status.Ok);
@@ -102,10 +108,12 @@ namespace ITI.KDO.WebApp.Services
                     //var present = _presentGateway.FindByPresentId(id);
                     return Result.Success(Status.Ok);
                 case EType.Event:
-
+                    if (ListOfFiles[id] == null)
+                        ListOfFiles[id] = File.ReadAllBytes(@"..\ITI.KDO.WebApp\App\kdo\src\assets\event.jpg");
+                    else if (ListOfFiles[id] != null)
+                        _eventGateway.EventSetPicture(id, ListOfFiles[id]);
                     break;
             }
-
             return Result.Success(Status.Ok);
         }
     }

@@ -13,6 +13,7 @@
       <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
+                    <th>Photo</th>
                     <th>Present Name</th>
                     <th>Price</th>
                     <th>Link Present</th>
@@ -27,6 +28,7 @@
                 </tr>
 
                 <tr v-for="i of presentList">
+                    <td> <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage"></td>
                     <td>{{ i.presentName }}</td>
                     <td>{{ i.price }}</td>
                     <td>{{ i.linkPresent }}</td>
@@ -84,5 +86,7 @@
 </script>
 
 <style lang="less">
-
+.myImage {
+    width: 25%;
+}
 </style>

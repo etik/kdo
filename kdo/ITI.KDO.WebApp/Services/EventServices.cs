@@ -64,13 +64,13 @@ namespace ITI.KDO.WebApp.Services
 
             return Result.Success(Status.Ok, events);
         }
-        public Result<Event> CreateEvent(int userId, string eventName, string descriptions, DateTime dates)
+        public Result<int> CreateEvent(int userId, string eventName, string descriptions, DateTime dates)
         {
-            if (!IsNameValid(eventName)) return Result.Failure<Event>(Status.BadRequest, "The event's name is not valid.");
+            if (!IsNameValid(eventName)) return Result.Failure<int>(Status.BadRequest, "The event's name is not valid.");
 
-            _eventGateway.Create(eventName, descriptions, dates, userId);
-            Event events = _eventGateway.FindByName(eventName);
-            return Result.Success(Status.Ok, events);
+            int result = _eventGateway.Create(eventName, descriptions, dates, userId);
+            
+            return Result.Success(Status.Ok, result);
         }
 
         bool IsNameValid(string name) => !string.IsNullOrWhiteSpace(name);

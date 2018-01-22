@@ -130,14 +130,23 @@
                         console.log("this data : " + this.data);
                         console.log("this sendItem : " + this.sendImage.name);
                         console.log("this present.presentId : " + this.present.presentId);
-                        await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
+                        this.sendItemImage = await FileApiService
+                        .updateFileAsync(this.data, this.present.presentId)
+                        .then( () => { FileApiService.typeOfPicture(1, this.present.presentId)});
                      }
                         
                         
                 }
                 else {
                     await this.executeAsyncRequest(() => PresentApiService.updatePresentAsync(this.present));
-                    if(this.data != null) await this.executeAsyncRequest(() => FileApiService.updateFileAsync(this.data, this.present.presentId, 1));
+                    if(this.data != null) {
+                        console.log("this data : " + this.data);
+                        console.log("this sendItem : " + this.sendImage.name);
+                        console.log("this present.presentId : " + this.present.presentId);
+                        this.sendItemImage = await FileApiService
+                        .updateFileAsync(this.data, this.present.presentId)
+                        .then( () => { FileApiService.typeOfPicture(1, this.present.presentId)});
+                     }
                 }
                 this.$router.replace('/presents');
             }

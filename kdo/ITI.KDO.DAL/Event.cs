@@ -12,6 +12,8 @@ namespace ITI.KDO.DAL
 
         public string Descriptions { get; set; }
 
+        public byte[] Picture { get; set; }
+
         public DateTime Dates { get; set; }
 
         public int UserId { get; set; }

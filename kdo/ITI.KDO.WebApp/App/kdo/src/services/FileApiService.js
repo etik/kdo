@@ -1,4 +1,4 @@
-import { postFileAsync, postTypeAsync } from '../helpers/apiHelper';
+import { postFileAsync, postTypeAsync, deleteAsync } from '../helpers/apiHelper';
 
 const endpoint = "/api/file";
 
@@ -15,6 +15,11 @@ class FileApiService {
     async typeOfPicture(type, userId) {
         console.log("postTypeAsync");
         return await postTypeAsync(`${endpoint}/${type}/${userId}`);
+    }
+
+    async deletePicture(type, userId) {
+        console.log("postTypeAsync");
+        return await deleteAsync(`${endpoint}/${type}/${userId}`);
     }
 }
 
