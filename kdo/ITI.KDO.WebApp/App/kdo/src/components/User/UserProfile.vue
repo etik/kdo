@@ -1,124 +1,92 @@
 <template>
 <div>
-<section>
-  <div class="title">
-    <h1>YOUR PROFILE</h1>
-  </div>
-</section>
-<div class="row">
-  <div class="col-sm-3">
-    <b-card title=" Your Profile"
-       img-src="https://www.walldevil.com/wallpapers/a18/thumb/background-lemons-web-nvstormygetaway-images-profile-naver.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2">
-        <p class="card-text">
-            {{auth.email}}
-            <br>{{item.firstName}}
-            <br>{{item.lastName}}
-            
-        </p>
-    </b-card>
-      </div>
-  <div class="col-sm-9">
-   <b-card title="Edit your Profile">
-<!--form class="form-inline" asp-controller="Account" asp-action="Register" method="post" @submit="onSubmit($event)">
-            <div class="col-md-12">
-            <div class="form-group">
-                <label  asp-for="Email">Email : </label>
-                <input asp-for="Email" class="form-control" v-model="auth.email"/>
-                <span asp-validation-for="Email"></span>
-            </div>
-            </div>
-            <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="FirstName">FirstName : </label>
-                <input asp-for="FirstName" class="form-control" v-model="item.firstName"/>
-                <span asp-validation-for="FirstName"></span>
-            </div>
-            </div>
-            <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="LastName">LastName : </label>
-                <input asp-for="LastName" class="form-control" v-model="item.lastName"/>
-                <span asp-validation-for="LastName"></span>
-            </div>
-            </div>
-            <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Birthdate">BirthDate : </label>
-                <input asp-for="Birthdate" class="form-control" type="date" v-model="item.birthdate"/>
-                <span asp-validation-for="Birthdate"></span>
-            </div>
-            </div>
-            <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Phone">Phone : </label>
-                <input asp-for="Phone" class="form-control" v-model="item.phone"/>
-                <span asp-validation-for="Phone"></span>
-            </div>
-            </div-->
-            <!--div class="col-md-2">
-            <div class="form-group">
-                <label asp-for="Photo">Photo : </label>
-                <input asp-for="Photo" class="form-control" v-model="item.photo"/> <br />
-                <img :src="item.photo" />
-                <span asp-validation-for="Photo"></span>
-            </div>
-            </div-->
-            <!--input type="submit" class="btn btn-primary btn-block" value="Edit"/>
-        </form--> 
-  <b-form  asp-controller="Account" asp-action="Register" method="post" @submit="onSubmit($event)" >
-            <b-col md="12">
-            <b-form-group label="Email:">
-                <b-form-input asp-for="Email" class="form-control" v-model="auth.email">
-                <span asp-validation-for="Email"></span>
-                </b-form-input>
-            </b-form-group>
-            </b-col>
+    <section>
+        <div class="title">
+            <h1>YOUR PROFILE</h1>
+        </div>
+    </section>
 
-            <b-col md="6">
-            <b-form-group  label="Firstname:">
-                <b-form-input  asp-for="FirstName" class="form-control" v-model="item.firstName">
-                <span asp-validation-for="FirstName"></span>
-                </b-form-input>
-            </b-form-group>
-            </b-col>
+    <b-row style="margin-right: 3% !important;">
+        <b-col md="3" offset-md="2">
+            <b-card     tag="article"
+                        style="max-width: 20rem;"
+                        class="text-center mb-2">
 
-            <b-col md="6">
-            <b-form-group  label="Lastname:">
-                <b-form-input asp-for="LastName" class="form-control" v-model="item.lastName">
-                <span asp-validation-for="LastName"></span>
-                </b-form-input>
-            </b-form-group>
-            </b-col>
+                <img :src="'data:image/jpeg;base64,'+ item.photo" style="width:100%" class="img-thumbnail myImage" img-alt="Image" img-top/>
+                <h4>Chose a picture</h4>
+                
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary btn-file">
+                            Browse
+                            <input type="file" @change="onFileChange" style="display: none;" multiple>
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" v-model="sendImage.name" readonly>
+                </div>
 
-            <b-col md="6">
-            <b-form-group  label="BirthDate:">
-                <b-form-input asp-for="Birthdate" class="form-control" type="date" v-model="item.birthdate">
-                <span asp-validation-for="Birthdate"></span>
-                </b-form-input>
-            </b-form-group>
-            </b-col>
+                <b-row style="margin-left: 0%;">
+                    <b-col style="padding: 0%;">
+                        <button v-show="item.photo != null || image != null" class="btn btn-success" @click="removeImage($event)">Delete picture</button>
+                    </b-col>
 
-            <b-col md="6">
-            <b-form-group  label="Photo:">
-                <b-form-input asp-for="Photo" class="form-control" type="photo" v-model="item.photo">
-                <span asp-validation-for="Photo"></span>
-                </b-form-input>
-            </b-form-group>
-            </b-col>
-            
-            <b-col md="6">
-            <b-button type="submit" variant="primary">Submit</b-button>
-            <b-button @click="modifyPassword()" variant="primary">Modify password</b-button>
-            </b-col>
-        </b-form>
-   </b-card>
+                    <b-col style="padding: 0%;" @click="setPhoto()">
+                        <button type="button" class="btn btn-success" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            Set picture
+                        </button>
+                    </b-col>
+                </b-row>  
+            </b-card>
+        </b-col>
 
-  </div>
+        <b-col md="5">
+            <b-card title="Edit your Profile">
+                <h1 class="text-center">
+                    {{item.firstName}} {{item.lastName}}
+                </h1>
+
+                <b-form  asp-controller="Account" asp-action="Register" method="post" @submit="onSubmit($event)" >
+                    <b-col>
+                        <b-form-group label="Email:">
+                            <b-form-input asp-for="Email" class="form-control" v-model="auth.email">
+                            <span asp-validation-for="Email"></span>
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col>
+                        <b-form-group  label="Firstname:">
+                            <b-form-input  asp-for="FirstName" class="form-control" v-model="item.firstName">
+                            <span asp-validation-for="FirstName"></span>
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col>
+                        <b-form-group  label="Lastname:">
+                            <b-form-input asp-for="LastName" class="form-control" v-model="item.lastName">
+                            <span asp-validation-for="LastName"></span>
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col>
+                        <b-form-group  label="BirthDate:">
+                            <b-form-input asp-for="Birthdate" class="form-control" type="date" v-model="item.birthdate">
+                            <span asp-validation-for="Birthdate"></span>
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    
+                    <b-col>
+                        <b-button type="submit" variant="primary">Submit</b-button>
+                        <b-button @click="modifyPassword()" variant="primary">Modify password</b-button>
+                    </b-col>
+                </b-form>
+            </b-card>
+        </b-col>
+    </b-row>
 </div>
 
 </div>
@@ -126,6 +94,7 @@
 <script>
     import AuthService from "../../services/AuthService";
     import UserApiService from "../../services/UserApiService";
+    import FileApiService from "../../services/FileApiService";
     import { mapGetters, mapActions } from "vuex";
     import "../../directives/requiredProviders";
     import Vue from 'vue';
@@ -136,7 +105,11 @@
             return {
                 userEmail: null,
                 item: {},
-                errors: []
+                image: '',
+                sendImage: '',
+                errors: [],
+                data: new FormData(),
+                TypeOfFile: 0
             };
         },
 
@@ -156,9 +129,22 @@
             modifyPassword(){
                 AuthService.modifyPassword();
             },
+
+            async refresh(){
+                this.activeUser = await UserApiService.getUserAsync(this.item.userEmail);
+                try {
+                    this.id = this.$route.query.Id;
+                    this.item = await UserApiService.getUserAsync(this.id);
+                }
+                catch(error) {
+                    this.item = this.activeUser;
+                }
+            },
+
             async onSubmit(e) {
                 try{
                     await UserApiService.updateUserAsync(this.item);
+                    if(item.sendImage != null) setPhoto();
                 }
                 catch (error){
                     this.notifyError(error);
@@ -171,22 +157,73 @@
                 finally {
                     this.notifyLoading(false);
                  }
-                 this.$router.replace('userProfile');
+                 //this.$router.replace('userProfil');
             },
+
+            async setPhoto() {
+              
+                if(this.data != null)
+                {
+                    this.sendItemImage = await FileApiService
+                        .updateFileAsync(this.data, this.item.userId)
+                        .then( () => { FileApiService.typeOfPicture(this.typeOfFile, this.item.userId)});
+                }  
+     
+            },
+
+            onFileChange(e) {        
+                var files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.createImage(files[0]);
+                this.refresh();
+                this.$router.replace('userProfile');      
+            },
+            createImage(file) {
+                var image = new Image();
+                var reader = new FileReader();
+                var vm = this;
+
+                this.data.append('files', file);
+                this.sendImage = file;
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
+            async removeImage(e) {
+                e.preventDefault();
+                this.image = '';
+                this.file = '';
+                this.data.append('files',  this.file);
+                if(this.data != null)
+                    await FileApiService.deletePicture( 0,this.item.userId );                        
+                this.refresh();
+                this.$router.replace('userProfil');           
+            }
         }
     };
 </script>
 
 <style lang="less" scoped>
 .row {
-    margin-top:7%;
+    margin-top:1%;
     margin-left:3%;
 }
 
 /* Section - Title */
 /**************************/
-.title {background: white; padding: 60px; margin:0 auto; text-align:center;}
-.title h1 {font-size:35px; letter-spacing:8px;}
+.title {
+    background: white;
+    padding: 60px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.title h1 {
+    font-size:35px;
+    letter-spacing:8px;
+}
 
 .progress {
     margin: 0px;

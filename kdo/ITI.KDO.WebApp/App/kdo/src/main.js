@@ -17,7 +17,7 @@ import Login from './components/Login.vue';
 import Logout from './components/Logout.vue';
 
 
-import UserProfile from './components/user/UserProfil.vue';
+import UserProfile from './components/user/UserProfile.vue';
 import UserProfileDisplay from './components/user/UserProfileDisplay.vue';
 
 import PresentList from './components/present/PresentList.vue';
