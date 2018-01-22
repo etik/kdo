@@ -1,32 +1,31 @@
 <template>
 <div>
-            <button style="width: 21%; margin-left: 38%;    background-color: #d44e4e;"type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
+    <button style="width:21%;margin-left: 38%;background-color:#d44e4e;" type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
 
-<section>
-  <div class="title">
-    <h1>EVENTS LIST</h1>
-  </div>
-</section>
+    <section>
+    <div class="title">
+        <h1>EVENTS LIST</h1>
+    </div>
+    </section>
 
-    <div class="row" style="margin-left:11%;">
-        <div md="12" class="feature-box event" v-for="i of eventList">
+    <div class="row" style="margin-left:50px; margin-right:50px;">
+        <div md="12" class="eventDiv" v-for="i of eventList" :key="i.eventId">
                 <div class="test-event">
                 <span>{{ i.eventName }}</span>
                 </div>
-         <div v-if = "isCreator(i.userId) == true">
-            <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deleteEvent(i.eventId)" fluid alt="Responsive image" />
-            <div class="edit">
+        <div v-if = "isCreator(i.userId) == true">
+        <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deleteEvent(i.eventId)" fluid alt="Responsive image" />
+        <div class="edit">
             <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`events/edit/${i.eventId}`"></router-link>
             <router-link tag="img" class="voirT" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
-
-            </div>
-         </div>
-         <div v-if = "isCreator(i.userId) == false">
-             <router-link tag="img" class="calendar" src="https://png.icons8.com/metro/540/calendar.png" :to="`events/dateSuggest/${i.eventId}`"></router-link>
-             <router-link tag="img" class="voir" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
+        </div>
+        </div>
+        <div v-if = "isCreator(i.userId) == false">
+            <router-link tag="img" class="calendar" src="https://png.icons8.com/metro/540/calendar.png" :to="`events/dateSuggest/${i.eventId}`"></router-link>
+            <router-link tag="img" class="voir" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
             <b-img src="http://cdn.onlinewebfonts.com/svg/img_447829.png"  class="quit" @click="quitEvent(i.eventId) " fluid alt="Responsive image" />
 
-         </div>
+        </div>
                 
         </div>  
         <div md="12" class="feature-box1 test">
@@ -35,58 +34,7 @@
 
         </div>
 	</div>
-    </div> <!-- End Col -->
-
-
-      <!--div class="panel panel-default">
-            <div class="panel-body text-right">
-                <router-link class="btn btn-primary" :to="`events/create`">Add an event</router-link>
-            </div>
-        </div>
-
-        <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Event Name</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Options</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr v-if="eventList.length == 0">
-                    <td colspan="7" class="text-center">Event</td>
-                </tr>
-
-                <tr v-for="i of eventList" :key="i.eventId">
-                    <td>{{ i.eventName }}</td>
-                    <td>{{ i.descriptions }}</td>
-                    <td>{{ i.dates }}</td>
-                    <td>
-                    <b-button-group v-if = "isCreator(i.userId) == true">
-                        <b-button :to="`events/edit/${i.eventId}`">Edit</b-button>
-                        <b-button :to="`events/view/${i.eventId}`">View</b-button>
-                        <b-button @click="deleteEvent(i.eventId) ">Remove</b-button>
-                    </b-button-group>
-
-                    <b-button variant="primary" v-if = "isCreator(i.userId) == false" @click="changeRoute()">Suggest another date</b-button>
-
-                    <b-button-group v-if = "isCreator(i.userId) == false">
-                        <b-button @click = "quitEvent(i.eventId)">Quit event</b-button>
-                    </b-button-group>
-
-                    <td-->
-                        <!--button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
-                        <router-link :to="`events/edit/${i.eventId}`">Edit event</router-link>
-                        <router-link :to="`events/view/${i.eventId}`">View</router-link-->
-
-                    <!--/td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    </div-->
+</div>
 </template>
 
 <script>
@@ -213,6 +161,19 @@
         opacity: 0.8;
         margin-top:32%;
     }
+}
+
+.eventDiv{
+    width: 400px;
+    height: 200px;
+    margin-top: 2%;
+    margin-right: 5%;
+    transition: .5s ease;
+}
+
+.eventDiv:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.3);
 }
 
 .feature-box{
