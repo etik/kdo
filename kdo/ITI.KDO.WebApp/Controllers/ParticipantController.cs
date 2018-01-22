@@ -24,6 +24,16 @@ namespace ITI.KDO.WebApp.Controllers
             _participantService = participantService;
         }
 
+        [HttpGet("{userId}/{eventId}/getParticipant")]
+        public IActionResult GetParticipant(int userId, int eventId)
+        {
+            Result<Participant> result = _participantService.GetParticipant(userId, eventId);
+            return this.CreateResult<Participant, ParticipantViewModel>(result, o =>
+            {
+                o.ToViewModel = s => s.ToParticipantViewModel();
+            });
+        }
+
         [HttpGet("{userId}/{eventId}/getByUserId")]
         public IActionResult GetParticipantList(int userId, int eventId)
         {
@@ -34,10 +44,30 @@ namespace ITI.KDO.WebApp.Controllers
              });
         }
 
+        [HttpGet("{userId}/{eventId}/getByEventId")]
+        public IActionResult GetParticipantInvitedList(int userId, int eventId)
+        {
+            Result<IEnumerable<Participant>> result = _participantService.FindParticipantsInvitedById(userId, eventId);
+            return this.CreateResult<IEnumerable<Participant>, IEnumerable<ParticipantViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(s => s.ToParticipantViewModel());
+            });
+        }
+
         [HttpPost]
         public IActionResult CreateParticipant([FromBody] ParticipantViewModel model)
         {
             Result<Participant> result = _participantService.CreateParticipant(model.UserId, model.EventId, false, false);
+            return this.CreateResult<Participant, ParticipantViewModel>(result, o =>
+            {
+                o.ToViewModel = s => s.ToParticipantViewModel();
+            });
+        }
+
+        [HttpPut("{userId}/{eventId}/update")]
+        public IActionResult UpdateParticipant(int userId, int eventId, [FromBody] ParticipantViewModel model)
+        {
+            Result<Participant> result = _participantService.UpdateParticipant(model.UserId, model.EventId, model.ParticipantType, model.Invitation);
             return this.CreateResult<Participant, ParticipantViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToParticipantViewModel();

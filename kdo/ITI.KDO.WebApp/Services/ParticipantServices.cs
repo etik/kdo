@@ -31,6 +31,14 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok);
         }
 
+        public Result<Participant> GetParticipant(int userId, int eventId)
+        {
+            if (_participantGateway.FindByIds(userId, eventId) == null)
+                return Result.Failure<Participant>(Status.NotFound, "Participant doesn't exist.");
+            Participant participant = _participantGateway.FindByIds(userId, eventId);
+            return Result.Success(Status.Ok, participant);
+        }
+
         public Result<IEnumerable<Participant>> GetInviteNotification(int userId)
         {
             return Result.Success(Status.Ok, _participantGateway.GetInviteNotification(userId));
@@ -41,6 +49,11 @@ namespace ITI.KDO.WebApp.Services
             return Result.Success(Status.Ok, _participantGateway.FindParticipantsForEvent(eventId));
         }
 
+        public Result<IEnumerable<Participant>> FindParticipantsInvitedById(int userId, int eventId)
+        {
+            return Result.Success(Status.Ok, _participantGateway.FindParticipantsInvitedForEvent(eventId));
+        }       
+
         public Result<Participant> CreateParticipant(int userId, int eventId, bool participantType, bool invitation)
         {
             if (_userGateway.FindById(userId) == null) return Result.Failure<Participant>(Status.NotFound, "User not found");
@@ -49,6 +62,19 @@ namespace ITI.KDO.WebApp.Services
 
             _participantGateway.Create(userId, eventId, false, false);
             Participant participant = _participantGateway.FindByIds(userId, eventId);
+            return Result.Success(Status.Ok, participant);
+        }
+
+        public Result<Participant> UpdateParticipant(int userId, int eventId, bool participantType, bool invitation)
+        {
+            Participant participant;
+            if ((participant = _participantGateway.FindByIds(userId, eventId)) == null)
+            {
+                return Result.Failure<Participant>(Status.NotFound, "Participant not found.");
+            }
+
+            _participantGateway.Update(userId, eventId, participantType, invitation);
+            participant = _participantGateway.FindByIds(userId, eventId);
             return Result.Success(Status.Ok, participant);
         }
 

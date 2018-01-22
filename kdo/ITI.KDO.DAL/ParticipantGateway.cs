@@ -40,6 +40,23 @@ namespace ITI.KDO.DAL
             }
         }
 
+        public void Update(int userId, int eventId, bool participantType, bool invitation)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    "dbo.sParticipantUpdate",
+                    new
+                    {
+                        UserId = userId,
+                        EventId = eventId,
+                        ParticipantType = participantType,
+                        Invitation = invitation
+                    },
+                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
         /// Find a all participant with the userId for 1 Event
         /// </summary>
         /// <param name="userId"></param>
@@ -82,7 +99,20 @@ namespace ITI.KDO.DAL
             }
         }
 
-
+        public IEnumerable<Participant> FindParticipantsInvitedForEvent(int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Participant>(
+                    @"select p.UserId,
+                             p.EventId,
+                             p.ParticipantType,
+                             p.Invitation
+                  from dbo.vParticipant p
+                    where p.EventId = @EventId",
+                    new { EventId = eventId });
+            }
+        }
         /// <summary>
         /// Get all participants of a user
         /// </summary>
