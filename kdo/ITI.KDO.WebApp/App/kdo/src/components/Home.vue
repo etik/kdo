@@ -37,9 +37,9 @@
 
             <b-nav-item  href="/Home/userProfile">Profile</b-nav-item>
             <b-nav-item  href="/Home/events">Event</b-nav-item>
-            <b-nav-item href="/Home/contact">Mes contacts</b-nav-item>
-            <b-nav-item href="/Home/events/display/calendar">Calendrier</b-nav-item>
-            <b-nav-item href="/Home/presents">Ma liste de cadeaux</b-nav-item>
+            <b-nav-item href="/Home/contact">My contacts</b-nav-item>
+            <b-nav-item href="/Home/events/display/calendar">Calendar</b-nav-item>
+            <b-nav-item href="/Home/presents">My presents</b-nav-item>
             <b-nav-item> 
                <span class="badge badge-light" >
                       <tr v-if="contactNotificationList.length == 0 & eventNotificationList.length==0">
@@ -66,10 +66,9 @@
                       </tr>
                </span>
             </b-nav-item>
-                  <b-nav-form>
-        <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
-        <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-      </b-nav-form>
+            <b-nav-item  href="/Home/contactEmail">Contact Email</b-nav-item>
+
+
             <b-nav-item style="position:absolute; right:10px;" href="#"@click="logout()">
             <div class="logoImg">
                     <img class="logoImg" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/power-512.png">
@@ -94,18 +93,7 @@
     
     <div style="margin-top: 10%; margin-bottom: 10%; position: relative;
     height:100%;">
-          <!--b-col md="2" class="bg-light " style="height:100%;">
-            <b-nav v-if="auth.isConnected" vertical class="icon-bar" >
-              <b-nav-item href="/Home/userProfile" class="row">Profil</b-nav-item>
-              <b-nav-item href="/Home/events"class="row">Event</b-nav-item>
-              <b-nav-item href="/Home/contact" class="row" >Mes contacts</b-nav-item>
-              <b-nav-item href="/Home/events/display/calendar" class="row">Calendrier</b-nav-item>
-              <b-nav-item href="/Home/presents" class="row">Ma liste de cadeaux</b-nav-item>
-            </b-nav>
-          </b-col-->
           <router-view class="child"></router-view>
-          <!--b-col md="2" class="bg-light" style="height:100%;">
-          </b-col-->
       </div>
   </div>
 </template>
@@ -132,8 +120,6 @@ export default {
       contactModel: {},
       eventModel: {},
       show: false
-
-    
     };
 
   },

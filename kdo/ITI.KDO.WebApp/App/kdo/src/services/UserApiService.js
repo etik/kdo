@@ -7,6 +7,10 @@ class UserApiServices {
 
     }
 
+    async getAllUserAsync() {
+        return await getAsync(`${endpoint}`);
+    }
+
     async getUserByIdAsync(userId) {
         return await getAsync(`${endpoint}/${userId}/search`);
     }

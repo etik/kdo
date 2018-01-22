@@ -25,15 +25,7 @@
                     style="max-width: 128px;">
             </b-card>
             </b-card-group>
-            <!--b-card-group deck v-for="i in nbline" class="mb-2">
-            <b-card v-for="j in 6" v-if="friendsList[j - 1] != null" cols="2"
-                    text-variant="black"
-                    :header="friendsList[j - 1].firstName + ' ' + friendsList[j - 1].lastName"
-                    class="text-center"
-                    style="max-width: 128px;">
-                <p class="card-text">image</p>
-            </b-card>
-             </b-card-group-->
+
     </b-col>
     <b-col md="2">
     </b-col>
