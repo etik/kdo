@@ -19,15 +19,14 @@
                 </div>
             </b-col>
         </b-card>
-    <br>
+        <br>
         <b-card style="margin-left:10%;" class="text-center" bg-variant="light" header="PARTICIPANTS">
             <h6 slot="header"class="mb-0">PARTICIPANTS</h6>
             <b-card v-for="i in participantUserList"
                 tag="article"
                 style="max-width: 16rem;margin-left:23%;"
                 class="mb-2">
-                {{i.firstName}}
-                {{i.lastName}}
+                <router-link :to="`/userProfile/display/${i.email}`">{{i.firstName}} {{i.lastName}}</router-link>
             </b-card>
         </b-card>
     </b-col>
@@ -100,7 +99,6 @@
             quantityList: [],
             selected: null,
             quantityPresentList: [],
-            participantQuantity: [],
             bugfix: 1
         };
     },
