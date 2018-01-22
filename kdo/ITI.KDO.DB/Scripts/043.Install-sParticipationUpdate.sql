@@ -11,6 +11,6 @@ begin
 	update dbo.tParticipation
 	set
 		AmountUserPrice = @AmountUserPrice
-	where UserId = @UserId and EventId = @EventId;
+	where UserId = @UserId and QuantityId = @QuantityId;
 	return 0;
 end;

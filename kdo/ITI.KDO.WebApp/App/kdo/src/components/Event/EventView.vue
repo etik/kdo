@@ -1,135 +1,92 @@
 <template>
-    <div class="container">
-      <div class="page-header">
-            <h1>Events</h1>
-      </div>
-      <div class="row">
-      <div class="col-sm-6">
-      <b-card-group>
-      <b-img rounded blank width="120" height="150" blank-color="#777" alt="img" class="m-1" />
-      <div class="col-sm-6">
-        <b-list-group>
-        <b-list-group-item>
-            {{event.eventName}}
-        </b-list-group-item>
-        <b-list-group-item>
-            {{event.dates}}
-        </b-list-group-item>
-        </b-list-group>
-      
-        <b-button :to="`/events/edit/${eventId}`" variant="primary"> Edit </b-button>
-        </div>
-     </b-card-group>
-        </div>
-        </div>
-
-      <!--div class="com-sm-6 carou">
-      <b-card>
-      <b-carousel width="500" height="500" id="carousel1"
-                style="text-shadow: 1px 1px 2px #333;"
-                controls
-                indicators
-                background="#ababab"
-                :interval="4000"
-                v-model="slide"
-                @sliding-start="onSlideStart"
-                @sliding-end="onSlideEnd"-->
-        <!--b-col v-for="i of PresentList" md="4">
-        <b-card :title="i.PresentName"
-                img-src="https://img4.hostingpics.net/pics/518638Image1.png"
-                img-alt="Image"
-                img-top
-                tag="article"
-                style="max-width: 16rem;"
-                class="mb-2">
-        <p class="card-text">
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-        </p>
-        <b-button href="#" variant="primary">Go</b-button>
-        </b-card-->
-        <!--/b-col>
-        <b-carousel-slide  caption="First slide"
-                        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                        img-src="https://lorempixel.com/1024/480/technics/2/">
-        </b-carousel-slide>
-        <b-carousel-slide img-src="https://lorempixel.com/1024/480/technics/4/">
-        <h1>Hello world!</h1>
-        </b-carousel-slide>
-        </b-carousel>
-            <p class="mt-4">
-      Slide #: {{ slide }}<br>
-      Sliding: {{ sliding }}
-    </p>
-    </b-card>
-    <div class="com-sm-6">
-      <b-card>
-    </b-card>
-    </div>
-        </div-->
-
-      <!--table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>Participant</th>
-                    <th>userId</th>
-                    <th>eventId</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                <tr v-if="participantList.length == 0">
-                    <td colspan="7" class="text-center">Participant</td>
-                </tr>
-
-                <tr v-for="i of participantList">
-                    <td>{{ i.ParticipantType }}</td>
-                    <td>{{ i.userId }}</td>
-                    <td>{{ i.eventId }}</td>
-                </tr>
-            </tbody>
-        </table-->
-        <div class="carou">
-        <b-card  bg-variant="dark" text-variant="white" title="Cadeaux">
-        <b-carousel id="carousel1 "
-                style="text-shadow: 1px 1px 2px #333;"
-                controls
-                indicators
-                background="#ababab"
-                :interval="4000"
-                img-width="1024"
-                img-height="480"
-                v-model="slide"
-                @sliding-start="onSlideStart"
-                @sliding-end="onSlideEnd">
-        <b-carousel-slide caption="First slide"
-                        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                        img-src="https://lorempixel.com/1024/480/technics/2/">
-        </b-carousel-slide>
-
-        <b-carousel-slide img-src="https://lorempixel.com/1024/480/technics/4/">
-        <h1>Hello world!</h1>
-        </b-carousel-slide>
-        </b-carousel>
-        </b-card>
-        </div>
-        <p>
-        <div class="participant">
-            <b-card bg-variant="dark" text-variant="white" title="Participant" >
-                <div v-for="i of participantList" :key="i.userId">
-                    <b-button>{{i.userId}}</b-button>
+<div>
+<section>
+  <div class="title">
+    <h1>YOUR EVENT</h1>
+  </div>
+</section>
+<b-row>
+    <b-col md="4">
+        <b-card style="margin-left: 10%;"   class="text-center"header-bg-variant="danger" bg-variant="light" header="Informations">
+            <h6 slot="header"class="mb-0" text-variant="white">INFORMATIONS</h6>
+            <b-col sm="3" >
+                <b-img rounded blank width="90" height="90" blank-color="#777" alt="img" class="m-1" />
+            </b-col>
+            <b-col sm="12">
+                <router-link tag="img" class="edite" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`/events/edit/${eventId}`"></router-link>
+                <div class="Info">{{event.eventName}}
+                    <br>Date
                 </div>
+            </b-col>
+        </b-card>
+    <br>
+        <b-card style="margin-left:10%;" class="text-center" bg-variant="light" header="PARTICIPANTS">
+            <h6 slot="header"class="mb-0">PARTICIPANTS</h6>
+            <b-card v-for="i in participantUserList"
+                tag="article"
+                style="max-width: 16rem;margin-left:23%;"
+                class="mb-2">
+                {{i.firstName}}
+                {{i.lastName}}
             </b-card>
-        </div>
-    </div>
+        </b-card>
+    </b-col>
+    <b-col md="8">
+        <b-row>
+            <b-col sm="2">
+                Present for :
+            </b-col>
+            <b-col sm="10">
+                <b-form-select v-model="selected" :options="beneficiary" v-on:change="refreshQuantityList()" class="mb-3">
+                </b-form-select>
+            </b-col>
+        </b-row>
+
+        <b-card bg-variant="light" header="PRESENT">
+            <h6 slot="header" class="mb-0 text-center" color="white">
+                PRESENTS
+            </h6>
+
+            <b-dropdown id="ddown1" text="Add a present" class="m-md-2" >
+                <b-dropdown-item :to="`/events/presents/create/${eventId}`">Create a new present</b-dropdown-item>
+                <b-dropdown-item :to="`/events/importPresent/${eventId}`">Import from your list of present</b-dropdown-item>
+            </b-dropdown>
+
+            <div class="row" style="margin-left:11%;">
+                <div md="12" class="feature-box event"  v-for="i in quantityPresentList">
+                    <div :id="'Popover-'+i.quantityId" class="test-event event-text">
+                        {{ i.presentName }}
+                        <b-progress :value="i.ammount" :max="i.price" show-progress animated></b-progress>
+                        <b-popover :target="'Popover-'+i.quantityId" triggers="hover focus" placement="top">
+                            <template slot="title">Participant</template>
+                            <div v-for="x in i.participants">
+                                {{x.firstName}} {{x.lastName}} 
+                            </div>
+                        </b-popover>
+                    </div>
+
+                    <div class="btni">
+                        <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg"  class="editP" :to="`/events/presents/edit/${eventId}/${i.quantityId}`" v-if="i.nominatorId == user.userId"></router-link>
+                        <router-link tag="img" src="https://cdn2.iconfinder.com/data/icons/sales-and-delivery/128/easy-2-512.png"  class="participant" :to="`/events/participate/${eventId}/${i.quantityId}`"></router-link>
+                    </div>
+                </div>
+            </div>
+        </b-card>
+    </b-col>
+     </b-row>
+     {{bugfix}}
+  </div>
 </template>
 
 <script>
     import { mapActions } from 'vuex';
     import ParticipantApiService from '../../services/ParticipantApiService';
+    import ParticipationApiService from '../../services/ParticipationApiService';
     import AuthService from "../../services/AuthService";
     import EventApiService from '../../services/EventApiService';
     import UserApiService from '../../services/UserApiService';
+    import QuantityApiService from '../../services/QuantityApiService';
+    import PresentApiService from '../../services/PresentApiService';
 
   export default {
     data() {
@@ -138,8 +95,13 @@
             eventId: null,
             event: {},
             participantList: [],
-            slide: 0,
-            sliding: null
+            beneficiary: [],
+            participantUserList: [],
+            quantityList: [],
+            selected: null,
+            quantityPresentList: [],
+            participantQuantity: [],
+            bugfix: 1
         };
     },
 
@@ -147,39 +109,114 @@
         var userEmail = AuthService.emailUser();
         this.eventId = this.$route.params.id;
         this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
-        
         this.user = await UserApiService.getUserAsync(userEmail);
-
-        await this.refreshList();
         await this.refreshParticipantList();
+        this.selected = this.beneficiary[0].value;
+        await this.refreshQuantityList();
+        await this.refreshParticipation();
+        await this.refreshParticipantToQuantityList();
+                    
+        this.bugfix = 2;
     },
 
     methods: {
-    onSlideStart (slide) {
-      this.sliding = true
-    },
-    onSlideEnd (slide) {
-      this.sliding = false
-    },
-      ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
+        ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
-      async refreshList() {
-            this.event = await EventApiService.getEventByIdAsync(this.eventId);
-            this.event.dates = this.event.dates.slice(0, 10);
-      },
-       async refreshParticipantList(){
+        async refreshParticipantList(){
+            this.participantUserList = [];
+            this.beneficiary = [];
+            var aux;
             this.participantList = await ParticipantApiService.getParticipantListAsync(this.user.userId, this.eventId);
-      },
+
+            for(var i = 0; i < this.participantList.length; i++)
+            {
+                aux = await UserApiService.getUserByIdAsync(this.participantList[i].userId);
+                this.participantUserList.push(aux);
+                if (this.participantList[i].participantType == true)                    
+                    this.beneficiary.push({value: aux.userId, text: aux.firstName});
+            }
+        },
+        async refreshQuantityList(){
+            this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
+            this.quantityPresentList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityPresentListAsync(this.selected, this.eventId));
+            if (this.selected == this.user.userId)
+            {
+                for (var i = 0; i < this.quantityPresentList.length; i++)
+                {
+                    if (this.quantityPresentList[i].nominatorId != this.user.userId)
+                    {
+                        this.quantityPresentList.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+        },
+        async refreshParticipation(){
+            var ammount;
+            for (var i = 0; i < this.quantityPresentList.length; i++)
+            {
+                ammount = 0;
+                await this.executeAsyncRequest(
+                    () => ParticipationApiService
+                        .getParticipationByQuantityAsync(this.quantityPresentList[i].quantityId)
+                ).then(p => {
+                    this.quantityPresentList[i].participants = p;
+                    this.quantityPresentList[i].ammount = 0;
+                    for (var j = 0; j < p.length; j++)
+                    {
+                        this.quantityPresentList[i].ammount += p[j].amountUserPrice;
+                    }
+                });
+            }
+        },
+        async refreshParticipantToQuantityList(){
+            for (var i = 0; i < this.quantityPresentList.length; i++)
+            {
+                for (var j = 0; j < this.quantityPresentList[i].participants.length; j++)
+                {
+                    var auxUser = await UserApiService.getUserByIdAsync(this.quantityPresentList[i].participants[j].userId);
+                    this.quantityPresentList[i].participants[j].firstName = auxUser.firstName;
+                    this.quantityPresentList[i].participants[j].lastName = auxUser.lastName;
+                }
+            }
+        }
     }
-  };
+};
 </script>
 
 <style lang="less">
 .row {
     margin-top:10%;
 }
-.carou {
-    width:40%;
+.event-text {
+    height:52px;    
+    //font-size: 110%;
 }
+.Info {
+    font-size: xx-large;
+    font-variant: all-petite-caps;
+    margin-top: -28%;
 
+}
+.btni {
+    margin-top:-53%;
+}
+.edite {
+    width: 7%;
+    margin-left: 98%;
+    margin-top: -70%;
+}
+.bordered {
+    border-style: solid;
+    border-width: 1px;
+}
+.editP{
+    width:15%;
+}
+.participant{
+    width:16%;
+}
+.card-header.bg-danger {
+    background-color:#db7070 !important;
+}
 </style>

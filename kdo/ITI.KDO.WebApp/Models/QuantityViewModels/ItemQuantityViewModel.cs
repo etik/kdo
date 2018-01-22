@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ITI.KDO.DAL
+namespace ITI.KDO.WebApp.Models.QuantityViewModels
 {
-    public class ItemQuantity
+    public class ItemQuantityViewModel
     {
         public int QuantityId { get; set; }
 
@@ -19,7 +17,7 @@ namespace ITI.KDO.DAL
         public int PresentId { get; set; }
     }
 
-    public class ItemPresentQuantity
+    public class ItemQuantityPresentViewModel
     {
         public int QuantityId { get; set; }
 

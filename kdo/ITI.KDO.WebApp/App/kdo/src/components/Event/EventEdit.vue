@@ -1,92 +1,79 @@
 <template>
-    <div class="container">    
-        <div class="page-header">
-            <h1 v-if="mode == 'create'">Create a event</h1>
-            <h1 v-else>Edit your event</h1>
-        </div>
-
-
-        <div class="row">
-        <div class="com-sm-4">
-        <b-card>
-        <h1 v-if="mode == 'create'">Create a event</h1>
-        <h1 v-else>Edit your event</h1>
-        <b-form  @submit="onSubmit($event)">
-                <div class="alert alert-danger" v-if="errors.length > 0">
-                <b>Les champs suivants semblent invalides : </b>
-
-                <ul>
-                    <li v-for="e of errors">{{e}}</li>
-                </ul>
-            </div>
-            <b-col md="12">
-            <b-form-group label="Event Name:" required>
-                <b-form-input asp-for="EventName" class="form-control" v-model="event.eventName" required>
-                <span asp-validation-for="EventName"></span>
-                </b-form-input>
-            </b-form-group>
-            </b-col>
-
-            <b-col md="12">
-            <b-form-group label="Description:">
-                <b-form-textarea asp-for="Description" class="form-control" v-model="event.descriptions">
-                <span asp-validation-for="Description"></span>
-                </b-form-textarea>
-            </b-form-group>
-            </b-col>
-
-            <b-col md="12">
-            <b-form-group label="Date">
-                <b-form-input type="date" asp-for="Date" class="form-control" v-model="event.dates">
-                <span asp-validation-for="Date"></span>
-                </b-form-input>
-            </b-form-group>
-            </b-col>
-            
-            <b-col md="6">
-            <b-button type="submit" variant="primary">Submit</b-button>
-            </b-col>
-        </b-form>
-        </b-card>
-        </div>
-
-        <div v-if="mode == 'edit'" class="com-sm-4" >
-        <b-col md="12">
-        <b-card>
-            <h5 class="mt-3">Your friends</h5>
-            <div v-for="i of friendList" :key="i.id">
-                <div>
-                    <td>{{ i.firstName }} {{ i.lastName }} {{ i.userId }}</td>
-                    <td><b-button @click="addParticipant(i.userId, i)" variant="success">Add</b-button></td>
-                </div>
-            </div>
-        </b-card>
-        </b-col>
-        </div>
-
-        <!--table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>FirstName</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr v-if="friendList.length == 0">
-                    <td colspan="7" class="text-center">No Contact found</td>
-                </tr>
-
-                <tr v-for="i of friendList">
-                    <td>{{ i.firstName }}</td>
-                </tr>
-            </tbody>
-        </table-->
-
-        </div>
-
+<div>
+    <section>
+    <div class="title">
+        <h1 v-if="mode == 'create'">CREATE AN EVENT</h1>
+        <h1 v-else>EDIT AN EVENT</h1>
     </div>
-</template>
+    </section>
 
+        <b-row>
+            <b-col md="5" style="margin-left: 1%;">
+
+                <b-card header="EVENT" >
+                 <h6 slot="header" class="text-center mb-0" text-variant="white">EVENT</h6>
+                    <b-form  @submit="onSubmit($event)">
+                        <div class="alert alert-danger" v-if="errors.length > 0">
+                        <b>Les champs suivants semblent invalides : </b>
+
+                        <ul>
+                        <li v-for="e of errors">{{e}}</li>
+                        </ul>
+                        </div>
+                        <b-col md="12">
+                        <b-form-group label="Event Name:" required>
+                        <b-form-input asp-for="EventName" class="form-control" v-model="event.eventName" required>
+                        <span asp-validation-for="EventName"></span>
+                        </b-form-input>
+                        </b-form-group>
+                        </b-col>
+
+                        <b-col md="12">
+                        <b-form-group label="Description:">
+                        <b-form-textarea asp-for="Description" class="form-control" v-model="event.descriptions">
+                        <span asp-validation-for="Description"></span>
+                        </b-form-textarea>
+                        </b-form-group>
+                        </b-col>
+
+                        <b-col md="12">
+                        <b-form-group label="Date">
+                        <b-form-input type="date" asp-for="Date" class="form-control" v-model="event.dates">
+                        <span asp-validation-for="Date"></span>
+                        </b-form-input>
+                        </b-form-group>
+                        </b-col>
+
+                        <b-col md="6">
+                        <b-button type="submit" variant="primary">Submit</b-button>
+                        </b-col>
+                    </b-form>
+                </b-card>
+                </b-col>
+            <b-col md="6">
+                <b-card header="FRIENDS">
+                <b-alert variant="success" dismissible :show="showDismissibleAlert"
+                                        @dismissed="showDismissibleAlert=false">
+                                        You add a friend as participant !
+                </b-alert>
+                    <h6 slot="header" class="text-center mb-0" text-variant="white">FRIENDS</h6>
+                    <div v-if="mode == 'edit'" class="com-sm-4" >
+                        <b-row style="margin-left: 3%;">
+                            <div v-for="i of friendList" :key="i.id">
+                                <b-col md="3">
+                                <b-card  style="width: 75%;margin-top: 7%;">
+                                <td>{{ i.firstName }} {{ i.lastName }}</td>
+                                <td><b-button @click="addParticipant(i.userId, i),showDismissibleAlert=true" style="margin-left: 92%;"variant="success">+</b-button></td>
+                                </b-card>
+                                </b-col>
+                            </div>
+                        </b-row>
+                    </div>
+                </b-card>
+            </b-col>
+        </b-row>
+</div>
+</template>
 <script>
     import { mapActions } from 'vuex';
     import ParticipantApiService from '../../services/ParticipantApiService';
@@ -108,12 +95,8 @@
         friendList: [],
         selected: [],
         errors: [],
-        options: [
-        {text: 'Xavier F', value: 'Xavier F'},
-        {text: 'Eric H', value: 'Eric H'},
-        {text: 'Charles O', value: 'Charles O'},
-        {text: 'Loic D', value: 'Loic D'}
-        ]
+        showDismissibleAlert: false
+
       }
     },
     
@@ -205,7 +188,7 @@
 
 <style lang="less">
 .row {
-    margin-top: 5%;
+    margin-top: 10px;
 }
 
 </style>

@@ -1,10 +1,44 @@
 <template>
-    <div class="container">
-        <div class="page-header">
-            <h1>Events</h1>
-        </div>
+<div>
+            <button style="width: 21%; margin-left: 38%;    background-color: #d44e4e;"type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-danger"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
 
-        <div class="panel panel-default">
+<section>
+  <div class="title">
+    <h1>EVENTS LIST</h1>
+  </div>
+</section>
+
+    <div class="row" style="margin-left:11%;">
+        <div md="12" class="feature-box event" v-for="i of eventList">
+                <div class="test-event">
+                <span>{{ i.eventName }}</span>
+                </div>
+         <div v-if = "isCreator(i.userId) == true">
+            <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deleteEvent(i.eventId)" fluid alt="Responsive image" />
+            <div class="edit">
+            <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`events/edit/${i.eventId}`"></router-link>
+            <router-link tag="img" class="voirT" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
+
+            </div>
+         </div>
+         <div v-if = "isCreator(i.userId) == false">
+             <router-link tag="img" class="calendar" src="https://png.icons8.com/metro/540/calendar.png" :to="`events/dateSuggest/${i.eventId}`"></router-link>
+             <router-link tag="img" class="voir" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
+            <b-img src="http://cdn.onlinewebfonts.com/svg/img_447829.png"  class="quit" @click="quitEvent(i.eventId) " fluid alt="Responsive image" />
+
+         </div>
+                
+        </div>  
+        <div md="12" class="feature-box1 test">
+                    <router-link tag="img" style=" margin-top: -5%;" src="https://blazer-net.com/wp-content/uploads/blazer-nett.png" :to="`events/create`">Add a present</router-link>
+                       <span style="font-family: cursive; font-size: larger;" >Add an event</span>
+
+        </div>
+	</div>
+    </div> <!-- End Col -->
+
+
+      <!--div class="panel panel-default">
             <div class="panel-body text-right">
                 <router-link class="btn btn-primary" :to="`events/create`">Add an event</router-link>
             </div>
@@ -41,11 +75,18 @@
                     <b-button-group v-if = "isCreator(i.userId) == false">
                         <b-button @click = "quitEvent(i.eventId)">Quit event</b-button>
                     </b-button-group>
-                    </td>
+
+                    <td-->
+                        <!--button @click="deleteEvent(i.eventId)"  class="btn btn-primary">Remove</button>
+                        <router-link :to="`events/edit/${i.eventId}`">Edit event</router-link>
+                        <router-link :to="`events/view/${i.eventId}`">View</router-link-->
+
+                    <!--/td>
                 </tr>
             </tbody>
         </table>
     </div>
+    </div-->
 </template>
 
 <script>
@@ -90,11 +131,13 @@
 
             }
         },
-
+        sendEmail(mailType){
+            AuthService.sendEmail(mailType);
+        },
         isCreator(creatorId){
             if(this.user.userId == creatorId){
                 return true;
-            }else {
+            } else {
                 return false;
             }
         },
@@ -128,5 +171,55 @@
 </script>
 
 <style lang="less">
+.row{
+    margin-top: 10px;
+}
 
+/* Section - Title */
+/**************************/
+.title {background: white; padding: 60px; margin:0 auto; text-align:center;}
+.title h1 {font-size:35px; letter-spacing:8px;}
+
+.test div span{
+    color: white;
+}
+.quit {
+    width: 7%;
+    margin-left: 99%;
+    margin-top: -137%;
+}
+.calendar {
+    width: 7%;
+    margin-left: 73%;
+    margin-top: -110%;
+}
+.voir{
+     width: 7%;
+    margin-left: 89%;
+    margin-top: -123%;
+}
+
+.voirT{
+    width: 124%;
+    margin-left: 97%;
+    margin-top: -206%;
+}
+.test-{
+    &event {
+        position: relative;
+        right:0;
+        font-size: 24px;
+        background-color: #d44e4e;
+        opacity: 0.8;
+        margin-top:32%;
+    }
+}
+
+.feature-box{
+   // background-image:url("https://financesonline.com/uploads/2017/10/ev.jpg");
+    width: 400px;
+    height: 200px;
+    margin-top: 2%;
+    margin-right: 5%;
+}
 </style>

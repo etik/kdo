@@ -3,6 +3,7 @@ using ITI.KDO.WebApp.Models.CategoryPresentViewModels;
 using ITI.KDO.WebApp.Models.EmailViewModels;
 using ITI.KDO.WebApp.Models.NotificationViewModels;
 using ITI.KDO.WebApp.Models.PresentViewModels;
+using ITI.KDO.WebApp.Models.QuantityViewModels;
 using ITI.KDO.WebApp.Models.UserViewModels;
 using ITI.KDO.WebApp.Models.EventViewModels;
 using System;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ITI.KDO.WebApp.Models.ParticipantViewModels;
+using ITI.KDO.WebApp.Models.ParticipationViewModels;
 
 namespace ITI.KDO.WebApp.Controllers
 {
@@ -38,8 +40,50 @@ namespace ITI.KDO.WebApp.Controllers
                 Price = @this.Price,
                 LinkPresent = @this.LinkPresent,
                 CategoryPresentId = @this.CategoryPresentId,
-                CategoryName = @this.CategoryName,
                 UserId = @this.UserId
+            };
+        }
+
+        public static ItemQuantityViewModel ToQuantityViewModel(this ItemQuantity @this)
+        {
+            return new ItemQuantityViewModel
+            {
+                QuantityId = @this.QuantityId,
+                Quantity = @this.Quantity,
+                RecipientId = @this.RecipientId,
+                NominatorId = @this.NominatorId,
+                EventId = @this.EventId,
+                PresentId = @this.PresentId
+            };
+         }
+
+        public static ItemQuantityPresentViewModel ToQuantityPresentViewModel(this ItemPresentQuantity @this)
+        {
+            return new ItemQuantityPresentViewModel
+            {
+                QuantityId = @this.QuantityId,
+                Quantity = @this.Quantity,
+                Price = @this.Price,
+                RecipientId = @this.RecipientId,
+                NominatorId = @this.NominatorId,
+                PresentId = @this.PresentId,
+                PresentName = @this.PresentName,
+                LinkPresent = @this.LinkPresent,
+                CategoryPresentId = @this.CategoryPresentId,
+                ParticipantType = @this.ParticipantType,
+                Invitation = @this.Invitation,
+                EventId = @this.EventId,
+            };
+        }
+
+        public static ParticipationViewModel ToParticipationViewModel(this Participation @this)
+        {
+            return new ParticipationViewModel
+            {
+                QuantityId = @this.QuantityId,
+                UserId = @this.UserId,
+                EventId = @this.EventId,
+                AmountUserPrice = @this.AmountUserPrice
             };
         }
 

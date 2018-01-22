@@ -1,34 +1,63 @@
 <template>
-    <div>
-        <b-card-group deck v-for="i in nbline" :key="i" class="mb-2">
-            <b-card v-for="j in 6" :key="j" v-if="contactList[j - 1] != null" cols="2"
+<div>
+    <section>
+    <div class="title">
+        <h1>CONTACTS</h1>
+    </div>
+    </section>
+
+    <b-row>
+    <b-col md="3">
+    </b-col>
+    <b-col md="7">
+        <b-card-group deck class="mb-2">
+        <b-card
+       img-src="https://www.walldevil.com/wallpapers/a18/thumb/background-lemons-web-nvstormygetaway-images-profile-naver.jpg"
+            img-alt="Image"
+            header-text-variant="white"
+            header-bg-variant="dark"
+            img-top
+            tag="article"
+            v-for="j in 6" v-if="friendsList[j - 1] != null" cols="2"
                     text-variant="black"
-                    :header="contactList[j - 1].firstName"
+                    :header="friendsList[j - 1].firstName + ' ' + friendsList[j - 1].lastName"
                     class="text-center"
                     style="max-width: 128px;">
-                <p class="card-text">{{contactList[j-1]}}</p>
             </b-card>
-        </b-card-group>
-
-        <div class="text-center" style="padding: 50px">
-            <button type="button" @click="sendEmail('OccasionInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-google" aria-hidden="true"></i> Send Occasion Invitation</button>
-            <button type="button" @click="sendEmail('FriendInvitation')" class="btn btn-lg btn-block btn-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Send Friends Invitation</button>
-            <router-link :to="`notification/${this.user.userId}`">Notification</router-link>
+            </b-card-group>
+            <!--b-card-group deck v-for="i in nbline" class="mb-2">
+            <b-card v-for="j in 6" v-if="friendsList[j - 1] != null" cols="2"
+                    text-variant="black"
+                    :header="friendsList[j - 1].firstName + ' ' + friendsList[j - 1].lastName"
+                    class="text-center"
+                    style="max-width: 128px;">
+                <p class="card-text">image</p>
+            </b-card>
+             </b-card-group-->
+    </b-col>
+    <b-col md="2">
+    </b-col>
+    </b-row>
+        <b-row style="margin-top: 2%;">
+    <b-col md="3">
+    </b-col>
+    <b-col md="7">
             <form @submit="onSubmit($event)">
-                <input v-model="recipientsEmail" placeholder="Find friend's email">
-                <b-btn type="submit" class="btn btn-primary" v-b-modal.modal>Send friend request</b-btn>
-                <b-modal id="modal" title="Sending Email">
-                    <p class="my-4">Email sent !</p>
-                </b-modal>
-            </form>
-            <router-link :to="`contacts`">Contact List</router-link>
-            <router-link :to="`facebookContacts`">Facebook Contact List</router-link>
-        </div>
-    </div>
-</template>
+            <input v-model="recipientsEmail" placeholder="Find friend's email">
+            <!--button type="submit" class="btn btn-primary">Send friend request</button-->
 
+            <b-btn type="submit" @click="showDismissibleAlert=true" variant="info" class="m-1">
+            Send friend request
+            </b-btn>
+            </form>
+    </b-col>
+    <b-col md="2">
+    </b-col>
+    </b-row>
+</div>
+</template>
 <script>
-    import Vue from "vue";
+   import Vue from "vue";
     import { mapActions } from 'vuex';
     import AuthService from "../../services/AuthService";
     import UserApiService from "../../services/UserApiService";
@@ -45,8 +74,9 @@ export default {
             recipientsEmail: null,
             model:{},
             listFacebookFriends: {},
-            contactList: [],
-            nbline: 0
+            friendsList: [],
+            nbline: 0,
+            showDismissibleAlert: false
         };
     },
 
@@ -60,8 +90,8 @@ export default {
         ...mapActions(['executeAsyncRequest']),
 
         async refreshList() {
-            this.contactList = await ContactApiService.getContactListAsync(this.user.userId);
-            this.nbline = Math.trunc((this.contactList.length + 5) / 6);
+            this.friendsList = await ContactApiService.getFriendsAsync(this.user.userId);
+            this.nbline = Math.trunc((this.friendsList.length + 5) / 6);
         },
 
         sendEmail(mailType){
@@ -110,3 +140,5 @@ export default {
     }
 };
 </script>
+<style lang="less">
+</style>

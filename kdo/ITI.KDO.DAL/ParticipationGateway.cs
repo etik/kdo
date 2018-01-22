@@ -47,7 +47,7 @@ namespace ITI.KDO.DAL
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
         /// <returns></returns>
-        public Participation FindByIds(int userId, int eventId)
+        public Participation FindByIds(int userId, int quantityId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -56,12 +56,29 @@ namespace ITI.KDO.DAL
                              p.UserId,
                              p.EventId,
                              p.AmountUserPrice
-                  from dbo.vParticipation p
-                    where p.UserId = @UserId and p.EventId = @EventId",
-                    new { UserId = userId, EventId = eventId })
+                    from dbo.vParticipation p
+                    where p.UserId = @UserId and p.QuantityId = @QuantityId",
+                    new { UserId = userId, QuantityId = quantityId })
                     .FirstOrDefault();
             }
         }
+
+
+        public IEnumerable<Participation> FindParticipationById(int quantityId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<Participation>(
+                    @"select p.QuantityId,
+                             p.UserId,
+                             p.EventId,
+                             p.AmountUserPrice
+                    from dbo.vParticipation p
+                    where p.QuantityId = @QuantityId",
+                    new { QuantityId = quantityId });
+            }
+        }
+
 
         /// <summary>
         /// Update ONLY the AmountUserPrice where UserId = @UserId and EventId = @EventId
@@ -86,13 +103,13 @@ namespace ITI.KDO.DAL
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
-        public void Delete(int userId, int eventId)
+        public void Delete(int userId, int quantityId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "dbo.sParticipationDelete",
-                    new { UserId = userId, EventId = eventId },
+                    new { UserId = userId, QuantityId = quantityId },
                     commandType: CommandType.StoredProcedure);
             }
         }

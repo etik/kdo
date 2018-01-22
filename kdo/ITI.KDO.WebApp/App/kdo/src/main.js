@@ -4,7 +4,6 @@ import VueI18n from 'vue-i18n';
 
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
-import Vuetify from 'vuetify'
 import $ from 'jquery';
 import Vuex from 'vuex';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -20,6 +19,7 @@ import Logout from './components/Logout.vue';
 
 import UserProfile from './components/user/UserProfile.vue';
 import UserProfileEdit from './components/user/UserProfileEdit.vue';
+import UserProfileDisplay from './components/user/UserProfileDisplay.vue';
 
 import PresentList from './components/present/PresentList.vue';
 import PresentEdit from './components/present/PresentEdit.vue';
@@ -27,6 +27,10 @@ import PresentEdit from './components/present/PresentEdit.vue';
 import EventList from './components/event/EventList.vue';
 import EventEdit from './components/event/EventEdit.vue';
 import EventView from './components/event/EventView.vue';
+import EventPresentEdit from './components/event/EventPresentEdit.vue';
+import EventParticipate from './components/event/EventParticipate.vue';
+import EventImportPresent from './components/event/EventImportPresent.vue';
+
 import Calendar from './components/event/calendar/Cal.vue';
 
 import Contact from './components/Contact/Contact.vue';
@@ -52,7 +56,6 @@ import AuthService from './services/AuthService';
 Vue.use(VueI18n);
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-Vue.use(Vuetify);
 
 import {messages} from 'vue-bootstrap4-calendar';
 
@@ -97,6 +100,7 @@ const router = new VueRouter({
 
         { path: '/userProfile', component: UserProfile, beforeEnter: requireAuth },
         { path: '/userProfile/edit', component: UserProfileEdit, beforeEnter: requireAuth },
+        { path: '/userProfile/display/:email?', component: UserProfileDisplay, beforeEnter: requireAuth },
 
         { path: '/appDefault', component: AppDefault },
 
@@ -105,8 +109,13 @@ const router = new VueRouter({
 
         { path: '/events', component: EventList, beforeEnter: requireAuth },
         { path: '/events/:mode([create|edit]+)/:id?', component: EventEdit, beforeEnter: requireAuth },
-        { path: '/events/view/:id?', component: EventView, beforeEnter: requireAuth },
+
+        { path: '/events/:mode([create|view]+)/:id?', component: EventView, beforeEnter: requireAuth },
+        { path: '/events/importPresent/:id?', component: EventImportPresent, beforeEnter: requireAuth },
+        { path: '/events/presents/:mode([create|edit]+)/:eid?/:qid?', component: EventPresentEdit, beforeEnter: requireAuth },
+        { path: '/events/participate/:eid?/:qid?', component: EventParticipate, beforeEnter: requireAuth },
         { path: '/events/:mode([suggest|display]+)/calendar', component: Calendar, beforeEnter: requireAuth },
+
 
         { path: '/contact', component: Contact, beforeEnter: requireAuth },
         { path: '/contacts', component: ContactList, beforeEnter: requireAuth },

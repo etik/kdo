@@ -71,6 +71,23 @@ namespace ITI.KDO.DAL
             }
         }
 
+        public IEnumerable<ItemQuantity> FindByEventId(int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<ItemQuantity>(
+                    @"select q.QuantityId,
+                             q.Quantity,
+                             q.RecipientId,
+                             q.NominatorId,
+                             q.EventId,
+                             q.PresentId
+                      from dbo.vQuantity q
+                      where q.EventId = @EventId",
+                    new { EventId = eventId });
+            }
+        }
+
         /// <summary>
         /// Update Quantity where QuantityId = @QuantityId ( that not update the NominatorId (NominatorId is like UserId) )
         /// </summary>
@@ -103,6 +120,29 @@ namespace ITI.KDO.DAL
                     "dbo.sQuantityDelete",
                     new { QuantityId = quantityId },
                     commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public IEnumerable<ItemPresentQuantity> GetUserPresentEvent(int userId, int eventId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<ItemPresentQuantity>(
+                    @"select PresentId,
+                             PresentName,
+                             Price,
+                             LinkPresent,
+                             CategoryPresentId,
+                             QuantityId,
+                             Quantity,
+                             RecipientId,
+                             NominatorId,
+                             ParticipantType,
+                             Invitation,
+                             EventId
+                      from dbo.vUserPresentEvent
+                      where RecipientId = @RecipientId and EventId = @EventId;",
+                    new { RecipientId = userId, EventId = eventId });
             }
         }
     }
