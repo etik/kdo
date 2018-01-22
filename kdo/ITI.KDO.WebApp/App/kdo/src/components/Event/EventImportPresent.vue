@@ -20,7 +20,7 @@
                         <tr v-for="i of presentList">
                             <td>{{ i.presentName }}</td>
                             <td>
-                                <button @click="addPresent(i.presentId)"  class="btn btn-primary">Add</button>
+                                <button @click="addPresent(i.presentId, i)"  class="btn btn-primary">Add</button>
                             </td>
                         </tr>
                     </tbody>
@@ -45,7 +45,7 @@
                         <tr v-for="i of myQuantityList">
                             <td>{{ i.presentName }}</td>
                             <td>
-                                <button @click="removePresent(i.quantityId)"  class="btn btn-primary">Remove</button>
+                                <button @click="removePresent(i)" class="btn btn-primary">Remove</button>
                             </td>
                         </tr>
                     </tbody>
@@ -81,17 +81,17 @@
         this.user = await UserApiService.getUserAsync(userEmail);
         this.eventId = this.$route.params.id;
         this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
-
-        await this.refreshPresentList();
+        this.presentList = await PresentApiService.getPresentListAsync(this.user.userId);
         await this.refreshQuantityList();
+        for(var i = 0; i < this.quantityList.length; i++)
+        {
+             this.presentList.splice(this.presentList.indexOf(await PresentApiService.getPresentAsync(this.quantityList[i].presentId)), 1);
+        }
     },
 
     methods: {
       ...mapActions(['executeAsyncRequestOrDefault', 'executeAsyncRequest']),
 
-      async refreshPresentList() {
-            this.presentList = await PresentApiService.getPresentListAsync(this.user.userId);
-      },
       async refreshQuantityList(){
             this.myQuantityList = [];
             this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityPresentListAsync(this.user.userId, this.eventId));
@@ -103,7 +103,7 @@
             }
       },
       
-      async addPresent(presentId) {
+      async addPresent(presentId, present) {
           try {
               this.itemQuantity.quantity = 1;
               this.itemQuantity.recipientId = this.user.userId;
@@ -112,14 +112,17 @@
               this.itemQuantity.presentId = presentId;
               await QuantityApiService.createQuantityAsync(this.itemQuantity);
               await this.refreshQuantityList();
+
+              this.presentList.splice(this.presentList.indexOf(present), 1);
           }
           catch(error) {
           }
       },
 
-      async removePresent(quantityId) {
+      async removePresent(quantity) {
           try {
-              await QuantityApiService.deleteQuantityAsync(quantityId);
+              this.presentList.push(await PresentApiService.getPresentAsync(quantity.presentId));
+              await QuantityApiService.deleteQuantityAsync(quantity.quantityId);
               await this.refreshQuantityList();
           }
           catch(error) {
@@ -130,5 +133,8 @@
 </script>
 
 <style lang="less">
-
+.container
+{
+    margin-top: 150px;
+}
 </style>

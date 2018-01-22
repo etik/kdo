@@ -15,9 +15,9 @@
             <b-list-group-item>{{present.presentName}} </b-list-group-item>
             <b-list-group-item>{{present.price}}€</b-list-group-item>
             <b-list-group-item>{{present.linkPresent}}</b-list-group-item>
-            <b-list-group-item>{{quantity.quantity}}</b-list-group-item>
-            <b-list-group-item>{{recipient.firstName}} {{recipient.lastName}}</b-list-group-item>
-            <b-list-group-item>{{nominator.firstName}} {{nominator.lastName}}</b-list-group-item>
+            <b-list-group-item>Number of this present : {{quantity.quantity}}</b-list-group-item>
+            <b-list-group-item>Present for : {{recipient.firstName}} {{recipient.lastName}}</b-list-group-item>
+            <b-list-group-item>Present idea from : {{nominator.firstName}} {{nominator.lastName}}</b-list-group-item>
             </b-list-group>
             </b-card>
         </b-col>
@@ -30,6 +30,16 @@
 
                 <b-button @click="Particip()" class="btn btn-success">Participate</b-button>
                 <b-button v-if="existing" @click="DeleteParticipation()" class="btn btn-danger">Remove your participation</b-button>                
+            </b-card>
+
+            <b-card style="margin-top:10%;" class="text-center" bg-variant="light" header="PARTICIPANTS">
+                <h6 slot="header"class="mb-0">PARTICIPANTS</h6>
+                <b-card v-for="i in participantUserList"
+                    tag="article"
+                    style="max-width: 16rem;margin-left:23%;"
+                    class="mb-2">
+                    <router-link :to="`/userProfile/display/${i.email}`">{{i.firstName}} {{i.lastName}}</router-link>
+                </b-card>
             </b-card>
         </b-col>
     </b-row>
@@ -52,6 +62,7 @@
         nominator:{},
         recipient:{},
         participation:{},
+        participantUserList:[],
         price: null,
         quantityId: null,
         eventId: null,
@@ -70,6 +81,7 @@
         this.present = await this.executeAsyncRequest(() => PresentApiService.getPresentAsync(this.quantity.presentId));
         this.nominator = await this.executeAsyncRequest(() => UserApiService.getUserByIdAsync(this.quantity.nominatorId));
         this.recipient = await this.executeAsyncRequest(() => UserApiService.getUserByIdAsync(this.quantity.recipientId));
+        await this.UpdateParticipantUserList();
 
         if (await this.executeAsyncRequest(() => ParticipationApiService.existingParticipationAsync(this.quantityId, this.user.userId)))
         {
@@ -104,6 +116,17 @@
         {
             this.$router.go(-1);
             await this.executeAsyncRequest(() => ParticipationApiService.deleteParticipationAsync(this.quantityId, this.user.userId));
+        },
+
+        async UpdateParticipantUserList()
+        {
+            var user;
+            var aux = await this.executeAsyncRequest(() => ParticipationApiService.getParticipationByQuantityAsync(this.quantityId));
+            for (var i = 0; i < aux.length; i++)
+            {
+                user = await UserApiService.getUserByIdAsync(aux[i].userId);
+                this.participantUserList.push(user);
+            }
         }
     }
 };

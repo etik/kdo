@@ -7,32 +7,33 @@
 </section>
 <b-row>
     <b-col md="4">
-        <b-card style="margin-left: 10%;"   class="text-center"header-bg-variant="danger" bg-variant="light" header="Informations">
-            <h6 slot="header"class="mb-0" text-variant="white">INFORMATIONS</h6>
+        <b-card style="margin-left: 10%;" class="text-center" header-bg-variant="danger" bg-variant="light" header="Informations">
+            <h6 slot="header"class="mb-0" text-variant="white">
+                INFORMATIONS
+                <router-link tag="img" class="edite" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`/events/edit/${eventId}`"></router-link>
+            </h6>
             <b-col sm="3" >
                 <b-img rounded blank width="90" height="90" blank-color="#777" alt="img" class="m-1" />
             </b-col>
             <b-col sm="12">
-                <router-link tag="img" class="edite" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`/events/edit/${eventId}`"></router-link>
                 <div class="Info">{{event.eventName}}
                     <br>Date
                 </div>
             </b-col>
         </b-card>
-    <br>
+        <br>
         <b-card style="margin-left:10%;" class="text-center" bg-variant="light" header="PARTICIPANTS">
             <h6 slot="header"class="mb-0">PARTICIPANTS</h6>
             <b-card v-for="i in participantUserList"
                 tag="article"
                 style="max-width: 16rem;margin-left:23%;"
                 class="mb-2">
-                {{i.firstName}}
-                {{i.lastName}}
+                <router-link :to="`/userProfile/display/${i.email}`">{{i.firstName}} {{i.lastName}}</router-link>
             </b-card>
         </b-card>
     </b-col>
     <b-col md="8">
-        <b-row>
+        <b-row v-if="beneficiary[0] != null">
             <b-col sm="2">
                 Present for :
             </b-col>
@@ -40,6 +41,9 @@
                 <b-form-select v-model="selected" :options="beneficiary" v-on:change="refreshQuantityList()" class="mb-3">
                 </b-form-select>
             </b-col>
+        </b-row>
+        <b-row v-else>
+            <b-alert show variant="danger" style="margin-left: 15px;">You need to add at least one beneficiary !</b-alert>
         </b-row>
 
         <b-card bg-variant="light" header="PRESENT">
@@ -100,7 +104,6 @@
             quantityList: [],
             selected: null,
             quantityPresentList: [],
-            participantQuantity: [],
             bugfix: 1
         };
     },
@@ -111,12 +114,9 @@
         this.event = await this.executeAsyncRequest(() => EventApiService.getEventByIdAsync(this.eventId));
         this.user = await UserApiService.getUserAsync(userEmail);
         await this.refreshParticipantList();
-        this.selected = this.beneficiary[0].value;
-        await this.refreshQuantityList();
-        await this.refreshParticipation();
-        await this.refreshParticipantToQuantityList();
-                    
-        this.bugfix = 2;
+        if (this.beneficiary[0] != null)
+            this.selected = this.beneficiary[0].value;
+        await this.refreshQuantityList();                    
     },
 
     methods: {
@@ -150,6 +150,8 @@
                     }
                 }
             }
+            await this.refreshParticipation();
+            await this.refreshParticipantToQuantityList();
         },
         async refreshParticipation(){
             var ammount;
@@ -179,6 +181,7 @@
                     this.quantityPresentList[i].participants[j].lastName = auxUser.lastName;
                 }
             }
+            this.bugfix++;
         }
     }
 };
@@ -186,7 +189,10 @@
 
 <style lang="less">
 .row {
-    margin-top:10%;
+    margin-top:0%;
+}
+.title {
+    margin-top:50px;
 }
 .event-text {
     height:52px;
@@ -219,18 +225,17 @@
 }
 .btni {
     margin-top:-33%;
+    text-align: center;
 }
 .edite {
     width: 7%;
-    margin-left: 98%;
-    margin-top: -70%;
+    margin-left: 5%;
 }
 .bordered {
     border-style: solid;
     border-width: 1px;
 }
 .editP{
-    margin-left: 29%;
     width:15%;
 }
 .participant{

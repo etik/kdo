@@ -2,7 +2,7 @@
 <div id="parallax-world-of-ugg">
   
 <section>
-  <div class="title">
+  <div class="title" style="margin-top:50px;">
     <h1>>WELCOME TO KDO</h1>
   </div>
 </section>
@@ -13,7 +13,7 @@
     </div>
 </section>
   
-<div class="row">
+<div class="row" style="margin-top: 1.3%;">
   <div class="col-sm-6 col-md-3">
     <div class="col-md-12 feature-box">
       <span class="glyphicon glyphicon-cog icon"></span>

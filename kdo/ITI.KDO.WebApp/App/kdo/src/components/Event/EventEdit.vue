@@ -6,63 +6,86 @@
         <h1 v-else>EDIT AN EVENT</h1>
     </div>
     </section>
-
         <b-row>
-            <b-col md="3">
-            </b-col>
             <b-col md="5" style="margin-left: 1%;">
                 <b-card header="EVENT" >
-                 <h6 slot="header" class="text-center mb-0" text-variant="white">EVENT</h6>
+                    <h6 slot="header" class="text-center mb-0" text-variant="white">EVENT</h6>
                     <b-form  @submit="onSubmit($event)">
                         <div class="alert alert-danger" v-if="errors.length > 0">
-                        <b>Les champs suivants semblent invalides : </b>
+                            <b>Les champs suivants semblent invalides : </b>
 
-                        <ul>
-                        <li v-for="e of errors">{{e}}</li>
-                        </ul>
+                            <ul>
+                                <li v-for="e of errors">{{e}}</li>
+                            </ul>
                         </div>
                         <b-col md="12">
-                        <b-form-group label="Event Name:" required>
-                        <b-form-input asp-for="EventName" class="form-control" v-model="event.eventName" required>
-                        <span asp-validation-for="EventName"></span>
-                        </b-form-input>
-                        </b-form-group>
+                            <b-form-group label="Event Name:" required>
+                            <b-form-input asp-for="EventName" class="form-control" v-model="event.eventName" required>
+                            <span asp-validation-for="EventName"></span>
+                            </b-form-input>
+                            </b-form-group>
                         </b-col>
 
                         <b-col md="12">
-                        <b-form-group label="Description:">
-                        <b-form-textarea asp-for="Description" class="form-control" v-model="event.descriptions">
-                        <span asp-validation-for="Description"></span>
-                        </b-form-textarea>
-                        </b-form-group>
+                            <b-form-group label="Description:">
+                            <b-form-textarea asp-for="Description" class="form-control" v-model="event.descriptions">
+                            <span asp-validation-for="Description"></span>
+                            </b-form-textarea>
+                            </b-form-group>
                         </b-col>
 
                         <b-col md="12">
-                        <b-form-group label="Date">
-                        <b-form-input type="date" asp-for="Date" class="form-control" v-model="event.dates">
-                        <span asp-validation-for="Date"></span>
-                        </b-form-input>
-                        </b-form-group>
+                            <b-form-group label="Date">
+                            <b-form-input type="date" asp-for="Date" class="form-control" v-model="event.dates">
+                            <span asp-validation-for="Date"></span>
+                            </b-form-input>
+                            </b-form-group>
                         </b-col>
 
                         <b-col md="6">
-                        <b-button type="submit" variant="primary">Submit</b-button>
+                            <b-button type="submit" variant="primary">Submit</b-button>
                         </b-col>
                     </b-form>
                 </b-card>
-                </b-col>
+            </b-col>
+
             <b-col md="2">
                 <b-card header="FRIENDS">
-                <b-alert variant="success" dismissible :show="showDismissibleAlert"
-                                        @dismissed="showDismissibleAlert=false">
-                                        You add a friend as participant !
-                </b-alert>
                     <h6 slot="header" class="text-center mb-0" text-variant="white">FRIENDS</h6>
                     <div v-if="mode == 'edit'" class="com-sm-4" >
                         <b-row style="margin-left: 3%;">
                             <div class="friendCard" v-for="i of friendList" :key="i.id">
                                 <td style="width:200px;">{{ i.firstName }} {{ i.lastName }}</td>
-                                <td><b-button @click="addParticipant(i.userId, i),showDismissibleAlert=true" style="margin-right: 5px;"variant="success">+</b-button></td>
+                                <td><b-button @click="addParticipant(i.userId, i)" style="margin-right: 5px;"variant="success">></b-button></td>
+                            </div>
+                        </b-row>
+                    </div>
+                </b-card>
+            </b-col>
+
+            <b-col md="2">
+                <b-card header="PARTICIPANTS">
+                    <h6 slot="header" class="text-center mb-0" text-variant="white">PARTICIPANTS</h6>
+                    <div v-if="mode == 'edit'" class="com-sm-4" >
+                        <b-row style="margin-left: 3%;">
+                            <div class="friendCard" v-for="i of participantList" :key="i.id">
+                                <td style="width:200px;">{{ i.firstName }} {{ i.lastName }}</td>
+                                <td><b-button v-if="i.userId != user.userId" @click="removeParticipant(i.userId, i)" style="margin-right: 5px;"variant="success"><</b-button></td>
+                                <td><b-button @click="updateBeneficiary(i.userId, i, true)" style="margin-right: 5px;"variant="success">></b-button></td>
+                            </div>
+                        </b-row>
+                    </div>
+                </b-card>
+            </b-col>
+
+            <b-col md="2">
+                <b-card header="BENEFICIARY">
+                    <h6 slot="header" class="text-center mb-0" text-variant="white">BENEFICIARY</h6>
+                    <div v-if="mode == 'edit'" class="com-sm-4" >
+                        <b-row style="margin-left: 3%;">
+                            <div class="friendCard" v-for="i of beneficiaryList" :key="i.id">
+                                <td style="width:200px;">{{ i.firstName }} {{ i.lastName }}</td>
+                                <td><b-button @click="updateBeneficiary(i.userId, i, false)" style="margin-right: 5px;"variant="success"><</b-button></td>
                             </div>
                         </b-row>
                     </div>
@@ -100,9 +123,9 @@
         event: {},
         mode: null,
         eventId: 0,
-        participant: {},
-        participantList: [],
         friendList: [],
+        participantList: [],
+        beneficiaryList: [],
         selected: [],
         image: '',
         sendImage: '',
@@ -120,8 +143,8 @@
         console.log(this.mode);
         this.eventId = this.$route.params.id;
         
-        await this.refreshParticipantList();
         await this.refreshfriendList();
+        await this.refreshParticipantList();
 
         if(this.mode == 'edit')
         {
@@ -149,42 +172,33 @@
 
         ...mapActions(['executeAsyncRequest']),
 
-        onFileChange(e) {
-            console.log("in OnFileChange");             
+        onFileChange(e) {         
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
                 return;
             this.createImage(files[0]);
             this.$router.replace('/events/create');      
         },
-        createImage(file) {
-            console.log("in CreateImage");   
+        createImage(file) { 
             var image = new Image();
             var reader = new FileReader();
             var vm = this;
 
             this.data.append('files', file);
             this.sendImage = file;
-            console.log("sendImage : " + this.sendImage);
-            console.log("file : " + file);
             reader.onload = (e) => {
                 vm.image = e.target.result;
             };
             reader.readAsDataURL(file);
         },
         async removeImage(e) {
-            console.log("in RemoveImage");   
             e.preventDefault();
             this.image = '';
             this.file = '';
             this.data.append('files',  this.file);
             if(this.data != null)
             {
-                console.log("this.image is not null");
-                console.log("this.data : " + this.data);
-                console.log("this.item.userId : " + this.item.userId);
-                await FileApiService.deletePicture( 2, this.event.eventId );
-                    
+                await FileApiService.deletePicture( 2, this.event.eventId );                    
             }
             this.refresh();
             this.$router.replace('userProfil');           
@@ -203,14 +217,57 @@
 
             await ParticipantApiService.createParticipantAsync(participant);
             this.removeElement(this.friendList, element);
+            this.participantList.push(element);
+        },
+
+        async removeParticipant(userId, element){
+            await ParticipantApiService.deleteParticipantAsync(userId, this.eventId);
+            this.removeElement(this.participantList, element);
+            this.friendList.push(element);
+        },
+
+        async updateBeneficiary(userId, element, benef){
+            var participant = await ParticipantApiService.getParticipant(userId, this.eventId);
+
+            participant.participantType = benef;
+
+            await ParticipantApiService.updateParticipantAsync(participant);
+            if (benef == true)
+            {
+                this.removeElement(this.participantList, element);
+                this.beneficiaryList.push(element);
+            }
+            else
+            {
+                this.removeElement(this.beneficiaryList, element);
+                this.participantList.push(element);
+            }
         },
 
         async refreshfriendList() {
             this.friendList = await ContactApiService.getFriendsAsync(this.user.userId);
         },
+        
+        async refreshParticipantList(){
+            var aux = await ParticipantApiService.getParticipantInvitedListAsync(this.user.userId, this.eventId);
+            var user;
+            for (var i = 0; i < aux.length; i++)
+            {
+                user = await UserApiService.getUserByIdAsync(aux[i].userId);
+                this.participantList.push(user);
+                if (aux[i].participantType == 1)
+                {
+                    this.beneficiaryList.push(user);
+                    this.removeElement(this.participantList, user);
+                }
+                this.removeElement(this.friendList, user);
+            }
+        },
+
         async inviteParticipant() {
             this.selected = await ParticipantApiService.createParticipantAsync();
         },
+
         async onSubmit(e){
             e.preventDefault();
 
@@ -224,13 +281,9 @@
                 try {
                     if(this.mode == 'create') {
                         this.event.userId = this.user.userId;
-                        console.log("hello");
                         this.event.eventId = await this.executeAsyncRequest(() => EventApiService.createEventAsync(this.event));      
                         if(this.data != null)
                         {
-                            console.log("this.image is not null");
-                            console.log("this.data : " + this.data);
-                            console.log("this.event.eventId: " + this.event.eventId);
                             this.sendItemImage = await FileApiService
                                 .updateFileAsync(this.data, this.event.eventId)
                                 .then( () => { FileApiService.typeOfPicture(2, this.event.eventId)});
@@ -252,7 +305,6 @@
 
         removeElement(list, i){
             list.splice(list.indexOf(i), 1);
-            console.log(list);
         }
     }
 };
