@@ -9,7 +9,7 @@ Feature:
          @dragover.prevent="onDrop"
          @dragenter.prevent="dragenter"
          @drop="onDrop">
-        <div class="schedule-calendar-date-hd" @click="func()">
+        <div class="schedule-calendar-date-hd">
             <div class="schedule-calendar-date-label" >{{ date.getDate() }}</div>
             <button type="button"
                     class="schedule-calendar-counter"

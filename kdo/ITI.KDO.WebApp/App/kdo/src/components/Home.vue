@@ -38,7 +38,7 @@
             <b-nav-item  href="/Home/userProfile">Profile</b-nav-item>
             <b-nav-item  href="/Home/events">Event</b-nav-item>
             <b-nav-item href="/Home/contact">My contacts</b-nav-item>
-            <b-nav-item href="/Home/events/display/calendar">Calendar</b-nav-item>
+            <b-nav-item href="/Home/events/calendar">Calendar</b-nav-item>
             <b-nav-item href="/Home/presents">My presents</b-nav-item>
             <b-nav-item> 
                <span v-if="contactNotificationList.length != 0 || eventNotificationList.length != 0" class="badge badge-light">

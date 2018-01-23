@@ -112,7 +112,7 @@ const router = new VueRouter({
         { path: '/events/importPresent/:id?', component: EventImportPresent, beforeEnter: requireAuth },
         { path: '/events/presents/:mode([create|edit]+)/:eid?/:qid?', component: EventPresentEdit, beforeEnter: requireAuth },
         { path: '/events/participate/:eid?/:qid?', component: EventParticipate, beforeEnter: requireAuth },
-        { path: '/events/:mode([suggest|display]+)/calendar', component: Calendar, beforeEnter: requireAuth },
+        { path: '/events/calendar', component: Calendar, beforeEnter: requireAuth },
 
 
         { path: '/contactEmail', component: ContactEmail, beforeEnter: requireAuth },

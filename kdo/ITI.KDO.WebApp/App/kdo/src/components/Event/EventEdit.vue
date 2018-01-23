@@ -23,14 +23,14 @@
 
                     <b-col md="12">
                         Chose a picture for your Event :
-                        <div class="input-group" style="width : 25%;">
+                        <div class="input-group" style="width:100%;">
                             <label class="input-group-btn">
-                                <span class="btn btn-primary btn-file">
+                                <span class="btn btn-primary btn-file" style="height:37px;">
                                     Browse
                                     <input type="file" @change="onFileChange" style="display: none;" multiple>
                                 </span>
                             </label>
-                            <input type="text" class="form-control" v-model="sendImage.name" readonly>
+                            <input type="text" style="height:37px;" class="form-control" v-model="sendImage.name" readonly>
                         </div>
                     </b-col>
 

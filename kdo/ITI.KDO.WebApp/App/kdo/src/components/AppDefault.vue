@@ -3,7 +3,7 @@
   
 <section>
   <div class="title" style="margin-top:50px;">
-    <h1>>WELCOME TO KDO</h1>
+    <h1>WELCOME TO KDO</h1>
   </div>
 </section>
 

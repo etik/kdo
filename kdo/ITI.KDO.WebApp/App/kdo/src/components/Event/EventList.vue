@@ -10,7 +10,7 @@
 
     <div class="row" style="margin-left:11%;">
         <div md="12" class="feature-box event" v-for="i of eventList">
-            <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage">
+            <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage" style="min-height: 90px;">
             <div class="eventDiv">
                 <span>{{ i.eventName }}</span>
             </div>

@@ -19,10 +19,10 @@
                     <label class="input-group-btn">
                         <span class="btn btn-primary btn-file">
                             Browse
-                            <input type="file" @change="onFileChange" style="display: none;" multiple>
+                            <input type="file" @change="onFileChange" style="display:none;" multiple>
                         </span>
                     </label>
-                    <input type="text" class="form-control" v-model="sendImage.name" readonly>
+                    <input type="text" class="form-control" style="height:37px;" v-model="sendImage.name" readonly>
                 </div>
 
                 <b-row style="margin-left: 0%;">
