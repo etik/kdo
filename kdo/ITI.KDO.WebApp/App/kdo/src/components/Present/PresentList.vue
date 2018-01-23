@@ -7,6 +7,7 @@
     </section>
     <div class="row" style="margin-left:11%;">
         <div md="12" class="feature-box test" v-for="i of presentList">
+            <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage">
             <div class="test-event">
                 <span>{{ i.presentName }}</span>
             </div>
@@ -20,37 +21,6 @@
             <span style="font-family: cursive; font-size: larger;" >Add a present</span>
         </div>
 	</div>
-
-    <table class="table table-striped table-hover table-bordered">
-        <thead>
-            <tr>
-                <th>Photo</th>
-                <th>Present Name</th>
-                <th>Price</th>
-                <th>Link Present</th>
-                <th>Category Present</th>
-                <th>Options</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr v-if="presentList.length == 0">
-                <td colspan="7" class="text-center">We-want-a-present!!!</td>
-            </tr>
-
-            <tr v-for="i of presentList">
-                <td> <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage"></td>
-                <td>{{ i.presentName }}</td>
-                <td>{{ i.price }}</td>
-                <td>{{ i.linkPresent }}</td>
-                <td>{{ i.categoryName }}</td>
-                <td>
-                    <button @click="deletePresent(i.presentId)"  class="btn btn-primary">Remove</button>
-                    <router-link :to="`presents/edit/${i.presentId}`">Edit Present</router-link>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 </template>
 
@@ -143,7 +113,7 @@
         font-size: 24px;
         background-color: #1a5d59;
         opacity: 0.8;
-        margin-top:32%;
+        margin-top: 5%;
     }
 }
 

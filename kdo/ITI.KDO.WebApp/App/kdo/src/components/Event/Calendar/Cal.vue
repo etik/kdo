@@ -63,6 +63,7 @@ body {
 }
 
 .demo {
+    margin-top: 120px;
     display: flex;
     flex-direction: column;
     height: 100%;

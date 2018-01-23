@@ -41,11 +41,8 @@
             <b-nav-item href="/Home/events/display/calendar">Calendar</b-nav-item>
             <b-nav-item href="/Home/presents">My presents</b-nav-item>
             <b-nav-item> 
-               <span class="badge badge-light" >
-                      <tr v-if="contactNotificationList.length == 0 & eventNotificationList.length==0">
-                            
-                        </tr>
-                      <tr v-else >
+               <span v-if="contactNotificationList.length != 0 || eventNotificationList.length != 0" class="badge badge-light">
+                        <tr>
                             <td colspan="7" id="popoverButton-sync" style="font-size: medium;" class="text-center" >{{this.contactNotificationList.length + this.eventNotificationList.length}} Notifications</td>
                             <b-popover :show.sync="show" target="popoverButton-sync" title="Accept or Decline">
                         <tr v-if="i.senderEmail != userEmail" v-for="i of contactNotificationList">
