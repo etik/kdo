@@ -10,13 +10,13 @@
 
     <div class="row" style="margin-left:11%;">
         <div md="12" class="feature-box event" v-for="i of eventList">
-            <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage" style="min-height: 90px;">
+            <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage" style="height: 120px; width: auto;">
             <div class="eventDiv">
                 <span>{{ i.eventName }}</span>
             </div>
 
             <div v-if = "isCreator(i.userId) == true">
-                <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg"  class="delete"@click="deleteEvent(i.eventId)" fluid alt="Responsive image" />
+                <b-img src="https://image.freepik.com/icones-gratuites/corbeille_318-55452.jpg" class="delete" @click="deleteEvent(i.eventId)" fluid alt="Responsive image"/>
                 <div class="edit">
                     <router-link tag="img" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`events/edit/${i.eventId}`"></router-link>
                     <router-link tag="img" class="voirT" src="http://www.icone-png.com/png/24/23722.png" :to="`events/view/${i.eventId}`"></router-link>
@@ -147,7 +147,7 @@
     font-size: 24px;
     background-color: #81cc67;
     opacity: 0.8;
-    margin-top: 10%;
+    margin-top: 3%;
 }
 .feature-box{
    // background-image:url("https://financesonline.com/uploads/2017/10/ev.jpg");

@@ -7,17 +7,17 @@
 </section>
 <b-row>
     <b-col md="4">
-        <b-card style="margin-left: 10%;" class="text-center" header-bg-variant="danger" bg-variant="light" header="Informations">
+        <b-card style="margin-left: 10%; min-height: 210px;" class="text-center" header-bg-variant="danger" bg-variant="light" header="Informations">
             <h6 slot="header"class="mb-0" text-variant="white">
                 INFORMATIONS
                 <router-link tag="img" class="edite" src="https://image.flaticon.com/icons/svg/84/84380.svg" :to="`/events/edit/${eventId}`"></router-link>
             </h6>
             <b-col sm="3" >
-                <b-img rounded blank width="90" height="90" blank-color="#777" alt="img" class="m-1" />
+                <img :src="'data:image/jpeg;base64,'+ event.picture" class="img-thumbnail myImage" style="min-height: 110px; min-width: 110px">
             </b-col>
             <b-col sm="12">
                 <div class="Info">{{event.eventName}}
-                    <br>Date
+                    <!--br>{{event.dates}}-->
                 </div>
             </b-col>
         </b-card>
@@ -135,6 +135,7 @@
                 if (this.participantList[i].participantType == true)                    
                     this.beneficiary.push({value: aux.userId, text: aux.firstName});
             }
+            console.log(this.beneficiary);
         },
         async refreshQuantityList(){
             this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));

@@ -16,68 +16,34 @@
                 indicators
                 :interval="0"
                 img-width="15%"
-                img-height="5%"
+                img-height="6%"
                 v-model="slide"
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
 
           <b-carousel-slide v-for = "i in nbslide" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
-              <b-col md="4">
-                <b-card v-if="eventList[(3 * (i - 1))] != null"
-                      img-src="https://img4.hostingpics.net/pics/518638Image1.png"
+              <b-col v-for = "j in 3" :key="j" md="4">
+                <b-card v-if="eventList[(3 * (i - 1)) + j - 1] != null"
+                      :img-src="'data:image/jpeg;base64,'+ eventList[(3 * (i - 1)) + j - 1].picture"
                       img-alt="Image"
                       img-top
                       tag="article"
-                      style="max-width: 15rem;"
-                      class="mb-2"
-                      border-variant="dark"
-                      bg-variant="dark">
-                <h2 class="card-text">
-                  {{eventList[(3 * (i - 1))].eventName}}
-                </h2>
-                <router-link :to="`events/view/${eventList[(3 * (i - 1))].eventId}`">Go</router-link>
-                </b-card>
-              </b-col>
-
-              <b-col md="4">
-                <b-card v-if="eventList[(3 * (i - 1)) + 1] != null"
-                      img-src="https://img4.hostingpics.net/pics/211052Image2.png"
-                      img-alt="Image"
-                      img-top
-                      tag="article"
-                      style="max-width: 15rem;"
-                      class="mb-2"
-                      border-variant="dark"
-                      bg-variant="dark">
-                <h2 class="card-text">
-                  {{eventList[(3 * (i - 1)) + 1].eventName}}
-                </h2>
-                <router-link :to="`events/view/${eventList[(3 * (i - 1)) + 1].eventId}`">Go</router-link>
-                </b-card>
-              </b-col>
-
-              <b-col md="4">
-                <b-card v-if="eventList[(3 * (i - 1)) + 2] != null"
-                      img-src="https://img4.hostingpics.net/pics/527500Image3.png"
-                      img-alt="Image"
-                      img-top
-                      tag="article"
-                      style="max-width: 15rem;"
                       class="mb-2"
                       border-variant="dark"
                       bg-variant="dark">
                   <h2 class="card-text">
-                    {{eventList[(3 * (i - 1)) + 2].eventName}}
+                    {{eventList[(3 * (i - 1)) + j - 1].eventName}}
                   </h2>
-                  <router-link :to="`events/view/${eventList[(3 * (i - 1)) + 2].eventId}`">Go</router-link>
+                  <router-link :to="`events/view/${eventList[(3 * (i - 1)) + j - 1].eventId}`">Go</router-link>
                 </b-card>
               </b-col>
             </b-row>
         </b-carousel-slide>
     </b-carousel>
   </b-jumbotron>
-  </b-col>
+</b-col>
+
 <b-col md="12">
   <b-jumbotron class="bg-light">
     <h1>Your presents</h1>
@@ -94,41 +60,9 @@
 
           <b-carousel-slide v-for="i in nbslide1" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
-              <b-col md="4">
-                <b-card v-if="presentList[(3 * (i - 1))] != null"
-                      img-src="https://img4.hostingpics.net/pics/518638Image1.png"
-                      img-alt="Image"
-                      img-top
-                      tag="article"
-                      style="max-width: 15rem;"
-                      class="mb-2"
-                      border-variant="dark"
-                      bg-variant="dark">
-                <h2 class="card-text">
-                  {{presentList[(3 * (i - 1))].presentName}}
-                </h2>
-                </b-card>
-              </b-col>
-
-              <b-col md="4">
-                <b-card v-if="presentList[(3 * (i - 1)) + 1] != null"
-                      img-src="https://img4.hostingpics.net/pics/211052Image2.png"
-                      img-alt="Image"
-                      img-top
-                      tag="article"
-                      style="max-width: 15rem;"
-                      class="mb-2"
-                      border-variant="dark"
-                      bg-variant="dark">
-                <h2 class="card-text">
-                  {{presentList[(3 * (i - 1)) + 1].presentName}}
-                </h2>
-                </b-card>
-              </b-col>
-
-              <b-col md="4">
-                <b-card v-if="presentList[(3 * (i - 1)) + 2] != null"
-                      img-src="https://img4.hostingpics.net/pics/527500Image3.png"
+              <b-col v-for = "j in 3" :key="j" md="4">
+                <b-card v-if="presentList[(3 * (i - 1)) + j - 1] != null"
+                      :img-src="'data:image/jpeg;base64,'+ presentList[(3 * (i - 1)) + j - 1].picture"
                       img-alt="Image"
                       img-top
                       tag="article"
@@ -137,7 +71,7 @@
                       border-variant="dark"
                       bg-variant="dark">
                   <h2 class="card-text">
-                    {{presentList[(3 * (i - 1)) + 2].presentName}}
+                    {{presentList[(3 * (i - 1)) + j - 1].presentName}}
                   </h2>
                 </b-card>
               </b-col>
@@ -146,15 +80,6 @@
     </b-carousel>
   </b-jumbotron>
   </b-col>
-  <!--div class="row">
-    <b-col class="com-sm-5" v-for="i of presentList">
-      <b-card title="Your present">
-        <p class="card-text">
-          {{i.presentName}}
-        </p>
-      </b-card>
-    </b-col>
-  </div-->
 </div>
 </template>
 
