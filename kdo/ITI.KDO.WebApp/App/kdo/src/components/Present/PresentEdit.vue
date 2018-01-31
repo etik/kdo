@@ -20,7 +20,7 @@
                 <li v-for="e of errors">{{e}}</li>
                 </ul>
             </div>
-            <b-card title="Present">
+            <b-card>
 
                 <img :src="'data:image/jpeg;base64,'+ present.picture" style="width:100%" class="img-thumbnail myImage"
                 <h4>Chose a picture for your present</h4>
@@ -31,7 +31,7 @@
                             <input type="file" @change="onFileChange" style="display: none;" multiple>
                         </span>
                     </label>
-                    <input type="text" class="form-control" v-model="sendImage.name" readonly>
+                    <input type="text" class="form-control" v-model="sendImage.name" style="height:37px;" readonly>
                 </div>
             </b-card>
             <div class="form-group">
@@ -67,7 +67,7 @@
 </div>
 </template>
 <script>
-  import { mapActions } from 'vuex';
+    import { mapActions } from 'vuex';
     import PresentApiService from '../../services/PresentApiService';
     import CategoryPresentApiService from '../../services/CategoryPresentApiService';
     import UserApiService from '../../services/UserApiService';

@@ -17,7 +17,7 @@
             </div>
         </div>  
         <div md="12" class="feature-box1 test">
-            <router-link tag="img" style=" margin-top: -5%;" src="https://blazer-net.com/wp-content/uploads/blazer-nett.png" :to="`presents/create`">Add a present</router-link>
+            <router-link tag="img" style=" margin-top: -5%;" src="https://blazer-net.com/wp-content/uploads/blazer-nett.png" :to="`/category`">Add a present</router-link>
             <span style="font-family: cursive; font-size: larger;" >Add a present</span>
         </div>
 	</div>
