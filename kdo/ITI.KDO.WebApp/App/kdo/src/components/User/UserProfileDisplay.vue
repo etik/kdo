@@ -1,5 +1,26 @@
 <template>
-    <div class="container">
+    <div>
+        <b-row md="2">
+        </b-row>
+        <b-row md="2">
+            <b-col md="4">
+            </b-col >
+            <b-col md="4">
+                <b-card style="margin-top:35%;">
+                      <div class="page-header">
+                        <h1>Profil de {{ profil.firstName }} {{ profil.lastName }}</h1>
+                      </div>
+                <p><h4 style="color: #907272;">First Name: </h4> {{ profil.firstName }}</p>
+                <p><h4 style="color: #907272;">Last Name: </h4>{{ profil.lastName }}</p>
+                <p><h4 style="color: #907272;">Email: </h4>{{ profil.email }}</p>
+                <p v-if="listCheck() == -1"><button style="background: #907272;" @click="sendRequest(profil.email)" class="btn btn-default">Send Friend Request</button></p>
+                <p v-else><button style="background: #907272;" @click="deleteContact(listCheck())" class="btn btn-default">Unfriend</button></p>
+                </b-card>
+            </b-col>
+        </b-row>
+    </div>
+
+    <!--div class="container">
       <div class="page-header">
             <h1>Profil de {{ profil.firstName }} {{ profil.lastName }}</h1>
       </div>
@@ -8,7 +29,7 @@
       <p>Email: {{ profil.email }}</p>
       <p v-if="listCheck() == -1"><button @click="sendRequest(profil.email)" class="btn btn-primary">Send Friend Request</button></p>
       <p v-else><button @click="deleteContact(listCheck())" class="btn btn-primary">Unfriend</button></p>
-    </div>
+    </div-->
 </template>
 
 <script>
