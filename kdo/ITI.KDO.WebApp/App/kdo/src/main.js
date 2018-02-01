@@ -20,6 +20,7 @@ import Logout from './components/Logout.vue';
 import UserProfile from './components/user/UserProfile.vue';
 import UserProfileDisplay from './components/user/UserProfileDisplay.vue';
 
+import Category from './components/present/Category.vue';
 import PresentList from './components/present/PresentList.vue';
 import PresentEdit from './components/present/PresentEdit.vue';
 
@@ -102,6 +103,7 @@ const router = new VueRouter({
 
         { path: '/appDefault', component: AppDefault },
 
+        { path: '/category', component: Category, beforeEnter: requireAuth },
         { path: '/presents', component: PresentList, beforeEnter: requireAuth },
         { path: '/presents/:mode([create|edit]+)/:id?', component: PresentEdit, beforeEnter: requireAuth },
 
