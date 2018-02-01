@@ -10,5 +10,5 @@ create table dbo.tPresent
 
     constraint PK_tPresent_PresentId primary key(PresentId),
     constraint CK_tPresent_CategoryPresentId foreign key(CategoryPresentId) references dbo.tCategoryPresent(CategoryPresentId),
-	constraint FK_tPresent_UserId foreign key(UserId) references dbo.tUser(UserId),
+	constraint FK_tPresent_UserId foreign key(UserId) references dbo.tUser(UserId) ON DELETE CASCADE,
 );

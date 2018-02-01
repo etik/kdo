@@ -8,5 +8,5 @@ create table dbo.tEvent
 	UserId int not null
 
     constraint PK_tEvent_EventId primary key(EventId),
-	constraint FK_tEvent_UserId foreign key(UserId) references dbo.tUser(UserId),
+	constraint FK_tEvent_UserId foreign key(UserId) references dbo.tUser(UserId) ON DELETE CASCADE,
 );
