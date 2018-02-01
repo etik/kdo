@@ -16,7 +16,7 @@
                 indicators
                 :interval="0"
                 img-width="15%"
-                img-height="6%"
+                img-height="4%"
                 v-model="slide"
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
@@ -53,7 +53,7 @@
                 indicators
                 :interval="0"
                 img-width="15%"
-                img-height="5%"
+                img-height="4%"
                 v-model="slide1"
                 @sliding-start="onSlideStart1"
                 @sliding-end="onSlideEnd1">

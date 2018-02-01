@@ -135,7 +135,6 @@
                 if (this.participantList[i].participantType == true)                    
                     this.beneficiary.push({value: aux.userId, text: aux.firstName});
             }
-            console.log(this.beneficiary);
         },
         async refreshQuantityList(){
             this.quantityList = await this.executeAsyncRequest(() => QuantityApiService.getQuantityListAsync(this.eventId));
