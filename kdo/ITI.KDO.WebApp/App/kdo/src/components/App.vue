@@ -23,7 +23,7 @@
 
           <b-carousel-slide v-for = "i in nbslide" :key="i" img-blank variant="dark" img-alt="Blank image">
             <b-row>
-              <b-col v-for = "j in 3" :key="j" md="4">
+              <b-col v-for = "j in 3" :key="j" md="4" style="padding-left: 30px; padding-right: 30px;">
                 <b-card v-if="eventList[(3 * (i - 1)) + j - 1] != null"
                       :img-src="'data:image/jpeg;base64,'+ eventList[(3 * (i - 1)) + j - 1].picture"
                       img-alt="Image"
