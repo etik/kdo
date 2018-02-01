@@ -49,7 +49,7 @@
                 <input type="text" v-model="present.linkPresent" class="form-control">
                 </div>
 
-                <div class="form-group">
+                <!--div class="form-group">
                 <label>Category Present</label>
                 <b-dropdown right variant="success"text="Category Present">
                     <tr v-for="i of categoryPresentList" :key="i.categoryPresentId">
@@ -57,7 +57,7 @@
                     </tr>
                 </b-dropdown>
                 <input type="text" v-model="this.categoryChosen" class="form-control" disabled-->
-                </div>
+                <!--/div-->
 
                 <button type="submit" class="btn btn-success">Sauvegarder</button>
                 </form>
@@ -127,14 +127,13 @@
             if(!this.present.presentName) errors.push("Present Name");
             if(!this.present.price) errors.push("Price");
             if(!this.present.linkPresent) errors.push("Link Present");
-            if(!this.present.categoryPresentId) errors.push("Category Present Id");
-
             this.errors = errors;
 
             if(errors.length == 0) {
             try {
                 if(this.mode == 'create') {
                     this.present.userId = this.user.userId;
+                    this.present.categoryPresentId = this.id;
                     this.present = await this.executeAsyncRequest(() => PresentApiService.createPresentAsync(this.present));
                     if(this.data != null) {
                         this.sendItemImage = await FileApiService
