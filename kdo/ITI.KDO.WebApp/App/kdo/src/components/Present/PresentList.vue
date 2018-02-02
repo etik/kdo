@@ -7,7 +7,7 @@
     </section>
     <div class="row" style="margin-left:11%;">
         <div md="12" class="feature-box test" v-for="i of presentList">
-            <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage"  style="min-height: 110px;">
+            <img :src="'data:image/jpeg;base64,'+ i.picture" class="img-thumbnail myImage"  style="height: 110px; width: 200px">
             <div class="test-event">
                 <span>{{ i.presentName }}</span>
             </div>
