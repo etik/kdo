@@ -24,7 +24,7 @@
 
                 <img :src="'data:image/jpeg;base64,'+ present.picture" style="width:100%" class="img-thumbnail myImage"
                 <h4>Chose a picture for your present</h4>
-                <div class="input-group" style="width : 25%;">
+                <div class="input-group">
                     <label class="input-group-btn">
                         <span class="btn btn-primary btn-file">
                             Browse
